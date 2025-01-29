@@ -1,0 +1,222 @@
+* {    
+    min-height: 0;
+    font-size: 1.07rem;
+    font-weight: 600;
+    font-family: "Jetbrains Mono Nerd Font" ;
+}
+
+
+window#waybar {
+    transition-duration: .5s;
+    background-color: transparent;
+    transition-property: background-color;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: inherit;
+}
+
+#workspaces {
+    transition: 0.3s;
+    background: #1d1d27; 
+    border-radius: 0.4em;
+}
+
+#workspaces button {
+    margin: 0;
+    color: #ffadad;
+    transition: 0.3s;
+    margin-right: 2px;
+    border-radius: 2px; 
+}
+
+#workspaces button:hover {
+    color: #1d1d27;
+    background: #ffadad;
+}
+
+#workspaces button.urgent {
+    color: #f53c3c;
+}
+
+#workspaces > button:first-child {
+    margin-left: 0;
+}
+
+#workspaces > button:last-child {
+    margin-right: 0;
+}
+
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#language,
+#network,
+#pulseaudio,
+#tray,
+#mode {
+    padding: 0 5px;
+    border-radius: 0.4em;
+}
+
+.modules-left, .modules-center, .modules-right {
+    padding: 2px;
+    border-radius: 0.4rem;
+    background: #1d1d27;
+    margin: 5px 5px 1px 5px;
+}
+
+.modules-left {
+    border: 0.15rem solid #ffadad;
+}
+
+.modules-center {
+    background: transparent;
+} 
+
+.modules-right {
+    border: 0.15rem solid #b4befe;
+    color: #b4befe;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#network, #language, #pulseaudio, #clock, #tray {
+    margin-right: 5px;
+    
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    border-radius: 4.4px;
+
+    transition: none;
+    transition: 0.3s;
+}
+
+#language:hover, 
+#network:hover,
+#pulseaudio:hover,
+#clock:hover {
+    color: #1d1d27; 
+    background: #b4befe; 
+}
+
+#pulseaudio.muted {
+    color: #ffadad; 
+}
+
+#pulseaudio.muted:hover {
+    color: #1d1d27;
+    background: #f38ba8;
+}
+
+#clock {
+    margin-right: 0;
+    margin-bottom: 0px;
+}
+
+#disk, #cpu, #memory {
+    background: #1d1d27;
+
+    border-style: solid;
+    border-width: 0.15rem;
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    transition: none;
+    transition: 0.3s;
+
+    margin-left: 5px;
+    margin-bottom: 0px;
+}
+
+#disk {
+    color: #cddfa0;
+    border-color: #cddfa0;    
+}
+
+#disk:hover{
+    color: #1d1d27; 
+    background: #cddfa0;
+}
+
+#memory {
+    color: #ffadad;
+    border-color: #ffadad;
+}
+
+#memory:hover { 
+    color: #1d1d27; 
+    background: #ffadad;
+}
+
+#cpu {
+    color: #5ee3f2;
+    border-color: #5ee3f2;    
+}
+
+#cpu:hover {
+    color: #1d1d27; 
+    background: #5ee3f2;
+}
+
+#network.disconnected {
+    color: #f38ba8;
+}
+
+#network.disconnected:hover {
+    background: #f38ba8;
+    color: #1d1d27; 
+}
+
+#tray {
+    margin-right: 5px;
+    margin-bottom: 0px;
+    border-color: #cddfa0;
+    border-style: solid;
+    border-width: 0.15rem;
+}
+
+#tray menu{
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-bottom: 0px;
+    
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    transition: none;
+    transition: 0.3s;
+
+    border-radius: 10px;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
+}

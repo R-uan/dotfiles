@@ -1,0 +1,100 @@
+{
+	"layer": "top",
+	"modules-left": ["hyprland/workspaces"],
+	"modules-center": ["cpu","memory","disk"],
+	"modules-right": ["tray","hyprland/language","network","pulseaudio", "clock"],
+	
+	"pulseaudio": {
+		"tooltip": false,
+		"scroll-step": 5,
+		"format": "{icon}  {volume}%",
+		"format-muted": "muted",
+		"on-click":"pactl set-sink-mute @DEFAULT_SINK@ toggle",
+		"format-icons": {
+			"default": ["", "", ""]
+		}
+	},
+
+    "disk": {
+        "interval": 30,
+        "format": "  {percentage_used}%",
+        "path": "/"
+    },
+
+    "privacy": {
+        "icon-spacing": 10,
+        "icon-size": 18,
+        "transition-duration": 250,
+        "tooltip": false,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 20
+            },
+            {
+                "type": "audio-out",
+                "tooltip": true,
+                "tooltip-icon-size": 20
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 20
+            }
+        ]
+    },
+
+
+    "hyprland/language": {
+        "format": "  {short}",
+        "tooltip": false
+    },
+
+    "cpu": {
+        "interval": 15,
+        "format": "  {usage}%",
+        "max-length": 10
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": "  {used}/{total}Gb",
+        "max-length": 20
+    },
+
+    "clock": {
+        "format": "{:%b, %d - %R}",
+        "tooltip": false
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "tooltip": false,
+        "format-icons": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "urgent": "!",
+            "active": "#",
+            "default": "1"
+    },
+
+    "tray": {
+        "icon-size": 25,
+        "spacing": 10
+    }
+
+    },
+    
+    "network": {
+        // "interface": "wlan0",
+        "format-wifi": "󰘊  wifi",
+        "format-ethernet": "  eth",
+        "format-disconnected": "󰶐 disc",
+        "tooltip": false,
+        "max-length": 50
+    }
+}
