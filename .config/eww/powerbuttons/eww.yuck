@@ -13,7 +13,7 @@
     :x "5px"
     :y "5px"
     :width "30px"
-    :height "55px"
+    :height "40px"
   :anchor "top right")
   (shutdown)
 )
@@ -38,7 +38,7 @@
     :x "42px"
     :y "5px"
     :width "30px"
-    :height "55px"
+    :height "40px"
   :anchor "top right")
   (reboot)
 )
@@ -51,14 +51,14 @@
     :x "79px"
     :y "5px"
     :width "30px"
-    :height "55px"
+    :height "40px"
   :anchor "top right")
   (logoff)
 )
 
 (defwidget sleep []
   (box :class "box" :vexpand "false" :hexpand :false
-    (button :class "sleep_btn" :onclick "systemctl suspend" "")
+    (button :class "sleep_btn" :onclick "systemctl suspend" "󰤄")
   )
 )
 
@@ -70,7 +70,7 @@
     :x "115px"
     :y "5px"
     :width "30px"
-    :height "55px"
+    :height "40px"
   :anchor "top right")
   (sleep)
 )

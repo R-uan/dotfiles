@@ -10,7 +10,6 @@ window#waybar {
     transition-duration: .5s;
     background-color: transparent;
     transition-property: background-color;
-    border: 1px solid red;
 }
 
 window#waybar.hidden {

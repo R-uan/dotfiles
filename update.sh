@@ -54,6 +54,13 @@ else
 	echo "Could not find eww folder"
 fi
 
+if [ -d "$USER_HOME/.config/rofi/" ]; then
+	cp -r "$USER_HOME/.config/rofi" ./.config
+	echo "$SUCCESS Rofi updated"
+else
+	echo "Could not find rofi folder"
+fi
+
 # Changes ownership to YOU. Yes, you. ദ്ദി( • ᴗ - ) ✧
 
 chown -R $(whoami):$(whoami) ./.config

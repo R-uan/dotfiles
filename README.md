@@ -15,6 +15,6 @@ Light purple - #b4befe
 
 ### Background colours
 Dark blue - #1d1d27
-
+Lighter dark blue - #282839
 ### Special colours
 Light-ish Red - #f53c3c
