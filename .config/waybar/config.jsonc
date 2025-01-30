@@ -21,31 +21,6 @@
         "path": "/"
     },
 
-    "privacy": {
-        "icon-spacing": 10,
-        "icon-size": 18,
-        "transition-duration": 250,
-        "tooltip": false,
-        "modules": [
-            {
-                "type": "screenshare",
-                "tooltip": true,
-                "tooltip-icon-size": 20
-            },
-            {
-                "type": "audio-out",
-                "tooltip": true,
-                "tooltip-icon-size": 20
-            },
-            {
-                "type": "audio-in",
-                "tooltip": true,
-                "tooltip-icon-size": 20
-            }
-        ]
-    },
-
-
     "hyprland/language": {
         "format": "  {short}",
         "tooltip": false
@@ -80,13 +55,13 @@
             "urgent": "!",
             "active": "#",
             "default": "1"
+        }
+
     },
-
+    
     "tray": {
-        "icon-size": 25,
-        "spacing": 10
-    }
-
+        "icon-size": 18,
+        "spacing": 7
     },
     
     "network": {

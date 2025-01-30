@@ -1,0 +1,76 @@
+
+(defwidget shutdown []
+  (box :class "box" :vexpand "false" :hexpand "false"
+    (button :class "shutdown_btn" :onclick "systemctl poweroff" "⏻")
+  )
+)
+
+(defwindow shutdown
+  :monitor 0
+  :stacking "bg"
+  :windowtype "desktop"
+  :geometry (geometry
+    :x "5px"
+    :y "5px"
+    :width "30px"
+    :height "55px"
+  :anchor "top right")
+  (shutdown)
+)
+
+(defwidget logoff []
+  (box :class "box" :vexpand "false" :hexpand "false"
+    (button :class "logoff_btn" :onclick "hyprctl dispatch exit" "󰍃")
+  )
+)
+
+(defwidget reboot []
+  (box :class "box" :vexpand "false" :hexpand :false
+    (button :class "reboot_btn" :onclick "systemctl reboot" "󰑓")
+  )
+)
+
+(defwindow reboot
+  :monitor 0
+  :stacking "bg"
+  :windowtype "desktop"
+  :geometry (geometry
+    :x "42px"
+    :y "5px"
+    :width "30px"
+    :height "55px"
+  :anchor "top right")
+  (reboot)
+)
+
+(defwindow logoff
+  :monitor 0
+  :stacking "bg"
+  :windowtype "desktop"
+  :geometry (geometry
+    :x "79px"
+    :y "5px"
+    :width "30px"
+    :height "55px"
+  :anchor "top right")
+  (logoff)
+)
+
+(defwidget sleep []
+  (box :class "box" :vexpand "false" :hexpand :false
+    (button :class "sleep_btn" :onclick "systemctl suspend" "")
+  )
+)
+
+(defwindow sleep
+  :monitor 0
+  :stacking "bg"
+  :windowtype "desktop"
+  :geometry (geometry
+    :x "115px"
+    :y "5px"
+    :width "30px"
+    :height "55px"
+  :anchor "top right")
+  (sleep)
+)

@@ -1,6 +1,6 @@
 * {    
     min-height: 0;
-    font-size: 1.07rem;
+    font-size: 1.01rem;
     font-weight: 600;
     font-family: "Jetbrains Mono Nerd Font" ;
 }
@@ -10,6 +10,7 @@ window#waybar {
     transition-duration: .5s;
     background-color: transparent;
     transition-property: background-color;
+    border: 1px solid red;
 }
 
 window#waybar.hidden {
@@ -82,22 +83,24 @@ button:hover {
 }
 
 .modules-left, .modules-center, .modules-right {
-    padding: 2px;
+    padding: 4px;
     border-radius: 0.4rem;
     background: #1d1d27;
-    margin: 5px 5px 1px 5px;
 }
 
 .modules-left {
-    border: 0.15rem solid #ffadad;
+	margin: 5px 0px 0px 5px;
 }
 
 .modules-center {
+padding: 0;
+	margin-top: 5px;
+margin-bottom: 0;
     background: transparent;
 } 
 
 .modules-right {
-    border: 0.15rem solid #b4befe;
+	margin: 5px 5px 0 0;
     color: #b4befe;
 }
 
@@ -105,7 +108,7 @@ label:focus {
     background-color: #000000;
 }
 
-#network, #language, #pulseaudio, #clock, #tray {
+#network, #language, #pulseaudio, #clock {
     margin-right: 5px;
     
     padding-left: 10px;
@@ -142,9 +145,6 @@ label:focus {
 #disk, #cpu, #memory {
     background: #1d1d27;
 
-    border-style: solid;
-    border-width: 0.15rem;
-
     padding-left: 10px;
     padding-right: 10px;
 
@@ -153,11 +153,11 @@ label:focus {
 
     margin-left: 5px;
     margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 #disk {
     color: #cddfa0;
-    border-color: #cddfa0;    
 }
 
 #disk:hover{
@@ -167,7 +167,6 @@ label:focus {
 
 #memory {
     color: #ffadad;
-    border-color: #ffadad;
 }
 
 #memory:hover { 
@@ -177,7 +176,6 @@ label:focus {
 
 #cpu {
     color: #5ee3f2;
-    border-color: #5ee3f2;    
 }
 
 #cpu:hover {
@@ -197,9 +195,8 @@ label:focus {
 #tray {
     margin-right: 5px;
     margin-bottom: 0px;
-    border-color: #cddfa0;
-    border-style: solid;
-    border-width: 0.15rem;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #tray menu{
@@ -207,8 +204,8 @@ label:focus {
     margin-left: 8px;
     margin-bottom: 0px;
     
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
     
     transition: none;
     transition: 0.3s;
@@ -219,4 +216,8 @@ label:focus {
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
     background-color: #eb4d4b;
+}
+
+.middle-module {
+	margin-bottom: 0;
 }

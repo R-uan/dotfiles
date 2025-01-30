@@ -47,6 +47,13 @@ else
 	echo "Could not find neofetch folder"
 fi
 
+if [ -d "$USER_HOME/.config/eww/" ]; then
+	cp -r "$USER_HOME/.config/eww" ./.config
+	echo "$SUCCESS Eww updated"
+else
+	echo "Could not find eww folder"
+fi
+
 # Changes ownership to YOU. Yes, you. ദ്ദി( • ᴗ - ) ✧
 
 chown -R $(whoami):$(whoami) ./.config

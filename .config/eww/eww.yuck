@@ -1,0 +1,75 @@
+(defwidget shutdown []
+  (box :class "shutdown_btn" :vexpand "false" :hexpand "false"
+    "⏻"
+  )
+)
+
+(defwidget logoff []
+  (box :class "logoff_btn" :vexpand "false" :hexpand "false"
+    ""
+  )
+)
+
+(defwidget sleep []
+  (box :class "sleep_btn" :vexpand "false" :hexpand :false
+    "󰒲"
+  )
+)
+
+(defwidget reboot []
+  (box :class "reboot_btn" :vexpand "false" :hexpand :false
+    "󰑓"
+  )
+)
+
+(defwindow logoff
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+    :x "845px"
+    :y "0%"
+    :width "110px"
+    :height "110px"
+  :anchor "center right")
+  (logoff)
+)
+
+(defwindow sleep
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+    :x "725px"
+    :y "0%"
+    :width "110px"
+    :height "110px"
+  :anchor "center right")
+  (sleep)
+)
+
+(defwindow shutdown
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+    :x "725px"
+    :y "0%"
+    :width "110px"
+    :height "110px"
+  :anchor "center left")
+  (shutdown)
+)
+
+(defwindow reboot
+  :monitor 0
+  :stacking "fg"
+  :windowtype "dock"
+  :geometry (geometry
+    :x "845px"
+    :y "0%"
+    :width "110px"
+    :height "110px"
+  :anchor "center left")
+  (reboot)
+)
