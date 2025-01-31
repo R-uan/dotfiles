@@ -17,7 +17,7 @@ window {
     width: 840px;
     border-radius: 6.4px;
     border-color: @background-alt;
-    border-width: 5px;
+    border: 1px;
     padding: 0px 20px 0px 0px;
     background-color: @background;
 }
