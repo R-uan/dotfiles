@@ -46,7 +46,7 @@ error_symbol = "[ 󰄛](lred)"
 vicmd_symbol = "[ 󰄛](peach)"
 
 [directory]
-format = "[  ](bg:dblue fg:text)[$path](bg:dblue fg:text bold)"
+format = "[  ](bg:transparent fg:text)[$path](bg:transparent fg:text bold)"
 style = "bg:none fg:dblue"
 truncation_length = 3
 truncate_to_repo=false
