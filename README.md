@@ -1,20 +1,29 @@
-kitty
-hyprland
-    - waybar
-    - hyprshot
-    - rofi-wayland
+## Apps
+<pre>
+kitty           (terminal)
+  fastfetch     (terminal system info)
+
+hyprland        (windows manager)
+  eww           (custom widgets)
+  swww          (wallpaper manager)
+  waybar        (status bar)
+  hyprshot      (screenshots)
+  rofi-wayland  (app launcher)
+</pre>
 
 ## Colours
 
-### Main colours
+<pre>
+Black         #222831
+Red           #F4A3A3
+Green         #D4E3A8
+Yellow        #E8BC7A
+Blue          #B8E5E7
+Purple        #9582B7
+Cyan          #52D6D3
+White         #FAF0E7
 
-Light blue - #5ee3f2
-Light rose - #ffadad
-Light green - #cddfa0
-Light purple - #b4befe
-
-### Background colours
-Dark blue - #1d1d27
-Lighter dark blue - #282839
-### Special colours
-Light-ish Red - #f53c3c
+Goldish       #E5B566
+Dark Blue     #17121C
+Lightish Red  #F53C3C
+</pre>

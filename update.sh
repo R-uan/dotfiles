@@ -40,11 +40,11 @@ else
 	echo "Could not find starship file"
 fi
 
-if [ -d "$USER_HOME/.config/neofetch/" ]; then
-	cp -r "$USER_HOME/.config/neofetch/" ./.config
-	echo "$SUCCESS Neofetch updated"
+if [ -d "$USER_HOME/.config/fastfetch/" ]; then
+	cp -r "$USER_HOME/.config/fastfetch/" ./.config
+	echo "$SUCCESS Fastfetch updated"
 else
-	echo "Could not find neofetch folder"
+	echo "Could not find fastfetch folder"
 fi
 
 if [ -d "$USER_HOME/.config/eww/" ]; then
