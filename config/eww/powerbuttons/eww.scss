@@ -1,0 +1,52 @@
+.logoff, .sleep, .shutdown, .reboot {
+    border-style: solid;
+    border-radius: 0.4rem;
+    background-color: #1d1d27;
+}
+
+.box {
+    border-radius: .4rem;
+}
+
+.shutdown_btn {
+    color: #ffadad ;
+}
+
+.shutdown_btn:hover {
+    background: #ffadad;
+}
+
+.reboot_btn {
+    color: #5ee3f2;
+}
+
+.reboot_btn:hover {
+    background: #5ee3f2;
+}
+
+.sleep_btn {
+    color: #cddfa0;
+}
+
+.sleep_btn:hover {
+    background: #cddfa0;
+}
+
+.logoff_btn {
+    color: #b4befe;
+}
+
+.logoff_btn:hover {
+    background: #b4befe;
+}
+
+.sleep_btn:hover, .logoff_btn:hover, .reboot_btn:hover, .shutdown_btn:hover {
+    color: #1d1d27;
+}
+
+.sleep_btn, .logoff_btn, .shutdown_btn, .reboot_btn {
+    font-size: 1.7rem;
+    background: transparent;
+    border-width: 0;
+
+}

@@ -1,0 +1,9 @@
+/* Rofi config file */
+configuration {
+    font: "JetBrainsMono Nerd Font 14";
+    show-icons: true;
+    display-window: "Window";
+    display-drun: "Search";
+}
+
+@theme "theme"
