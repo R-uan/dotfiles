@@ -7,3 +7,7 @@ configuration {
 }
 
 @theme "theme"
+
+listview {
+    lines: 6;
+}

@@ -1,7 +1,7 @@
 {
 	"layer": "top",
-	"modules-left": ["hyprland/workspaces"],
-	"modules-center": ["cpu","memory","disk"],
+	"modules-left": ["cpu", "memory", "disk", "custom/nbfc"],
+	"modules-center": ["hyprland/workspaces"],
 	"modules-right": ["tray","hyprland/language","network","pulseaudio", "clock"],
 	
 	"pulseaudio": {
@@ -15,8 +15,14 @@
 		}
 	},
 
+    "custom/nbfc": {
+        "format": "  {}",
+        "exec": "~/.config/waybar/scripts/nbfctemp",
+        "restart-interval": 7
+    },
+
     "disk": {
-        "interval": 30,
+        "interval": 7,
         "format": "  {percentage_used}%",
         "path": "/"
     },
@@ -27,20 +33,21 @@
     },
 
     "cpu": {
-        "interval": 15,
+        "interval": 7,
         "format": "  {usage}%",
         "max-length": 10
     },
 
     "memory": {
-        "interval": 30,
+        "interval": 7,
         "format": "  {used}/{total}Gb",
         "max-length": 20
     },
 
     "clock": {
         "format": "{:%b, %d - %R}",
-        "tooltip": false
+        "tooltip": true,
+        "tooltip-format": "{:%A, %B %d, %Y (%R)}"
     },
 
     "hyprland/workspaces": {
@@ -52,10 +59,10 @@
             "3": "3",
             "4": "4",
             "5": "5",
-	    "6": "6",
+            "6": "6",
             "7": "7",
-	    "8": "8",
-	    "9": "9",
+            "8": "8",
+            "9": "9",
             "urgent": "!",
             "active": "#",
             "default": "1"
@@ -72,7 +79,7 @@
         // "interface": "wlan0",
         "format-wifi": "󰘊  wifi",
         "format-ethernet": "  eth",
-        "format-disconnected": "󰶐 disc",
+        "format-disconnected": "󰶐  disc",
         "tooltip": false,
         "max-length": 50
     }

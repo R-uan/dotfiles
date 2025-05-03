@@ -38,6 +38,7 @@ fi
 
 if [ -f "$USER_HOME/.config/starship.toml" ]; then
 	cp "$USER_HOME/.config/starship.toml" ./config
+  	echo "$SUCCESS Starship updated"
 else
 	echo "Could not find starship file"
 fi
@@ -61,6 +62,28 @@ if [ -d "$USER_HOME/.config/rofi/" ]; then
 	echo "$SUCCESS Rofi updated"
 else
 	echo "Could not find rofi folder"
+fi
+
+if [ -f "$USER_HOME/.zshrc" ]; then
+	cp "$USER_HOME/.zshrc" .
+	echo "$SUCCESS Zshrc updated"
+else
+	echo "Could not find zshrc file"
+fi
+
+if [ -f "/etc/environment" ]; then
+    cp "/etc/environment" ./etc/
+    echo "$SUCCESS Environment updated"
+fi
+
+
+# System applications (Mako)
+
+if [ -d "$USER_HOME/.config/mako" ]; then
+	cp -r "$USER_HOME/.config/mako" ./config
+	echo "$SUCCESS Mako updated"
+else
+	echo "Could not find mako folder"
 fi
 
 # Changes ownership to YOU. Yes, you. ദ്ദി( • ᴗ - ) ✧

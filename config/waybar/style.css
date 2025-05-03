@@ -1,8 +1,8 @@
 * {    
     min-height: 0;
-    font-size: 1.01rem;
-    font-weight: 500;
-    font-family: "Jetbrains Mono Nerd Font" ;
+    font-size: 0.90rem;
+    font-weight: 200;
+    font-family: "JetBrains Mono Nerd Font" ;
 }
 
 
@@ -30,27 +30,34 @@ button {
     border-radius: 0;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
 }
 
 #workspaces {
+    padding: 2px;
     transition: 0.3s;
     background: #17121C; 
     border-radius: 0.4em;
 }
+
 
 #workspaces button {
     margin: 0;
     color: #E5B566;
     transition: 0.3s;
     margin-right: 2px;
-    border-radius: 2px; 
+    border-radius: 4.4px;
+
+    padding-top: 7px;    
+    padding-bottom: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #workspaces button:hover {
     color: #17121C;
+    border-radius: 4.4px;
     background: #E5B566;
 }
 
@@ -76,31 +83,32 @@ button:hover {
 #network,
 #pulseaudio,
 #tray,
-#mode {
+#mode,
+#custom-nbfc {
     padding: 0 5px;
     border-radius: 0.4em;
 }
 
 .modules-left, .modules-center, .modules-right {
-    padding: 4px;
+    padding: 2px;
+    margin-top: 5px;
     border-radius: 0.4rem;
     background: #17121C;
 }
 
 .modules-left {
-	margin: 5px 0px 0px 5px;
+    margin-left: 5px;
 }
 
 .modules-center {
-padding: 0;
-	margin-top: 5px;
-margin-bottom: 0;
-    background: transparent;
+    padding: 0;
+    margin-bottom: 0;
+    background: #17121C;
 } 
 
 .modules-right {
-	margin: 5px 5px 0 0;
     color: #E5B566;
+    margin-right: 5px;
 }
 
 label:focus {
@@ -109,7 +117,8 @@ label:focus {
 
 #network, #language, #pulseaudio, #clock {
     margin-right: 5px;
-    
+    padding-top: 7px;    
+    padding-bottom: 7px;
     padding-left: 10px;
     padding-right: 10px;
     
@@ -141,19 +150,33 @@ label:focus {
     margin-bottom: 0px;
 }
 
-#disk, #cpu, #memory {
-    background: #17121C;
+#disk, #cpu, #memory, #custom-nbfc {
+    background: transparent;
 
+    padding-top: 7px;    
+    padding-bottom: 7px;
     padding-left: 10px;
     padding-right: 10px;
-
+    
     transition: none;
     transition: 0.3s;
 
-    margin-left: 5px;
+    margin-left: 0px;
     margin-bottom: 0px;
+    margin-right: 2px;
     margin-top: 0px;
 }
+
+#custom-nbfc {
+    color: #e5b566;
+    margin-right: 0;
+}
+
+#custom-nbfc:hover {
+    background: #e5b566;
+    color: #17121c;
+}
+
 
 #disk {
     color: #cddfa0;
@@ -215,8 +238,4 @@ label:focus {
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
     background-color: #eb4d4b;
-}
-
-.middle-module {
-	margin-bottom: 0;
 }

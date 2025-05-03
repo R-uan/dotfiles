@@ -1,7 +1,7 @@
 .logoff, .sleep, .shutdown, .reboot {
     border-style: solid;
     border-radius: 0.4rem;
-    background-color: #1d1d27;
+    background-color: #17121C;
 }
 
 .box {
@@ -41,7 +41,7 @@
 }
 
 .sleep_btn:hover, .logoff_btn:hover, .reboot_btn:hover, .shutdown_btn:hover {
-    color: #1d1d27;
+    color: #17121C;
 }
 
 .sleep_btn, .logoff_btn, .shutdown_btn, .reboot_btn {

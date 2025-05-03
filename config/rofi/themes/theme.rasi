@@ -14,7 +14,7 @@ element-text, element-icon, mode-switcher {
 window {
     border: 3px;
     font: @font;
-    width: 840px;
+    width: 800px;
     border-radius: 6.4px;
     border-color: @background-alt;
     border: 1px;
@@ -81,7 +81,7 @@ element {
     border-radius: 0px;
     font: @font;
     background-color: @background;
-    text-color: @selected;
+    text-color: @background-alt;
 }
 
 element-icon {
@@ -94,5 +94,5 @@ element selected {
     font: @font;
     border-radius: 6.4px;
     text-color: @background;
-    background-color: @selected;
+    background-color: @background-alt;
 }
