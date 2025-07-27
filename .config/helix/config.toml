@@ -1,0 +1,19 @@
+theme = "base16_transparent"
+
+[editor]
+
+[editor.cursor-shape]
+insert = "bar"
+
+[editor.auto-save]
+focus-lost = true
+after-delay.enable = true
+after-delay.timeout = 30000
+
+[editor.indent-guides]
+render = true
+
+[keys.insert]
+"C-space" = "completion"
+"C-ret" = ["normal_mode", "open_below"]
+

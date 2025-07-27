@@ -1,0 +1,47 @@
+# terminal
+zsh
+kitty
+fastfetch
+bluetui
+starship
+nbfc-linux
+downgrade
+
+# desktop environment
+hyprland
+waybar
+rofi-wayland
+swww
+hyprshot
+mako
+
+# development
+java-openjdk
+nodejs-lts-jod
+dotnet-sdk-8.0
+aspnet-runtime-8.0
+npm
+python-pip
+rustup
+git
+gdb
+cmake
+ruff
+python-black
+omnisharp-roslyn
+
+# development environments
+helix
+clion/clion-jre
+pycharm-community
+webstorm/webstorm-jre
+visual-studio-code
+
+# software
+discord
+vlc
+steam
+firefox
+nautilus
+gimp
+obsidian
