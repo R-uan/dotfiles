@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [ "$EUID" -ne 0 ]; then
 	echo "Please run as root"
 	exit 1
@@ -34,6 +36,13 @@ else
 	echo "Could not find rofi folder"
 fi
 
+if [ -d "$USER_HOME/.config/quickshell" ]; then
+	cp -r "$USER_HOME/.config/quickshell" ./.config
+	echo "$SUCCESS Quickshell updated"
+else
+	echo "Could not find quickshell folder"
+fi
+	
 # terminal dotfiles (For terminal stuff like kitty, starship, zsh)
 
 if [ -d "$USER_HOME/.config/kitty" ]; then
