@@ -1,7 +1,9 @@
 import QtQuick
+import ".."
 
 Text {
-    color: "#F5EBFA"
-    font.family: "Maple Mono"
-    font.pixelSize: 13    
+    color: Theme.foreground
+    font.family: Theme.fontFamily
+    font.pixelSize: Theme.fontSize
+    font.weight: Theme.fontWeight
 }

@@ -4,7 +4,6 @@ import QtQuick
 import Quickshell.Io
 import QtQuick.Layouts
 import QtQuick.Controls
-
 import "./modules/"
 
 Scope {
@@ -17,41 +16,6 @@ Scope {
             color: "transparent"
             implicitHeight: 40
 
-            Rectangle {
-                radius: 6
-                color: "#0F0514"
-                anchors.fill: parent
-
-                RowLayout {
-                    width: parent.width
-                    height: parent.height
-
-                    SysResources {
-                        Layout.preferredHeight: parent.height - 4
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
-                        Layout.margins: 2
-                    }
-
-                    // Left Container
-                    RowLayout {
-                        Layout.preferredHeight: parent.height
-                        Layout.alignment: Qt.AlignRight
-
-                        Volume {
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            Layout.preferredHeight: parent.height - 4
-                            Layout.margins: 2
-                        }
-
-                        DateTime {
-                            Layout.preferredHeight: parent.height - 4
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            Layout.margins: 2
-                        }
-                    }
-                }
-            }
-
             anchors {
                 top: true
                 left: true
@@ -59,9 +23,88 @@ Scope {
             }
 
             margins {
-                left: 5
-                right: 5
+                left: 3
+                right: 3
                 top: 5
+            }
+
+            Rectangle {
+                radius: 6
+                color: "transparent"
+                anchors.fill: parent
+
+                Item {
+                    width: parent.width
+                    anchors.fill: parent
+                    height: parent.height
+
+                    // LEFT SEGMENT
+                    RowLayout {
+                        id: leftSegment
+                        anchors.margins: 2
+                        anchors.left: parent.left
+                        height: parent.height - 4
+                        width: parent.width / 4.4
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Rectangle {
+                            z: -1
+                            radius: 4
+                            color: Theme.dark
+                            anchors.fill: leftSegment
+                        }
+
+                        Volume {
+                            Layout.margins: 2
+                            Layout.preferredHeight: parent.height - 4
+                            Layout.alignment: Qt.AlignLeft
+                        }
+                    }
+
+                    // CENTER SEGMENT
+                    Item {
+                        height: parent.height
+                        width: parent.width / 2
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        DateTime {
+                            anchors.margins: 2
+                            height: parent.height
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
+
+                        SysResources {
+                            anchors.margins: 2
+                            height: parent.height
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+                    }
+
+                    // RIGHT SEGMENT
+                    RowLayout {
+                        id: rightSegment
+                        anchors.margins: 2
+                        height: parent.height - 4
+                        width: parent.width / 4.4
+                        anchors.right: parent.right
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Rectangle {
+                            radius: 4
+                            color: Theme.dark
+                            anchors.fill: rightSegment
+                        }
+
+                        Volume {
+                            Layout.margins: 2
+                            Layout.preferredHeight: parent.height - 4
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                        }
+                    }
+                }
             }
         }
     }

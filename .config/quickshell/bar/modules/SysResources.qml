@@ -8,25 +8,16 @@ import "../services"
 
 RowLayout {
     implicitHeight: parent.height
-    spacing: 7
-
-    CommonHover {
+    spacing: 2
+    SysResourceItem {
         dynText: SysResourcesManager.cpuUsage
     }
 
-    CommonText {
-        text: "♥"
-    }
-
-    CommonHover {
+    SysResourceItem {
         dynText: SysResourcesManager.ramUsage
     }
 
-    CommonText {
-        text: "♥"
-    }
-
-    CommonHover {
+    SysResourceItem {
         dynText: SysResourcesManager.sysTemp
     }
 }
