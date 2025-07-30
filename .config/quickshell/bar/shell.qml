@@ -14,7 +14,7 @@ Scope {
             required property var modelData
             screen: modelData
             color: "transparent"
-            implicitHeight: 40
+            implicitHeight: 31
 
             anchors {
                 top: true
@@ -53,12 +53,6 @@ Scope {
                             color: Theme.dark
                             anchors.fill: leftSegment
                         }
-
-                        Volume {
-                            Layout.margins: 2
-                            Layout.preferredHeight: parent.height - 4
-                            Layout.alignment: Qt.AlignLeft
-                        }
                     }
 
                     // CENTER SEGMENT
@@ -86,6 +80,7 @@ Scope {
                     // RIGHT SEGMENT
                     RowLayout {
                         id: rightSegment
+                        spacing: 0
                         anchors.margins: 2
                         height: parent.height - 4
                         width: parent.width / 4.4
@@ -98,10 +93,31 @@ Scope {
                             anchors.fill: rightSegment
                         }
 
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        NetworkConn {
+                            Layout.margins: 2
+                            Layout.preferredHeight: parent.height - 4
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                        }
+
                         Volume {
                             Layout.margins: 2
                             Layout.preferredHeight: parent.height - 4
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                        }
+
+                        MiniMenu {
+                            id: miniMenu
+                            Layout.preferredWidth: miniMenu.width
+                            Layout.margins: 4
+                            Layout.preferredHeight: parent.height - 8
                         }
                     }
                 }

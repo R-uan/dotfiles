@@ -24,11 +24,9 @@ Singleton {
                 let volume = parseInt(text.trim());
                 root.volumeValue = volume
 
-                if (volume == NaN) root.volumeDisplay = `  ???`
-                if (volume <= 0) root.volumeDisplay = `  muted`
-                else if (volume <= 33) root.volumeDisplay = ` ${volume}%`;
-                else if (volume <= 66) root.volumeDisplay = ` ${volume}%`;
-                else if (volume <= 100) root.volumeDisplay = `  ${volume}%`;
+                if (volume == NaN) root.volumeDisplay = `󰟎  ???`
+                if (volume <= 0) root.volumeDisplay = `󰟎  muted`
+                else root.volumeDisplay = `  ${volume}%`;
             }
         }
     }

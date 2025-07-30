@@ -11,6 +11,6 @@ Singleton {
     property string complementary: "#8AC22C"
 
     property string fontFamily: "Maple Mono"
-    property int fontSize: 13
-    property int fontWeight: 300
+    property int fontSize: 12
+    property int fontWeight: 200
 }

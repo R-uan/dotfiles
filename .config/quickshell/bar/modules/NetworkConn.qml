@@ -9,22 +9,13 @@ import ".."
 
 Rectangle {
     radius: 4
-    color: mouseArea.containsMouse ? Theme.accent : "transparent"
-
-    Layout.alignment: Qt.AlignCenter
-    Layout.preferredHeight: parent.height
     Layout.preferredWidth: textItem.width + 16
+    color: mouseArea.containsMouse ? Theme.accent : "transparent"
 
     MouseArea {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        onWheel: event => {
-            if (event.angleDelta.y > 0)
-                VolumeManager.setVolume("+5");
-            else
-                VolumeManager.setVolume("-5");
-        }
     }
 
     Behavior on color {
@@ -36,6 +27,6 @@ Rectangle {
     CommonText {
         id: textItem
         anchors.centerIn: parent
-        text: VolumeManager.volumeDisplay
+        text: NetworkConnManager.connection
     }
 }
