@@ -21,6 +21,15 @@ Core:
 - Foreground: #F5EBFA
 - Complementary: #8AC22C
 
+Accent	#9A5EE0	
+Accent Dark	#6E3FCF	
+Additional Accent #C48FB3
+Additional Accent Dar #A56C8A
+Dark	#0F0514
+Lighter Dark	#312936	
+Foreground	#EDE6F2	
+Complementary	#7CA53D	
+
 Additional:
 - Warning: #E9B082
 - Danger: #E982A4
