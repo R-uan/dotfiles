@@ -9,12 +9,14 @@ import QtQuick.Controls
 import Quickshell.Services.SystemTray
 
 PanelWindow {
-    id: bar
+    id: root
     visible: true
-    required property var modelData
     screen: modelData
-    color: "transparent"
     implicitHeight: 31
+    color: "transparent"
+    objectName: "Status Bar Window"
+
+    required property var modelData
 
     anchors {
         top: true
@@ -85,7 +87,7 @@ PanelWindow {
             // RIGHT SEGMENT
             RowLayout {
                 id: rightSegment
-                spacing: 16
+                spacing: 12
                 anchors.margins: 2
                 height: parent.height - 4
                 width: parent.width / 4.4
@@ -103,13 +105,19 @@ PanelWindow {
                     Layout.fillWidth: true
                 }
 
-                Tray {}
+                Tray {
+                    barWindow: root
+                }
 
                 RowLayout {
                     id: rightContainer0
                     spacing: 0
                     Layout.preferredHeight: rightSegment.height
 
+                    Bluetooth {
+                        Layout.preferredHeight: rightContainer0.height - 2
+                        Layout.margins: 1
+                    }
                     
                     NetworkConn {
                         Layout.margins: 1

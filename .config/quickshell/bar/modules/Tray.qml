@@ -1,4 +1,6 @@
+pragma ComponentBehavior: Bound
 import QtQuick
+import Quickshell
 import "../components"
 import Quickshell.Services.SystemTray
 
@@ -10,11 +12,13 @@ Item {
     implicitHeight: layout.implicitHeight
     
     readonly property Repeater items: items
+    required property QsWindow barWindow
 
     Row {
         id: layout
-        anchors.horizontalCenter: root.horizontalCenter
         spacing: 2
+        layoutDirection: Qt.RightToLeft
+        anchors.right: root.right
 
         add: Transition {
             NumberAnimation {
@@ -42,9 +46,15 @@ Item {
             }
         }
 
+        Component.onCompleted: {
+            console.log(root.mainWindow)
+        }
+        
         Repeater {
             id: items
-            delegate: TrayItem {}
+            delegate: TrayItem {
+                window: barWindow
+            }
             model: SystemTray.items
         }
     }
