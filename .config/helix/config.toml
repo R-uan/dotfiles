@@ -1,4 +1,4 @@
-theme = "base16_transparent"
+theme = "bunny_dark"
 
 [editor]
 line-number = "relative"
@@ -18,3 +18,10 @@ render = true
 "C-space" = "completion"
 "C-ret" = ["normal_mode", "open_below"]
 
+[keys.normal]
+"A-j" = ["goto_line_end","extend_line_below", "delete_selection", "move_line_up", "paste_before"]
+"A-k" = ["goto_line_end","extend_line_below", "delete_selection", "paste_after"]
+
+[keys.select]
+"A-j" = ["goto_line_end","extend_line_below",  "delete_selection", "move_line_up", "paste_before", "select_mode"]
+"A-k" = ["goto_line_end","extend_line_below",  "delete_selection", "paste_after", "select_mode" ]

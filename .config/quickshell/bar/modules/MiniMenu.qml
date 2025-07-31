@@ -10,19 +10,16 @@ import ".."
 Item {
     id: root
     width: row.width
-
+   
     RowLayout {
         id: row
         spacing: 4
         height: root.height
 
-        Item {
-            Layout.fillWidth: true
-        }
-
         MenuButton {
             icon: ""
             size: 13
+            commands: ["kitty", "--detach"]
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.preferredHeight: parent.height
         }

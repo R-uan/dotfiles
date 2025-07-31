@@ -8,10 +8,8 @@ import ".."
 Rectangle {
     property string dynText
 
-    opacity: 1
-    border.width: 1
+    opacity: Theme.backgroundOpacity
     color: hoverHandler.hovered ? Theme.accent : Theme.dark
-    border.color: hoverHandler.hovered ? Theme.dark : Theme.darkLight
 
     topLeftRadius: 4
     topRightRadius: 30

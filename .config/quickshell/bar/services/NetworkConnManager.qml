@@ -19,11 +19,11 @@ Singleton {
                     if (line.startsWith("TYPE=")) {
                         let type = line.slice(5);
                         if (type == "disconnected")
-                            root.connection = "󰶐  disc";
+                            root.connection = "󰶐  dc";
                         if (type == "ethernet")
-                            root.connection = "  ethe";
+                            root.connection = "  et";
                         if (type == "wifi")
-                            root.connection = "  wifi";
+                            root.connection = "  wf";
                     }
 
                     if (line.startsWith("NAME="))

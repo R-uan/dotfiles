@@ -1,13 +1,33 @@
 import QtQuick
+import QtQuick.Controls
+import Quickshell.Io
 import "../components"
 import ".."
 
 Item {
     id: root
+
     property string icon
     property int size
+    property var commands
+    
     width: butText.width + 5
     height: butText.height + 10
+
+    MouseArea {
+        anchors.fill: root
+        onClicked: {
+            if (proc.running) return;
+            proc.running = true
+            
+        }
+    }
+
+    Process {
+        id: proc
+        command: root.commands
+        running: false        
+    }
 
     CommonText {
         id: butText
@@ -15,6 +35,6 @@ Item {
         anchors.horizontalCenter: root.horizontalCenter
         text: root.icon
         font.pixelSize: root.size
-        color: Theme.accent
+        color: Theme.accent2
     }
 }

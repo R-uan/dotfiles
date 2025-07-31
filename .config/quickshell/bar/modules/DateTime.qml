@@ -15,13 +15,12 @@ RowLayout {
         property string dynText
 
         radius: 4
-        opacity: 1
         border.width: 1
-        border.color: mouseArea.containsMouse ? Theme.dark : Theme.darkLight
-
+        opacity: Theme.backgroundOpacity
         Layout.preferredHeight: parent.height
         Layout.preferredWidth: textItem.width + 24
         color: mouseArea.containsMouse ? Theme.accent : Theme.dark
+        border.color: mouseArea.containsMouse ? Theme.dark : Theme.darkLight
 
         MouseArea {
             id: mouseArea

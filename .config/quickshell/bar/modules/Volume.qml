@@ -13,7 +13,7 @@ Rectangle {
 
     Layout.alignment: Qt.AlignCenter
     Layout.preferredHeight: parent.height
-    Layout.preferredWidth: textItem.width + 16
+    Layout.preferredWidth: textItem.width + 10
 
     MouseArea {
         id: mouseArea

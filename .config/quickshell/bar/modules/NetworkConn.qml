@@ -9,7 +9,7 @@ import ".."
 
 Rectangle {
     radius: 4
-    Layout.preferredWidth: textItem.width + 16
+    Layout.preferredWidth: textItem.width + 10
     color: mouseArea.containsMouse ? Theme.accent : "transparent"
 
     MouseArea {

@@ -1,11 +1,5 @@
-## ░█▀▀░▀█▀░█▀█░█▀▄░█▀▀░█░█░▀█▀░█▀█
-## ░▀▀█░░█░░█▀█░█▀▄░▀▀█░█▀█░░█░░█▀▀
-## ░▀▀▀░░▀░░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░░
+palette = "Bunny"
 
-# Sets user-defined palette
-palette = "rw1c"
-
-# Setups
 format = """
 $directory\ 
 $character\
@@ -15,7 +9,7 @@ $git_branch\
 """
 add_newline = false
 
-# Other languages configurations:
+# Language modules disabled
 c.disabled = true
 cmake.disabled = true
 haskell.disabled = true
@@ -31,34 +25,32 @@ golang.disabled = true
 
 [username]
 show_always = true
-style_user = "fg:purple bold"
-style_root = "fg:purple bold"
+style_user = "fg:accent bold"
+style_root = "fg:accent bold"
 format = '[$user]($style)'
 disabled = false
 
 [conda]
 format = ' [$symbol$environment](dimmed green) '
 
-# Prompt symbols 
 [character]
-success_symbol = "[ 󰄛](green bold)"
-error_symbol = "[ 󰄛](lred)"
-vicmd_symbol = "[ 󰄛](peach)"
+success_symbol = "[ 🐇](green bold)"
+error_symbol = "[ 🐇](rose)"
+vicmd_symbol = "[ 🐇](lavender)"
 
 [directory]
-format = "[  ](bg:transparent fg:purple)[$path](bg:transparent fg:purple bold)"
-style = "bg:none fg:dblue"
+format = "[  ](fg:accent)[$path](fg:accent bold)"
+style = "fg:muted_dark"
 truncation_length = 3
 truncate_to_repo = false
 
 [git_branch]
-format = "[[ ](fg:purple bold)$branch](fg:purple bold)"
-style = "bg:none fg:base"
+format = "[[ ](fg:accent bold)$branch](fg:accent bold)"
+style = "fg:base"
 
 [git_status]
-# $all status$ahead_behind
-format = "[$all_status$ahead_behind](bg:base fg:purple) "
-style = "bg:none fg:base"
+format = "[$all_status$ahead_behind](fg:accent_dark) "
+style = "fg:base"
 conflicted = "="
 ahead = "⇡${count}"
 behind = "⇣${count}"
@@ -71,29 +63,21 @@ staged = "+${count}"
 renamed = "»${count}"
 deleted = "${count}"
 
-[palettes.rw1c]
-black = "#222831"
-red = "#F4A3A3"
-green = "#D4E3A8"
-yellow = "#E8BC7A"
-blue = "#B8E5E7"
-purple = "#9582B7"
-cyan = "#52D6D3"
-white = "#FAF0E7"
+[palettes.Bunny]
+black = "#0F0514"
+base = "#1D1620"
+mantle = "#18121B"
+crust = "#100912"
 
-goldish = "#E5B566"
-dblue = "#17121C"
-lred = "#F53C3C"
-
-text = "#F4A3A3"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1d1d27"
-mantle = "#181825"
-crust = "#11111b"
+accent = "#9A5EE0"
+accent_dark = "#6E3FCF"
+rose = "#D46A8C"
+lavender = "#B69CF4"
+muted_blue = "#6B85C1"
+green = "#7CA53D"
+cyan = "#6BB9A7"
+grey = "#5A5162"
+fg = "#EDE6F2"
+muted_dark = "#312936"
+muted_dark2 = "#22182E"
+complementary = "#7CA53D"
