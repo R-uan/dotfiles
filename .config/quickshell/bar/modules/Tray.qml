@@ -45,11 +45,7 @@ Item {
                 easing.type: Easing.BezierSpline
             }
         }
-
-        Component.onCompleted: {
-            console.log(root.mainWindow)
-        }
-        
+       
         Repeater {
             id: items
             delegate: TrayItem {

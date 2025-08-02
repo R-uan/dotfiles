@@ -8,7 +8,7 @@ import ".."
 
 Item {
     id: root
-    width: modelData.active || hover.containsMouse ? 50 : ws.height
+    width: modelData.active || modelData.urgent || hover.containsMouse ? 50 : ws.height
     height: ws.height + 1
 
     required property int dHeight
@@ -16,20 +16,18 @@ Item {
 
     Behavior on width {
         NumberAnimation {
-            duration: 200
+            duration: 100
             easing.type: Easing.InOutQuad
         }
     }
 
-
-
     Loader {
         anchors.fill: root
-        active: root.modelData.active === true || hover.containsMouse === true
+        active: root.modelData.active === true || hover.containsMouse === true || root.modelData.urgent === true
         sourceComponent: Rectangle {
             radius: 16
             anchors.fill: parent
-            color: hover.containsMouse ? Theme.accent : Theme.complementary
+            color: hover.containsMouse ? Theme.accent : root.modelData.urgent ? Theme.accent2 : Theme.complementary
         }
     }
     
@@ -37,12 +35,18 @@ Item {
         id: hover
         hoverEnabled: true
         anchors.fill: root
+
+        onClicked: (event) => {
+            if (event.button === Qt.LeftButton) {
+                modelData.activate()
+            }
+        }
     }
 
     CommonText {
         id: ws
-        color: modelData.active || hover.containsMouse ? Theme.dark : Theme.foreground
-        text: modelData.active ? "󱩡" : modelData.id
+        color: root.modelData.active || hover.containsMouse || root.modelData.urgent ? Theme.dark : Theme.foreground
+        text: root.modelData.active ? "󱩡" : root.modelData.id
         font.weight: 400
         anchors.horizontalCenter: root.horizontalCenter
         anchors.verticalCenter: root.verticalCenter

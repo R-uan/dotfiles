@@ -25,8 +25,8 @@ Item {
 
     Process {
         id: proc
-        command: root.commands
         running: false        
+        command: root.commands
     }
 
     CommonText {

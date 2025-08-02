@@ -20,23 +20,25 @@ Item {
             icon: ""
             size: 13
             commands: ["kitty", "--detach"]
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.preferredHeight: parent.height
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
 
         MenuButton {
             icon: ""
             size: 13
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+            commands: ["kitty", "--detach"]
             Layout.preferredHeight: parent.height
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
 
         MenuButton {
             icon: ""
             size: 13
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-            Layout.preferredHeight: parent.height
             Layout.rightMargin: 4
+            commands: ["kitty", "--detach"]
+            Layout.preferredHeight: parent.height
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
     }
 }

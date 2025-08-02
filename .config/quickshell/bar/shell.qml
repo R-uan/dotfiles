@@ -11,8 +11,7 @@ import Quickshell.Services.SystemTray
 PanelWindow {
     id: root
     visible: true
-    screen: modelData
-    implicitHeight: 31
+    implicitHeight: 35
     color: "transparent"
     objectName: "Status Bar Window"
 
@@ -41,24 +40,28 @@ PanelWindow {
             height: parent.height
 
             // LEFT SEGMENT
-            RowLayout {
-                id: leftSegment
-                anchors.margins: 2
-                anchors.left: parent.left
+            Item {
+                id: leftSegmentWrapper
                 height: parent.height - 4
                 width: parent.width / 4.4
-                anchors.verticalCenter: parent.verticalCenter
-
+                
                 Rectangle {
                     radius: 4
                     color: Theme.dark
-                    anchors.fill: leftSegment
+                    anchors.fill: parent
                     opacity: Theme.backgroundOpacity
                 }
+                
+                RowLayout {
+                    id: leftSegment
+                    anchors.margins: 2
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
 
-                Workspaces {
-                    Layout.rightMargin: 2
-                    Layout.preferredHeight: parent.height - 4
+                    Workspaces {
+                        Layout.leftMargin: 2
+                        Layout.preferredHeight: parent.height - 4
+                    }
                 }
             }
 
@@ -69,77 +72,86 @@ PanelWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
 
+                SysResources {
+                    anchors.margins: 2
+                    height: parent.height - 4 
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.horizontalCenterOffset: -310 
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
                 DateTime {
                     anchors.margins: 2
-                    height: parent.height
+                    height: parent.height - 4
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
+            }
 
-                SysResources {
+            Item {
+                id: rightSegmentWrapper    
+                width: parent.width / 4.4
+                height: parent.height - 4
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                
+                Rectangle {
+                    radius: 4
+                    color: Theme.dark
+                    anchors.fill: parent
+                    opacity: Theme.backgroundOpacity
+                }
+
+                
+                RowLayout {
+                    id: rightSegment
+                    spacing: 12
                     anchors.margins: 2
-                    height: parent.height
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.fill: parent
+                
+                    Item {
+                        Layout.fillWidth: true
+                    }
+
+                    Tray {
+                        barWindow: root
+                    }
+
+                    RowLayout {
+                        id: rightContainer0
+                        spacing: 0
+                        Layout.preferredHeight: rightSegment.height
+
+                        Bluetooth {
+                            barWindow: root
+                            Layout.margins: 1
+                            Layout.preferredHeight: rightContainer0.height - 2
+                        }
+                    
+                        NetworkConn {
+                            Layout.margins: 1
+                            Layout.preferredHeight: parent.height - 2
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                        }
+
+                        Volume {
+                            Layout.margins: 1
+                            Layout.preferredHeight: parent.height - 2
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                        }
+                    }
+
+
+                    MiniMenu {
+                        id: miniMenu
+                        Layout.preferredWidth: miniMenu.width
+                        Layout.rightMargin: 4
+                        Layout.preferredHeight: parent.height - 8
+                    }
                 }
             }
 
             // RIGHT SEGMENT
-            RowLayout {
-                id: rightSegment
-                spacing: 12
-                anchors.margins: 2
-                height: parent.height - 4
-                width: parent.width / 4.4
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-
-                Rectangle {
-                    radius: 4
-                    color: Theme.dark
-                    opacity: Theme.backgroundOpacity
-                    anchors.fill: rightSegment
-                }
-                
-                Item {
-                    Layout.fillWidth: true
-                }
-
-                Tray {
-                    barWindow: root
-                }
-
-                RowLayout {
-                    id: rightContainer0
-                    spacing: 0
-                    Layout.preferredHeight: rightSegment.height
-
-                    Bluetooth {
-                        Layout.preferredHeight: rightContainer0.height - 2
-                        Layout.margins: 1
-                    }
-                    
-                    NetworkConn {
-                        Layout.margins: 1
-                        Layout.preferredHeight: parent.height - 2
-                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    }
-
-                    Volume {
-                        Layout.margins: 1
-                        Layout.preferredHeight: parent.height - 2
-                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    }
-                }
-
-
-                MiniMenu {
-                    id: miniMenu
-                    Layout.preferredWidth: miniMenu.width
-                    Layout.rightMargin: 4
-                    Layout.preferredHeight: parent.height - 8
-                }
-            }
         }
     }
 }

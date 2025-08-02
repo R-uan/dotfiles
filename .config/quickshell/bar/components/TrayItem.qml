@@ -19,16 +19,17 @@ MouseArea {
     onClicked: event => {
         if (event.button === Qt.LeftButton) modelData.activate();
         else {
-            const pos = root.mapToItem(window.contentItem, 0, root.height + 5);
-            const offsetX = pos.x + (root.width / 2) - (popup.implicitWidth / 2);
-            modelData.display(popup, offsetX, pos.y);
+            if (modelData.hasMenu) {
+                const pos = root.mapToItem(window.contentItem, 0, root.height + 5);
+                const offsetX = pos.x + (root.width / 2) - (popup.implicitWidth / 2);
+                modelData.display(popup, pos.x, pos.y);
+            }
         }
     }
 
     PopupWindow {
         id: popup
         anchor.window: root.window
-        color: "red"
     }
 
     IconImage {

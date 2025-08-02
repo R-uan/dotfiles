@@ -18,7 +18,7 @@ Core:
 - Accent Dark	#6E3FCF	
 - Additional Accent #C48FB3
 - Additional Accent Dar #A56C8A
-- Dark	#0F0514
+- Dark	#17131A
 - Lighter Dark	#312936	
 - Foreground	#EDE6F2	
 - Complementary	#7CA53D	
