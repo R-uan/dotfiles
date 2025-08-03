@@ -24,8 +24,8 @@ PanelWindow {
     }
 
     margins {
-        left: 3
-        right: 3
+        left: 5
+        right: 5
         top: 5
     }
 
@@ -51,10 +51,10 @@ PanelWindow {
                     anchors.fill: parent
                     opacity: Theme.backgroundOpacity
                 }
-                
+                                
                 RowLayout {
                     id: leftSegment
-                    anchors.margins: 2
+                    anchors.leftMargin: 5
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -144,6 +144,7 @@ PanelWindow {
 
                     MiniMenu {
                         id: miniMenu
+                        rootWindow: root
                         Layout.preferredWidth: miniMenu.width
                         Layout.rightMargin: 4
                         Layout.preferredHeight: parent.height - 8

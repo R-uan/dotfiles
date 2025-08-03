@@ -9,24 +9,14 @@ Item {
 
     property string icon
     property int size
-    property var commands
+    property var onClick
     
     width: butText.width + 5
     height: butText.height + 10
 
     MouseArea {
+        id: mouse
         anchors.fill: root
-        onClicked: {
-            if (proc.running) return;
-            proc.running = true
-            
-        }
-    }
-
-    Process {
-        id: proc
-        running: false        
-        command: root.commands
     }
 
     CommonText {

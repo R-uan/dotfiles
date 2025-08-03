@@ -10,7 +10,8 @@ import ".."
 Item {
     id: root
     width: row.width
-   
+    required property QsWindow rootWindow
+       
     RowLayout {
         id: row
         spacing: 4
@@ -19,15 +20,12 @@ Item {
         MenuButton {
             icon: ""
             size: 13
-            commands: ["kitty", "--detach"]
             Layout.preferredHeight: parent.height
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
 
-        MenuButton {
-            icon: ""
-            size: 13
-            commands: ["kitty", "--detach"]
+        WallpaperSelector {
+            rootWindow: root.rootWindow
             Layout.preferredHeight: parent.height
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }
@@ -36,7 +34,6 @@ Item {
             icon: ""
             size: 13
             Layout.rightMargin: 4
-            commands: ["kitty", "--detach"]
             Layout.preferredHeight: parent.height
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }

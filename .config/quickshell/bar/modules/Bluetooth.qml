@@ -60,6 +60,8 @@ MouseArea {
             color: Theme.dark  
             width: parent.width
             height: parent.height
+            border.color: Theme.darkLight
+            border.width: 1
         }
 
         ColumnLayout {
@@ -74,7 +76,7 @@ MouseArea {
                 Rectangle {
                     topRightRadius: 6
                     topLeftRadius: 6
-                    color: Theme.accentDark
+                    color: "transparent"
                     width: parent.width
                     height: parent.height
                 }
@@ -84,17 +86,19 @@ MouseArea {
                     width: parent.width
                     
                     CommonText {
-                        Layout.margins: 4
-                        text: "paired devices"
+                        Layout.margins: 8
+                        text: "Bluetooth Devices"
                     }
 
                     Item { Layout.fillWidth: true }
                     
                     MouseArea {
-                        Layout.margins: 2
-                        width: xdx.width + 6
-                        height: xdx.height + 6
-
+                        id: area
+                        Layout.margins: 5
+                        Layout.preferredWidth: xdx.width + 10
+                        Layout.preferredHeight: xdx.height + 6
+                        hoverEnabled: true
+                        
                         onClicked: event => {
                             if (Bluetooth.defaultAdapter.discovering) Bluetooth.defaultAdapter.discovering = false
                             else Bluetooth.defaultAdapter.discovering = true
@@ -103,22 +107,22 @@ MouseArea {
                         Rectangle {
                             radius: 2
                             anchors.fill: parent
-                            color: Theme.accent
+                            color: area.containsMouse ? Theme.accentDark : Theme.accent
                         }
                         
                         CommonText {
                             id: xdx
                             anchors.centerIn: parent
-                            text: { Bluetooth.defaultAdapter?.discovering ? "󰘤" : "󱉶" }
+                            text: { Bluetooth.defaultAdapter?.discovering ? "Stop Scan" : "Scan Devices" }
                         }
                     }
                 }
             }
-        
+
             ColumnLayout {
                 spacing: 0
                 id: devices
-
+                Layout.margins: 5
                 Repeater {
                     model: Bluetooth.defaultAdapter.devices
                     delegate: BluetoothMenuItem {
