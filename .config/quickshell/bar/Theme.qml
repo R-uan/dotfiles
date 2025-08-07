@@ -17,5 +17,5 @@ Singleton {
     property int fontWeight: 200
 
     property real backgroundOpacity: 1
-    property string borderColor: foreground
+    property string borderColor: darkLight
 }

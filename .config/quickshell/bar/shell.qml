@@ -33,7 +33,9 @@ PanelWindow {
         radius: 2
         color: Theme.dark
         anchors.fill: parent
-
+        border.color: "#312936"
+        opacity: Theme.backgroundOpacity
+        
         Item {
             width: parent.width
             anchors.fill: parent

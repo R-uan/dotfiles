@@ -13,15 +13,20 @@
 ## Colour Palette
 
 Core:
-- Accent	#9A5EE0	
-- Accent Dark	#6E3FCF	
-- Additional Accent #C48FB3
-- Additional Accent Dar #A56C8A
-- Dark	#17131A
-- Lighter Dark	#312936	
-- Purple Foreground	#D6C1ED
-- Complementary	#7CA53D
-- Green Foreground #D9E8CD
+- Background	            #17131A	
+- Background Soft	      #221B26	
+- Lighter Background	    #312936	
+- Purple Foreground	    #D6C1ED	
+- Green Foreground	      #D9E8CD	
+- Grey Foreground	      #A89DB2	
+- Accent	                #9A5EE0	
+- Accent Dark	          #6E3FCF	
+- Accent Soft	          #B18EDC
+- Additional Accent	    #C48FB3	
+- Additional Accent Dark	#A56C8A	
+- Complementary	        #7CA53D	
+- Complementary Soft	    #A4CE70	
+- Border Grey	          #4B4354	
 
 Additional:
 - Warning: #E9B082

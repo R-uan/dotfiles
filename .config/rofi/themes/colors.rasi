@@ -4,7 +4,7 @@
     background-alt: #9A5EE0;
     foreground:     #D6C1ED;
     selected:       #7CA53D;
-    active:         #D4E3A8;
-    urgent:         #ffadad;
-    purple:         #9582B7;
+    active:         #A4CE70;
+    urgent:         #C48FB3;
+    purple:         #9A5EE0;
 }
