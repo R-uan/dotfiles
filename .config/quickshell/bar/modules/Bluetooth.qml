@@ -13,125 +13,39 @@ import ".."
 MouseArea {
     id: root
     height: parent.height
-    width: display.width + 10
+    width: display.width + 16
     hoverEnabled: true
 
     property BluetoothDevice connectedDevice
     required property QsWindow barWindow
 
     Rectangle {
-        radius: 6
-        color: root.containsMouse ? Theme.accent : "transparent"
+        radius: 2
         anchors.fill: root
+        border.color: Theme.borderColor
+        color: root.containsMouse ? Theme.accent : "transparent"
     }
 
     CommonText {
         id: display
-        text: Bluetooth.defaultAdapter.enabled ? "󰂯 on" : "󰂯 off"
         anchors.verticalCenter: root.verticalCenter
         anchors.horizontalCenter: root.horizontalCenter
+        text: Bluetooth.defaultAdapter.enabled ? "󰂯 on" : "󰂯 off"
     }
 
     onClicked: event => {
         if (event.button === Qt.LeftButton) {
-            if (popup.visible) popup.visible = false
-            else {       
+            if (popup.visible)
+                popup.visible = false;
+            else {
                 const pos = root.mapToItem(barWindow.contentItem, 0, root.height + 5);
-                popup.display(pos.x, pos.y)
+                popup.display(pos.x, pos.y);
             }
         }
     }
 
-    PopupWindow {
+    BluetoothMenu {
         id: popup
-        implicitWidth: 370
-        color: "transparent"
         anchor.window: barWindow
-        implicitHeight: layout.height
-
-        function display(x, y) {
-            popup.anchor.rect.x = x;
-            popup.anchor.rect.y = y;
-            popup.visible = true;
-        }
-
-        Rectangle {
-            radius: 6
-            color: Theme.dark  
-            width: parent.width
-            height: parent.height
-            border.color: Theme.darkLight
-            border.width: 1
-        }
-
-        ColumnLayout {
-            id: layout
-            width: popup.width
-            
-            Item {
-                id: header
-                Layout.preferredHeight: hLayout.height
-                Layout.preferredWidth: layout.width
-                
-                Rectangle {
-                    topRightRadius: 6
-                    topLeftRadius: 6
-                    color: "transparent"
-                    width: parent.width
-                    height: parent.height
-                }
-                
-                RowLayout {
-                    id: hLayout
-                    width: parent.width
-                    
-                    CommonText {
-                        Layout.margins: 8
-                        text: "Bluetooth Devices"
-                    }
-
-                    Item { Layout.fillWidth: true }
-                    
-                    MouseArea {
-                        id: area
-                        Layout.margins: 5
-                        Layout.preferredWidth: xdx.width + 10
-                        Layout.preferredHeight: xdx.height + 6
-                        hoverEnabled: true
-                        
-                        onClicked: event => {
-                            if (Bluetooth.defaultAdapter.discovering) Bluetooth.defaultAdapter.discovering = false
-                            else Bluetooth.defaultAdapter.discovering = true
-                        }
-                        
-                        Rectangle {
-                            radius: 2
-                            anchors.fill: parent
-                            color: area.containsMouse ? Theme.accentDark : Theme.accent
-                        }
-                        
-                        CommonText {
-                            id: xdx
-                            anchors.centerIn: parent
-                            text: { Bluetooth.defaultAdapter?.discovering ? "Stop Scan" : "Scan Devices" }
-                        }
-                    }
-                }
-            }
-
-            ColumnLayout {
-                spacing: 0
-                id: devices
-                Layout.margins: 5
-                Repeater {
-                    model: Bluetooth.defaultAdapter.devices
-                    delegate: BluetoothMenuItem {
-                        Layout.margins: 2
-                        Layout.preferredWidth: popup.width - 4
-                    }
-                }
-            }
-        }
-     }
+    }
 }
-

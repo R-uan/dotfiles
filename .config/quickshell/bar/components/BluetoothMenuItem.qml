@@ -9,11 +9,11 @@ RowLayout {
     id: root
     height: txt.height
     width: parent.width
-
     required property BluetoothDevice modelData
  
     CommonText {
-        Layout.margins: 2
+        Layout.margins: 3
+        Layout.alignment: Qt.AlignVCenter
         id: txt
         text: root.modelData.name
         color: root.modelData.connected ? Theme.complementary : root.modelData.paired ? Theme.accent : Theme.foreground
@@ -53,8 +53,8 @@ RowLayout {
             Layout.preferredWidth: discTxt.width + 10
             
             Rectangle {
-                bottomLeftRadius: 6
-                topLeftRadius: 6
+                bottomLeftRadius: 2
+                topLeftRadius: 2
                 color: conBtn.containsMouse ? "#538F46" : Theme.complementary
                 anchors.fill: parent
             }
@@ -87,9 +87,9 @@ RowLayout {
             Layout.preferredWidth: unTxt.width + 10
             
             Rectangle {
-                topRightRadius: 6
+                topRightRadius: 2
                 color: forgetbtn.containsMouse ? Theme.accentDark : Theme.accent
-                bottomRightRadius: 6
+                bottomRightRadius: 2
                 anchors.fill: parent
             }
 

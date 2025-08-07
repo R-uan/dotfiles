@@ -5,7 +5,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
-import QtQuick.Controls
 
 MouseArea {
     id: root

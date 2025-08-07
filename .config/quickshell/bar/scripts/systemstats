@@ -12,4 +12,4 @@ read used total <<< $(free -m | awk '/^Mem:/ {printf "%.2f %.2f", $3 / 1024, $2 
 
 echo "TEMP=  $tempªC"
 echo "CPU=  $cpu%"
-echo "RAM=  ${used}Gb/${total}Gb"
+echo "RAM=  ${used}Gb"

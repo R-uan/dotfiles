@@ -2,16 +2,16 @@
 //@ pragma Env QS_NO_RELOAD_POPUP=0
 import QtQuick
 import Quickshell
-import "./modules/"
-import Quickshell.Io
 import QtQuick.Layouts
-import QtQuick.Controls
-import Quickshell.Services.SystemTray
+
+import "modules"
+import "components"
+import "popups"
 
 PanelWindow {
     id: root
     visible: true
-    implicitHeight: 35
+    implicitHeight: 30
     color: "transparent"
     objectName: "Status Bar Window"
 
@@ -24,14 +24,14 @@ PanelWindow {
     }
 
     margins {
-        left: 5
-        right: 5
-        top: 5
+        left: 3
+        right: 3
+        top: 3
     }
 
     Rectangle {
-        radius: 6
-        color: "transparent"
+        radius: 2
+        color: Theme.dark
         anchors.fill: parent
 
         Item {
@@ -42,118 +42,73 @@ PanelWindow {
             // LEFT SEGMENT
             Item {
                 id: leftSegmentWrapper
-                height: parent.height - 4
-                width: parent.width / 4.4
-                
-                Rectangle {
-                    radius: 4
-                    color: Theme.dark
-                    anchors.fill: parent
-                    opacity: Theme.backgroundOpacity
-                }
-                                
+                height: parent.height
+                // width: leftSegment.width
+
                 RowLayout {
                     id: leftSegment
-                    anchors.leftMargin: 5
+                    anchors.leftMargin: 3
+                    height: parent.height
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
 
                     Workspaces {
                         Layout.leftMargin: 2
-                        Layout.preferredHeight: parent.height - 4
+                        Layout.preferredHeight: leftSegmentWrapper.height - 6
                     }
                 }
             }
 
             // CENTER SEGMENT
-            Item {
+            RowLayout {
                 height: parent.height
-                width: parent.width / 2
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                SysResources {
-                    anchors.margins: 2
-                    height: parent.height - 4 
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.horizontalCenterOffset: -310 
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-
                 DateTime {
-                    anchors.margins: 2
-                    height: parent.height - 4
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    Layout.preferredHeight: parent.height - 6
                 }
             }
 
-            Item {
-                id: rightSegmentWrapper    
-                width: parent.width / 4.4
-                height: parent.height - 4
+            RowLayout {
+                spacing: 3
+                height: parent.height
                 anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
                 
                 Rectangle {
-                    radius: 4
-                    color: Theme.dark
-                    anchors.fill: parent
-                    opacity: Theme.backgroundOpacity
+                    color: "blue"
+                    Layout.fillWidth: parent.width
+                    Layout.fillHeight: parent.height
                 }
 
-                
+                Tray {
+                    barWindow: root
+                    Layout.preferredHeight: parent.height - 6
+                }
+
+                SysResources {
+                    Layout.minimumHeight: parent.height - 6
+                }
+
                 RowLayout {
-                    id: rightSegment
-                    spacing: 12
-                    anchors.margins: 2
-                    anchors.fill: parent
-                
-                    Item {
-                        Layout.fillWidth: true
+                    spacing: 3
+                    Layout.preferredHeight: parent.height
+
+                    NetworkConn {
+                        Layout.minimumHeight: parent.height - 6
                     }
 
-                    Tray {
-                        barWindow: root
+                    Volume {
+                        Layout.minimumHeight: parent.height - 6
                     }
+                }
 
-                    RowLayout {
-                        id: rightContainer0
-                        spacing: 0
-                        Layout.preferredHeight: rightSegment.height
-
-                        Bluetooth {
-                            barWindow: root
-                            Layout.margins: 1
-                            Layout.preferredHeight: rightContainer0.height - 2
-                        }
-                    
-                        NetworkConn {
-                            Layout.margins: 1
-                            Layout.preferredHeight: parent.height - 2
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                        }
-
-                        Volume {
-                            Layout.margins: 1
-                            Layout.preferredHeight: parent.height - 2
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                        }
-                    }
-
-
-                    MiniMenu {
-                        id: miniMenu
-                        rootWindow: root
-                        Layout.preferredWidth: miniMenu.width
-                        Layout.rightMargin: 4
-                        Layout.preferredHeight: parent.height - 8
-                    }
+                MiniMenu {
+                    rootWindow: root
+                    Layout.rightMargin: 3
+                    Layout.preferredHeight: parent.height - 6
                 }
             }
-
-            // RIGHT SEGMENT
         }
     }
 }
-

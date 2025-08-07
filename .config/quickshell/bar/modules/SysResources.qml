@@ -7,8 +7,7 @@ import "../components"
 import "../services"
 
 RowLayout {
-    implicitHeight: parent.height
-    spacing: 2
+    spacing: 3
     SysResourceItem {
         dynText: SysResourcesManager.cpuUsage
     }

@@ -6,7 +6,6 @@ bluetui
 starship
 nbfc-linux
 downgrade
-
 # desktop environment
 hyprland
 waybar
@@ -14,9 +13,9 @@ rofi-wayland
 swww
 hyprshot
 mako
-
+quickshell
 # development
-java-openjdk
+jdk-openjdk
 nodejs-lts-jod
 dotnet-sdk-8.0
 aspnet-runtime-8.0
@@ -29,14 +28,14 @@ cmake
 ruff
 python-black
 omnisharp-roslyn
-
 # development environments
 helix
-clion/clion-jre
+clion
+clion-jre
 pycharm-community
-webstorm/webstorm-jre
-visual-studio-code
-
+webstorm
+webstorm-jre
+visual-studio-code-bin
 # software
 discord
 vlc
@@ -45,3 +44,4 @@ firefox
 nautilus
 gimp
 obsidian
+krita

@@ -3,22 +3,32 @@ import QtQuick
 import Quickshell
 import "../components"
 import Quickshell.Services.SystemTray
+import ".."
 
 Item {
     id: root
+
     clip: true
-    visible: width > 0 && height > 0 // To avoid warnings about being visible with no size
-    implicitWidth: 100
+    implicitWidth: layout.width + 10
+    visible: width > 0 && height > 0
     implicitHeight: layout.implicitHeight
-    
-    readonly property Repeater items: items
+
     required property QsWindow barWindow
+    readonly property Repeater items: items
+
+    Rectangle {
+        color: "transparent"
+        anchors.fill: parent
+        border.color: Theme.borderColor
+    }
 
     Row {
         id: layout
-        spacing: 2
-        layoutDirection: Qt.RightToLeft
+
+        spacing: 3
         anchors.right: root.right
+        anchors.centerIn: root
+        layoutDirection: Qt.RightToLeft
 
         add: Transition {
             NumberAnimation {
@@ -45,11 +55,11 @@ Item {
                 easing.type: Easing.BezierSpline
             }
         }
-       
+
         Repeater {
             id: items
             delegate: TrayItem {
-                window: barWindow
+                window: root.barWindow
             }
             model: SystemTray.items
         }

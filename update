@@ -1,0 +1,113 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]; then
+	echo "Please run as root"
+	exit 1
+fi
+
+USER_HOME=$(eval echo ~$SUDO_USER)
+SUCCESS="(˶ᵔ ᵕ ᵔ˶)"
+NOT_FOUND="( ╹ -╹)?"
+
+if [ ! -d "./.config" ]; then
+	printf "Where did the repo's .config file go (ó﹏ò｡)\nCreating a new one ദ്ദി( • ᴗ - ) ✧\n"
+	mkdir .config
+fi
+
+# desktop environment dotfiles (Compositors, app launchers, status bars)
+
+# hyprland
+if [ -d "$USER_HOME/.config/hypr" ]; then
+	cp -r "$USER_HOME/.config/hypr/" ./.config
+	echo "$SUCCESS Hypr updated"
+else
+	echo "Could not find hypr folder $NOT_FOUND"
+fi
+
+# waybar backup
+if [ -d "$USER_HOME/.config/waybar" ]; then
+	cp -r "$USER_HOME/.config/waybar" ./.config
+	echo "$SUCCESS Waybar updated"
+fi
+
+# rofi-wayland
+if [ -d "$USER_HOME/.config/rofi/" ]; then
+	cp -r "$USER_HOME/.config/rofi" ./.config
+	echo "$SUCCESS Rofi updated"
+else
+	echo "Could not find rofi folder $NOT_FOUND"
+fi
+
+# quickshell
+if [ -d "$USER_HOME/.config/quickshell" ]; then
+	cp -r "$USER_HOME/.config/quickshell" ./.config
+	echo "$SUCCESS Quickshell updated"
+else
+	echo "Could not find quickshell folder $NOT_FOUND"
+fi
+	
+# terminal dotfiles (For terminal stuff like kitty, starship, zsh)
+
+# kitty
+if [ -d "$USER_HOME/.config/kitty" ]; then
+	cp -r "$USER_HOME/.config/kitty/" ./.config
+	echo "$SUCCESS Kitty updated"
+else
+	echo "Could not find kitty folder $NOT_FOUND"
+fi
+
+# starship
+if [ -f "$USER_HOME/.config/starship.toml" ]; then
+	cp "$USER_HOME/.config/starship.toml" ./.config
+  	echo "$SUCCESS Starship updated"
+else
+	echo "Could not find starship file $NOT_FOUND"
+fi
+
+# fastfetch
+if [ -d "$USER_HOME/.config/fastfetch/" ]; then
+	cp -r "$USER_HOME/.config/fastfetch/" ./.config
+	echo "$SUCCESS Fastfetch updated"
+else
+	echo "Could not find fastfetch folder $NOT_FOUND"
+fi
+
+# zsh
+if [ -f "$USER_HOME/.zshrc" ]; then
+	cp "$USER_HOME/.zshrc" .
+	echo "$SUCCESS Zshrc updated"
+else
+	echo "Could not find zshrc file $NOT_FOUND"
+fi
+
+# helix
+if [ -d "$USER_HOME/.config/helix" ]; then
+	cp -r "$USER_HOME/.config/helix" "./.config"
+	echo "$SUCCESS Helix updated"
+else
+	echo "Could not find helix folder $NOT_FOUND"
+fi
+
+# system applications (Mako)
+
+# mako
+if [ -d "$USER_HOME/.config/mako" ]; then
+	cp -r "$USER_HOME/.config/mako" ./.config
+	echo "$SUCCESS Mako updated"
+else
+	echo "Could not find mako folder $NOT_FOUND"
+fi
+
+# wallpapers
+if [ -d "$USER_HOME/.local/share/wallpapers" ]; then
+	cp -r "$USER_HOME/.local/share/wallpapers" .
+	echo "$SUCCESS Wallpapers backed up"
+else
+	echo "Could not find wallpaper folder $NOT_FOUND"
+fi
+
+# Changes ownership/permissions ദ്ദി( • ᴗ - ) ✧
+
+sudo chown -R $(whoami):$(whoami) ./dotfiles
+chmod -R u+rwX ./dotfiles
+

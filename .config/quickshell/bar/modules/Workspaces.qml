@@ -8,11 +8,6 @@ Item {
     height: parent.height
     width: layout.width
 
-    // Rectangle {
-    //     color: "blue"
-    //     anchors.fill: root
-    // }
-
     Row {
         id: layout
         spacing: 5

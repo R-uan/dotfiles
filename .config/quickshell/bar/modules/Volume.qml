@@ -8,17 +8,17 @@ import "../components"
 import ".."
 
 Rectangle {
-    radius: 4
-    color: mouseArea.containsMouse ? Theme.accent : "transparent"
-
+    radius: 2
     Layout.alignment: Qt.AlignCenter
-    Layout.preferredHeight: parent.height
-    Layout.preferredWidth: textItem.width + 10
+    Layout.preferredWidth: textItem.width + 16
+    border.color: Theme.borderColor
+    border.width: 1
+    color: mouseArea.containsMouse ? Theme.accent : "transparent"
 
     MouseArea {
         id: mouseArea
-        anchors.fill: parent
         hoverEnabled: true
+        anchors.fill: parent
         onWheel: event => {
             if (event.angleDelta.y > 0)
                 VolumeManager.setVolume("+5");

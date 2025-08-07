@@ -1,12 +1,11 @@
 ## Apps
 <pre>
-kitty           (terminal)
+  kitty         (terminal)
   fastfetch     (terminal system info)
-
-hyprland        (windows manager)
+  hyprland      (window manager)
   eww           (custom widgets)
   swww          (wallpaper manager)
-  waybar        (status bar)
+  quickshell    (status bar)
   hyprshot      (screenshots)
   rofi-wayland  (app launcher)
 </pre>
@@ -20,8 +19,9 @@ Core:
 - Additional Accent Dar #A56C8A
 - Dark	#17131A
 - Lighter Dark	#312936	
-- Foreground	#EDE6F2	
-- Complementary	#7CA53D	
+- Purple Foreground	#D6C1ED
+- Complementary	#7CA53D
+- Green Foreground #D9E8CD
 
 Additional:
 - Warning: #E9B082

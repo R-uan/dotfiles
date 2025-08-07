@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ "$EUID" -ne 0 ]; then
+	echo "Please run as root (⸝⸝> ᴗ•⸝⸝)"
+	echo "But first read all scripts so you know what it will do to your system (ㅅ\´ ˘ \`)"
+	exit 1
+fi
+
+# Hyprland
+chmod +x ./scripts/hyprland
+sudo ./scripts/hyprland
+
+# Other Arch packages
+chmod +x ./scripts/packages
+sudo ./scripts/packages
+
+# install dotfiles
+
+USER_HOME=$(eval echo ~$SUDO_USER)
+if [ -d "./.config" ]; then
+	cp -r ./.config/* $USER_HOME/.config/
+	echo ".config files were installed (⸝⸝> ᴗ•⸝⸝)"	
+else
+	echo "Backup config folder was not found ( ╹ -╹)?"
+fi
+
+# copy wallpapers to .local/share/
+
+if [ -d "./wallpapers" ]; then
+	cp -r ./wallpapers $USER_HOME
+	echo "Wallpaper folder was copied over to `.local/share/wallpapers`"
+else
+	echo "Backup wallpaper folder was not found"
+fi

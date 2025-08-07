@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell.Io
-import "../components"
+import qs.components
 import ".."
 
 Item {
@@ -25,6 +25,6 @@ Item {
         anchors.horizontalCenter: root.horizontalCenter
         text: root.icon
         font.pixelSize: root.size
-        color: Theme.accent2
+        color: Theme.foreground
     }
 }

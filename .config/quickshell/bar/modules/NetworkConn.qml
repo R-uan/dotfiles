@@ -1,21 +1,20 @@
 import QtQuick
-import Quickshell
 import QtQuick.Window
 import QtQuick.Layouts
-import QtQuick.Controls
 import "../services"
 import "../components"
 import ".."
 
 Rectangle {
-    radius: 4
-    Layout.preferredWidth: textItem.width + 10
+    radius: 2
+    border.color: Theme.borderColor
+    Layout.preferredWidth: textItem.width + 16
     color: mouseArea.containsMouse ? Theme.accent : "transparent"
 
     MouseArea {
         id: mouseArea
-        anchors.fill: parent
         hoverEnabled: true
+        anchors.fill: parent
     }
 
     Behavior on color {

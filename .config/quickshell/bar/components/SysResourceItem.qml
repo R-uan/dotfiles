@@ -6,19 +6,19 @@ import Quickshell
 import ".."
 
 Rectangle {
-    property string dynText
-
+    topLeftRadius: 2
+    topRightRadius: 2
+    bottomLeftRadius: 2
+    bottomRightRadius: 2
+    border.color: Theme.borderColor
     opacity: Theme.backgroundOpacity
     color: hoverHandler.hovered ? Theme.accent : Theme.dark
 
-    topLeftRadius: 4
-    topRightRadius: 30
-    bottomLeftRadius: 30
-    bottomRightRadius: 4
-
     Layout.alignment: Qt.AlignCenter
     Layout.preferredHeight: parent.height
-    Layout.preferredWidth: textItem.width + 24
+    Layout.preferredWidth: textItem.width + 16
+
+    property string dynText
 
     HoverHandler {
         id: hoverHandler

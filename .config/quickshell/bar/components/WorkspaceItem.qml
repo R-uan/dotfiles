@@ -9,7 +9,8 @@ import ".."
 Item {
     id: root
     width: modelData.active || modelData.urgent || hover.containsMouse ? 50 : ws.height
-    height: ws.height + 1
+    // height: ws.height 
+    height: dHeight - 6
 
     required property int dHeight
     required property HyprlandWorkspace modelData
@@ -25,9 +26,9 @@ Item {
         anchors.fill: root
         active: root.modelData.active === true || hover.containsMouse === true || root.modelData.urgent === true
         sourceComponent: Rectangle {
-            radius: 16
+            radius: 2
             anchors.fill: parent
-            color: hover.containsMouse ? Theme.accent : root.modelData.urgent ? Theme.accent2 : Theme.complementary
+            color: hover.containsMouse ? Theme.complementary : root.modelData.urgent ? Theme.accent2 : Theme.accent
         }
     }
     

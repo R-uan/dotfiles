@@ -9,13 +9,21 @@ import ".."
 
 Item {
     id: root
-    width: row.width
+    width: row.width + 12
+
     required property QsWindow rootWindow
-       
+
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border.color: Theme.borderColor
+    }
+           
     RowLayout {
         id: row
-        spacing: 4
+        spacing: 3
         height: root.height
+        anchors.centerIn: parent
 
         MenuButton {
             icon: ""
@@ -33,7 +41,6 @@ Item {
         MenuButton {
             icon: ""
             size: 13
-            Layout.rightMargin: 4
             Layout.preferredHeight: parent.height
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
         }

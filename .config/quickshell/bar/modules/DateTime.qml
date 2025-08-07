@@ -6,35 +6,33 @@ import QtQuick
 import QtQuick.Window
 import QtQuick.Layouts
 
-RowLayout {
-    implicitHeight: parent.height
 
-    Rectangle {
-        property string dynText
+Rectangle {
+    radius: 2
+    border.width: 1
+    border.color: Theme.borderColor
+    opacity: Theme.backgroundOpacity
+    Layout.preferredWidth: textItem.width + 24
+    color: mouseArea.containsMouse ? Theme.accent : Theme.dark
 
-        radius: 4
-        opacity: Theme.backgroundOpacity
-        Layout.preferredHeight: parent.height
-        Layout.preferredWidth: textItem.width + 24
-        color: mouseArea.containsMouse ? Theme.accent : Theme.dark
+    property string dynText
 
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
+    MouseArea {
+        id: mouseArea
+        anchors.fill: parent
+        hoverEnabled: true
+    }
+
+    Behavior on color {
+        ColorAnimation {
+            duration: 100
         }
+    }
 
-        Behavior on color {
-            ColorAnimation {
-                duration: 100
-            }
-        }
-
-        CommonText {
-            id: textItem
-            anchors.centerIn: parent
-            text: DateTimeManager.time
-            color: mouseArea.containsMouse ? Theme.dark : Theme.foreground
-        }
+    CommonText {
+        id: textItem
+        anchors.centerIn: parent
+        text: DateTimeManager.time
+        color: mouseArea.containsMouse ? Theme.dark : Theme.foreground
     }
 }
