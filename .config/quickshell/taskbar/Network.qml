@@ -1,9 +1,8 @@
 import QtQuick
 import QtQuick.Window
 import QtQuick.Layouts
-import "../services"
-import "../components"
-import ".."
+import "./common"
+import "./services"
 
 Rectangle {
     radius: 2
@@ -17,15 +16,9 @@ Rectangle {
         anchors.fill: parent
     }
 
-    Behavior on color {
-        ColorAnimation {
-            duration: 100
-        }
-    }
-
     CommonText {
         id: textItem
         anchors.centerIn: parent
-        text: NetworkConnManager.connection
+        text: NetworkManager.connection
     }
 }

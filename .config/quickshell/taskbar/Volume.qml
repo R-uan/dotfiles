@@ -3,9 +3,8 @@ import Quickshell
 import QtQuick.Window
 import QtQuick.Layouts
 import QtQuick.Controls
-import "../services"
-import "../components"
-import ".."
+import "./common"
+import "./services"
 
 Rectangle {
     radius: 2

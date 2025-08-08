@@ -1,12 +1,9 @@
-//@ pragma UseQApplication
-//@ pragma Env QS_NO_RELOAD_POPUP=0
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
 
-import "modules"
-import "components"
-import "popups"
+import "./common"
+import "."
 
 PanelWindow {
     id: root
@@ -33,9 +30,9 @@ PanelWindow {
         radius: 2
         color: Theme.dark
         anchors.fill: parent
-        border.color: "#312936"
+        border.color: Theme.borderColor
         opacity: Theme.backgroundOpacity
-        
+
         Item {
             width: parent.width
             anchors.fill: parent
@@ -76,7 +73,7 @@ PanelWindow {
                 spacing: 3
                 height: parent.height
                 anchors.right: parent.right
-                
+
                 Rectangle {
                     color: "blue"
                     Layout.fillWidth: parent.width
@@ -84,7 +81,7 @@ PanelWindow {
                 }
 
                 Tray {
-                    barWindow: root
+                    statusBarWindow: root
                     Layout.preferredHeight: parent.height - 6
                 }
 
@@ -96,7 +93,7 @@ PanelWindow {
                     spacing: 3
                     Layout.preferredHeight: parent.height
 
-                    NetworkConn {
+                    Network {
                         Layout.minimumHeight: parent.height - 6
                     }
 
@@ -105,8 +102,7 @@ PanelWindow {
                     }
                 }
 
-                MiniMenu {
-                    rootWindow: root
+                PowerButton {
                     Layout.rightMargin: 3
                     Layout.preferredHeight: parent.height - 6
                 }

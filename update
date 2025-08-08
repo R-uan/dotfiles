@@ -115,6 +115,4 @@ fi
 
 # Changes ownership/permissions ദ്ദി( • ᴗ - ) ✧
 
-sudo chown -R $(whoami):$(whoami) ./.config
-chmod -R u+rwX ./.config
-
+sudo chown -R $USER:$USER ./ && sudo chmod -R u+rwX ./ 

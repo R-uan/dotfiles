@@ -1,11 +1,9 @@
-import ".."
-import "../services/"
-import "../components"
-
+import "./common"
+import "./services"
 import QtQuick
+import Quickshell
 import QtQuick.Window
 import QtQuick.Layouts
-
 
 Rectangle {
     radius: 2
@@ -15,7 +13,10 @@ Rectangle {
     Layout.preferredWidth: textItem.width + 24
     color: mouseArea.containsMouse ? Theme.accent : Theme.dark
 
-    property string dynText
+    SystemClock {
+        id: clock
+        precision: SystemClock.Seconds
+    }
 
     MouseArea {
         id: mouseArea
@@ -32,7 +33,7 @@ Rectangle {
     CommonText {
         id: textItem
         anchors.centerIn: parent
-        text: DateTimeManager.time
+        text: Qt.formatDateTime(clock.date, "ddd,  MMM d  ♥  HH:mm")
         color: mouseArea.containsMouse ? Theme.dark : Theme.foreground
     }
 }

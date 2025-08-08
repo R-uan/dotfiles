@@ -11,7 +11,7 @@ Singleton {
     Process {
         id: getNetwork
         running: true
-        command: ["/home/rw1c/.config/quickshell/bar/scripts/getnetwork"]
+        command: [Qt.resolvedUrl("../scripts/getnetwork")]
         stdout: StdioCollector {
             onStreamFinished: {
                 const lines = text.trim().split("\n");
@@ -37,6 +37,6 @@ Singleton {
         interval: 5000
         running: true
         repeat: true
-        onTriggered: getNetwork.running = true 
+        onTriggered: getNetwork.running = true
     }
 }
