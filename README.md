@@ -9,7 +9,7 @@
   rofi-wayland  (app launcher)
 </pre>
 
-## Colour Palette
+## Colour Palette:w
 | Name                         | Hex       | Purpose                                 |
 | ---------------------------- | --------- | --------------------------------------- |
 | **Accent**                   | `#8B6FB4` | Main purple, now mature and dusty       |
@@ -29,3 +29,9 @@
 | **Highlight**                | `#6BB9A7` | Accent cyan-ish for links, escape chars |
 | **Warning**                  | `#D46A8C` | Soft rose for warnings/errors           |
 | **Success**                  | `#A4CE70` | Gentle green indicator (non-clashing)   |
+
+# Todo
+- SDDM Theme
+- Powerbutton popup
+- NBFC System Init
+

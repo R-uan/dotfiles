@@ -1,41 +1,35 @@
 # terminal
 zsh
+nbfc
 kitty
-fastfetch
 bluetui
 starship
-nbfc-linux
 downgrade
+fastfetch
 # desktop environment
-hyprland
-waybar
-rofi-wayland
-swww
-hyprshot
 mako
+swww
+hyprland
+hyprshot
 quickshell
+rofi-wayland
 # development
-jdk-openjdk
-nodejs-lts-jod
-dotnet-sdk-8.0
-aspnet-runtime-8.0
 npm
-python-pip
-rustup
 git
 gdb
 cmake
 ruff
+rustup
+python-pip
+jdk-openjdk
 python-black
+nodejs-lts-jod
+dotnet-sdk-8.0
 omnisharp-roslyn
+aspnet-runtime-8.0
 # development environments
 helix
-clion
-clion-jre
-pycharm-community
-webstorm
-webstorm-jre
-visual-studio-code-bin
+rider
 # software
 discord
 vlc
@@ -45,3 +39,9 @@ nautilus
 gimp
 obsidian
 krita
+lutris
+# drivers and management and other background stuff
+akm
+ttf-hack
+ttf-hack-nerd
+nvidia-lts

@@ -1,0 +1,98 @@
+* {
+    width: 600;
+    font: "JetBrainsMono Nerd Font 14";
+}
+
+@import                          "./colors.rasi"
+element-text, element-icon, mode-switcher {
+    background-color: inherit;
+    text-color: inherit;
+    border-radius: 20px;
+    font: @font;
+}
+
+window {
+    border: 3px;
+    font: @font;
+    width: 800px;
+    border-radius: 2px;
+    border-color: @background-alt;
+    border: 1px;
+    padding: 0px 20px 0px 0px;
+    background-color: @background;
+}
+
+mainbox {
+    background-color: @background;
+    font: @font;
+}
+
+inputbar {
+    children: [prompt, entry];
+    background-color: @background;
+    border-radius: 2px;
+    padding: 2px;
+    font: @font;
+}
+
+prompt {
+    enabled: false;
+    background-color: @selected;
+    padding: 5px;
+    text-color: @background;
+    border-radius: 2px;
+    text-align: center;
+    margin: 0px;
+    font: @font;
+}
+
+textbox-prompt-colon {
+    expand: false;
+    str: ":";
+    font: @font;
+}
+
+entry {
+    placeholder-color: @background-alt;
+    placeholder: " ᓚ₍ ^. .^₎";
+    padding: 0px 5px 8px 5px;  
+    margin: 15px 0px 0px 15px;
+    text-color: @selected;
+    background-color: @background;
+    text-align: center; 
+    line-height: 30px;   
+    font: @font;
+}
+
+listview {
+    border: 0px;
+    padding: 4px 0px 13px;
+    margin: 0px 0px 0px 20px;
+    columns: 1;
+    background-color: @background;
+    fixed-height: true;
+    lines: 4;
+    border-radius: 0px;
+    font: @font;
+}
+
+element {
+    padding: 5px;
+    border-radius: 0px;
+    font: @font;
+    background-color: @background;
+    text-color: @background-alt;
+}
+
+element-icon {
+    size: 30px;
+    font: @font;
+    margin: 0 5px 0 0;
+}
+
+element selected {
+    font: @font;
+    border-radius: 2px;
+    text-color: @background;
+    background-color: @background-alt;
+}
