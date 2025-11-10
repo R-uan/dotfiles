@@ -1,9 +1,10 @@
 //@ pragma UseQApplication
 
-import "taskbar" as Taskbar
-import Quickshell
 import QtQuick
+import Quickshell
+import "taskbar"
+
 
 ShellRoot {
-    Taskbar.Bar {}
+    Bar {}
 }

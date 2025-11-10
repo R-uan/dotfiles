@@ -29,6 +29,17 @@
 | **Highlight**                | `#6BB9A7` | Accent cyan-ish for links, escape chars |
 | **Warning**                  | `#D46A8C` | Soft rose for warnings/errors           |
 | **Success**                  | `#A4CE70` | Gentle green indicator (non-clashing)   |
+    
+    property string darkPurple: "#17131A"
+    property string middPurple: "#5E4870"
+    property string lighPurple: "#B7A1D3"
+    property string darkGreen: "#536e50"
+    property string middGreen: "#749e77"
+    property string lighGreen: "#E6FFE6"
+    property string rose: "#D46A8C"
+    property string gray: "#CFC6C2"
+    property string peach: "#FFD6BA"
+    property string lavender: "#D9C3FF"
 
 # Todo
 - SDDM Theme

@@ -1,5 +1,6 @@
-module Taskbar
+module TaskBar
 singleton Theme Theme.qml
+
 Bar 1.0 Bar.qml
 Tray 1.0 Tray.qml
 Network 1.0 Network.qml
@@ -8,3 +9,4 @@ SysResources 1.0 SysResources.qml
 Volume 1.0 Volume.qml
 Workspaces 1.0 Workspaces.qml
 DateTime 1.0 DateTime.qml
+LeftSection 1.0 sections/LeftSection.qml

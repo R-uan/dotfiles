@@ -1,18 +1,21 @@
+import "."
+import "shared"
+import "sections"
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
 
-import "./common"
-import "."
-
+// =====================
+//  Status Bar (Panel)
+// =====================
 PanelWindow {
     id: root
-    visible: true
-    implicitHeight: 30
-    color: "transparent"
-    objectName: "Status Bar Window"
-
     required property var modelData
+
+    visible: true
+    color: "transparent"
+    implicitHeight: Theme.height
+    objectName: "Status Bar Window"
 
     anchors {
         top: true
@@ -21,92 +24,50 @@ PanelWindow {
     }
 
     margins {
-        left: 3
-        right: 3
-        top: 3
+        top: 7
+        bottom: 0
+        left: Theme.margins
+        right: Theme.margins
     }
 
     Rectangle {
-        radius: 2
-        color: Theme.dark
         anchors.fill: parent
-        border.color: Theme.borderColor
+        radius: Theme.radius
+        border.width: Theme.barBorderWidth
+        border.color: Theme.barBorderColor
         opacity: Theme.backgroundOpacity
+        color: Theme.fullBar ? Theme.background : "transparent"
+    }
 
-        Item {
-            width: parent.width
-            anchors.fill: parent
-            height: parent.height
-
-            // LEFT SEGMENT
-            Item {
-                id: leftSegmentWrapper
-                height: parent.height
-                // width: leftSegment.width
-
-                RowLayout {
-                    id: leftSegment
-                    anchors.leftMargin: 3
-                    height: parent.height
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    Workspaces {
-                        Layout.leftMargin: 2
-                        Layout.preferredHeight: leftSegmentWrapper.height - 6
-                    }
-                }
-            }
-
-            // CENTER SEGMENT
-            RowLayout {
-                height: parent.height
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                DateTime {
-                    Layout.preferredHeight: parent.height - 6
-                }
-            }
-
-            RowLayout {
-                spacing: 3
-                height: parent.height
-                anchors.right: parent.right
-
-                Rectangle {
-                    color: "blue"
-                    Layout.fillWidth: parent.width
-                    Layout.fillHeight: parent.height
-                }
-
-                Tray {
-                    statusBarWindow: root
-                    Layout.preferredHeight: parent.height - 6
-                }
-
-                SysResources {
-                    Layout.minimumHeight: parent.height - 6
-                }
-
-                RowLayout {
-                    spacing: 3
-                    Layout.preferredHeight: parent.height
-
-                    Network {
-                        Layout.minimumHeight: parent.height - 6
-                    }
-
-                    Volume {
-                        Layout.minimumHeight: parent.height - 6
-                    }
-                }
-
-                PowerButton {
-                    Layout.rightMargin: 3
-                    Layout.preferredHeight: parent.height - 6
-                }
-            }
+    // ---- LEFT ----
+    LeftSection {
+        id: left
+        anchors {
+            left: parent.left
+            leftMargin: 3
+            verticalCenter: parent.verticalCenter
         }
+        height: parent.height - 6
+    }
+
+    // ---- CENTER ----
+    MiddleSection {
+        id: middle
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+        }
+        height: parent.height - 6
+    }
+
+    // ---- RIGHT ----
+    RightSection {
+        id: right
+        anchors {
+            right: parent.right
+            rightMargin: 3
+            verticalCenter: parent.verticalCenter
+        }
+        height: parent.height - 6
     }
 }

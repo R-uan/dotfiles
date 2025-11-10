@@ -8,17 +8,21 @@ fi
 SUCCESS="(˶ᵔ ᵕ ᵔ˶)"
 NOT_FOUND="( ╹ -╹)?"
 
-backup_targets=("hypr" "kitty" "quickshell" "rofi" "starship" "btop" "mako" "fastfetch")
+backup_targets=("hypr" "kitty" "quickshell" "rofi" "starship" "btop" "mako" "fastfetch", "nvim")
 
 for config in "${backup_targets[@]}"; do
 	if [ -d "/home/$SUDO_USER/.config/$config" ]; then
 		if [ -d "./home/.config/$config" ]; then
 			rm -rf "./home/.config/$config"
 		fi
-		cp -r "/home/$SUDO_USER/.config/$config" "home/.config/"
+		cp -rp "/home/$SUDO_USER/.config/$config" "home/.config/"
 		echo "$SUCCESS $config backed"
 	elif [ -f "/home/$SUDO_USER/.config/$config" ]; then
-		cp "/home/$SUDO_USER/.config/$config" "home/.config/"
+		cp -a "/home/$SUDO_USER/.config/$config" "home/.config/"
 		echo "$SUCCESS $config backed"
 	fi
 done
+
+if [ -d "/home/$SUDO_USER/.local/share/wallpapers" ]; then
+  cp -rp "/home/$SUDO_USER/.local/share/wallpapers" "."
+fi
