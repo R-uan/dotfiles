@@ -1,4 +1,0 @@
-#!/bin/bash
-
-packages=$(cat "../packages" | grep -v "#")
-yay -S $packages

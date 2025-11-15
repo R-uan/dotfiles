@@ -1,0 +1,36 @@
+{
+  "accent": "#8B6FB4",
+  "accent_dark": "#6E5898",
+  "accent_soft": "#B7A1D3",
+  "accent_pink": "#C6A5BC",
+
+  "background": "#17131A",
+  "background_soft": "#221B26",
+  "background_alt": "#312936",
+
+  "foreground": "#E6DFF0",
+  "foreground_muted": "#BFB3CB",
+
+  "complementary": "#789659",
+  "complementary_soft": "#9BB27A",
+  "complementary_foreground": "#DAE8D0",
+
+  "border": "#4B4354",
+  "grey": "#A89DB2",
+  "highlight": "#6BB9A7",
+  "warning": "#D46A8C",
+  "success": "#A4CE70",
+
+  "dark_purple": "#17131A",
+  "mid_purple": "#5E4870",
+  "light_purple": "#B7A1D3",
+
+  "dark_green": "#536e50",
+  "mid_green": "#749e77",
+  "light_green": "#E6FFE6",
+
+  "rose": "#D46A8C",
+  "gray_alt": "#CFC6C2",
+  "peach": "#FFD6BA",
+  "lavender": "#D9C3FF"
+}

@@ -1,48 +1,67 @@
-## Apps
-<pre>
-  kitty         (terminal)
-  fastfetch     (terminal system info)
-  hyprland      (window manager)
-  swww          (wallpaper manager)
-  quickshell    (status bar)
-  hyprshot      (screenshots)
-  rofi-wayland  (app launcher)
-</pre>
 
-## Colour Palette:w
-| Name                         | Hex       | Purpose                                 |
-| ---------------------------- | --------- | --------------------------------------- |
-| **Accent**                   | `#8B6FB4` | Main purple, now mature and dusty       |
-| **Accent Dark**              | `#6E5898` | For hover, focused states, borders      |
-| **Accent Soft**              | `#B7A1D3` | For text, subtle highlights             |
-| **Accent Pink**              | `#C6A5BC` | Soft, analog accent for contrast        |
-| **Background**               | `#17131A` | Main background (dark grey-purple)      |
-| **Background Soft**          | `#221B26` | Cards, modals, slight lift              |
-| **Background Alt**           | `#312936` | Lighter surfaces, window borders        |
-| **Foreground**               | `#E6DFF0` | Main text color (purple-tinted white)   |
-| **Foreground Muted**         | `#BFB3CB` | Labels, placeholders, comments          |
-| **Complementary**            | `#789659` | The new muted green                     |
-| **Complementary Soft**       | `#9BB27A` | Lighter variant (tooltips, accents)     |
-| **Complementary Foreground** | `#DAE8D0` | Text on green surfaces                  |
-| **Border**                   | `#4B4354` | Separator lines, panel borders          |
-| **Grey**                     | `#A89DB2` | Neutral fallback text or icons          |
-| **Highlight**                | `#6BB9A7` | Accent cyan-ish for links, escape chars |
-| **Warning**                  | `#D46A8C` | Soft rose for warnings/errors           |
-| **Success**                  | `#A4CE70` | Gentle green indicator (non-clashing)   |
-    
-    property string darkPurple: "#17131A"
-    property string middPurple: "#5E4870"
-    property string lighPurple: "#B7A1D3"
-    property string darkGreen: "#536e50"
-    property string middGreen: "#749e77"
-    property string lighGreen: "#E6FFE6"
-    property string rose: "#D46A8C"
-    property string gray: "#CFC6C2"
-    property string peach: "#FFD6BA"
-    property string lavender: "#D9C3FF"
+# NixOS Dotfiles
 
-# Todo
-- SDDM Theme
-- Powerbutton popup
-- NBFC System Init
+A declarative NixOS configuration using flakes and Home Manager for reproducible system and user environment management.
 
+## 📋 Overview
+
+This repository contains my personal NixOS system configuration, managed through Nix flakes for improved reproducibility and Home Manager for user-level package and dotfile management.
+
+## 🔧 Prerequisites
+
+- NixOS installed with flakes enabled
+- Git for cloning the repository
+
+## 📦 Installation
+
+### Initial Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+   cd ~/dotfiles
+   ```
+
+2. **Enable flakes** (if not already enabled):
+   Add to `/etc/nixos/configuration.nix`:
+   ```nix
+   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+   ```
+
+3. **Build and switch:**
+   ```bash
+   sudo nixos-rebuild switch --flake .#hostname
+   ```
+
+### Fresh Installation
+
+When installing NixOS from scratch:
+
+```bash
+# After basic installation
+git clone https://github.com/yourusername/dotfiles.git /mnt/etc/nixos
+cd /mnt/etc/nixos
+nixos-install --flake .#hostname
+```
+
+## 🖥️ Usage
+
+### Rebuilding System
+
+```bash
+# From the dotfiles directory
+sudo nixos-rebuild switch --flake .#hostname
+```
+
+## 🔄 Rollback
+
+```bash
+# List generations
+sudo nixos-rebuild list-generations
+
+# Switch to previous generation
+sudo nixos-rebuild switch --rollback
+
+# Boot into specific generation (from GRUB menu)
+# Select generation at boot time
+```
