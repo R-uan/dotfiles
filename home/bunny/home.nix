@@ -17,7 +17,14 @@
     bluetuith
     hyprcursor
     zed-editor
+    networkmanager
+    gawk
+    gnused
+    procps      # for top
+    gnugrep
+    pulseaudio  # for pactl
     pavucontrol
+    nerd-fonts.hack
     nerd-fonts.jetbrains-mono
   ];
 

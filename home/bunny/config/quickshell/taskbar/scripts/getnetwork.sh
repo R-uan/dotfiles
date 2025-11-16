@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 read type name <<< $(nmcli -t -f DEVICE,TYPE,STATE,CONNECTION device | grep ':connected:' | grep -v '^lo' | awk -F':' '{print $2, $4}')
 
 if [ -z "$type" ]; then

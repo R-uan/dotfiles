@@ -1,25 +1,23 @@
-# nbfc.nix
-{
-  config,
-  inputs,
-  nbfc-linux,
-  pkgs,
-  ...
-}: let
-  myUser = "bunny";
-  command = "bin/nbfc_service --config-file '/home/${myUser}/.config/nbfc.json'";
+{pkgs, ...}: let
+  filename = "nbfc/nbfc.json";
+
+  nitroConfig = ''
+    {"SelectedConfigId": "Acer Nitro AN515-51"}
+  '';
 in {
   environment.systemPackages = with pkgs; [
-    nbfc-linux.packages.x86_64-linux.default
+    nbfc-linux
   ];
-
   systemd.services.nbfc_service = {
     enable = true;
     description = "NoteBook FanControl service";
     serviceConfig.Type = "simple";
     path = [pkgs.kmod];
 
-    script = "${nbfc-linux.packages.x86_64-linux.default}/${command}";
+    script = "${pkgs.nbfc-linux}/bin/nbfc_service --config-file '/etc/${filename}'";
+
     wantedBy = ["multi-user.target"];
   };
+
+  environment.etc."${filename}".text = nitroConfig;
 }

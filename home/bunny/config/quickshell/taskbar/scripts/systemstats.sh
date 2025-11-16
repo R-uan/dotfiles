@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Temp
 temp=$(nbfc  status | grep "Temperature" -m 1 | awk '{print $3}' | awk -F. '{print $1}')
 

@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
+    ../../modules/services/nbfc.nix
     ./hardware-configuration.nix
   ];
 
@@ -92,7 +93,6 @@
     dedicatedServer.openFirewall = true;
   };
 
-
   programs.yazi.enable = true;
   programs.firefox.enable = true;
   programs.hyprland.enable = true;
@@ -100,11 +100,7 @@
   environment.systemPackages = with pkgs; [
     git
     wget
-    # mesa
-    # lib32.mesa
-    # mesa_drivers
-    # lib32.vulkan-intel
-    # nvidiaPackages.steamPackages32
+    curl
   ];
 
   hardware.enableAllFirmware = true;

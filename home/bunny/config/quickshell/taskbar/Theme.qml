@@ -19,12 +19,12 @@ Singleton {
     property int height: 40
     property int radius: 2
     property int spacing: 3
-    property int margins: 200
+    property int margins: 0
     property bool fullBar: true
     property real backgroundOpacity: 1
     property int fontSize: 12
     property int fontWeight: 200
-    property string fontFamily: "Adwaita Mono"
+    property string fontFamily: "Hack Nerd Font"
     // Colour Scheme
     property string primaryHover: lighPurple
     property string secondaryHover: lighGreen

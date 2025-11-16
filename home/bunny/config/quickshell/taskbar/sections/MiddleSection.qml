@@ -1,6 +1,3 @@
-import "."
-import "shared"
-import "sections"
 import QtQuick
 import Quickshell
 import QtQuick.Layouts

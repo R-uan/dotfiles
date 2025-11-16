@@ -24,7 +24,7 @@ PanelWindow {
     }
 
     margins {
-        top: 7
+        top: 0
         bottom: 0
         left: Theme.margins
         right: Theme.margins

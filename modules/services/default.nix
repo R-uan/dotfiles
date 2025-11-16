@@ -1,4 +1,4 @@
-{ config, nbfc-linux, pkgs, ... }: {
+{ config, inputs, pkgs, ... }: {
   imports = [
   ];
 }
