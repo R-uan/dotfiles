@@ -9,11 +9,10 @@ import qs.taskbar.modules
 // Right Section
 Rectangle {
     id: root
+    color: "transparent"
+    radius: Theme.radius
     height: parent.height
     implicitWidth: layout.implicitWidth + 6
-    color: Theme.background
-    opacity: Theme.backgroundOpacity
-    radius: Theme.radius
 
     RowLayout {
         id: layout
@@ -22,28 +21,19 @@ Rectangle {
         spacing: 3
 
         Tray { Layout.preferredHeight: parent.height - 6 }
-        
-        Separator {}
+
+        // Separator {}
 
         SysResources { Layout.minimumHeight: parent.height - 6 }
 
-        Separator {}
+        // Separator {}
 
         RowLayout {
             spacing: 3
             Layout.preferredHeight: parent.height
-            Network { Layout.minimumHeight: parent.height - 6 }
+            // Network { Layout.minimumHeight: parent.height - 6 }
 
-            Separator {}
-
-            Volume { Layout.minimumHeight: parent.height - 6 }
-        }
-
-        Separator {}
-
-        PowerButton {
-            Layout.rightMargin: 3
-            Layout.preferredHeight: parent.height - 6
+            // Volume { Layout.minimumHeight: parent.height - 6 }
         }
     }
 }

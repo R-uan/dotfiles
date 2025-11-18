@@ -17,14 +17,13 @@ RowLayout {
             topLeftRadius: 2
             topRightRadius: 2
             bottomLeftRadius: 2
+            color: "transparent"
             bottomRightRadius: 2
             height: parent.height
             border.color: Theme.border
             opacity: Theme.backgroundOpacity
-            color: hoverHandler.hovered ? Theme.primaryHover : Theme.background
             Layout.alignment: Qt.AlignCenter
             Layout.preferredWidth: textItem.width + 16
-
             HoverHandler {
                 id: hoverHandler
             }
@@ -36,9 +35,6 @@ RowLayout {
                 anchors.centerIn: parent
                 color: hoverHandler.hovered ? Theme.foregroundHover : Theme.foreground
             }
-
         }
-
     }
-
 }

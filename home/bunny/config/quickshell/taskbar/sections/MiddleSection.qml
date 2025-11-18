@@ -10,14 +10,26 @@ import qs.taskbar.sections
 Rectangle {
     id: root
     radius: Theme.radius
+    color: "transparent"
     height: parent.height
-    color: Theme.background
-    opacity: Theme.backgroundOpacity
+    required property QsWindow popup
     implicitWidth: clockRow.implicitWidth
 
     SystemClock {
         id: sysclock
         precision: SystemClock.Seconds
+    }
+
+    MouseArea {
+        enabled: true
+        anchors.fill: root
+        hoverEnabled: true
+
+        onEntered: {
+        }
+
+        onExited: {
+        }
     }
 
     RowLayout {

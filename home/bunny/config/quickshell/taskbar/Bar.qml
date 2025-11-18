@@ -4,37 +4,36 @@ import "sections"
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
+import QtQuick.Controls
+import Quickshell.Widgets
 
 // =====================
 //  Status Bar (Panel)
 // =====================
 PanelWindow {
-    id: root
-    required property var modelData
-
+    id: bar
     visible: true
     color: "transparent"
     implicitHeight: Theme.height
+    implicitWidth: Theme.barWidth
     objectName: "Status Bar Window"
+
 
     anchors {
         top: true
-        left: true
-        right: true
     }
 
     margins {
         top: 0
-        bottom: 0
+        bottom: -4
         left: Theme.margins
         right: Theme.margins
     }
 
     Rectangle {
         anchors.fill: parent
-        radius: Theme.radius
-        border.width: Theme.barBorderWidth
-        border.color: Theme.barBorderColor
+        bottomLeftRadius: Theme.radius
+        bottomRightRadius: Theme.radius
         opacity: Theme.backgroundOpacity
         color: Theme.fullBar ? Theme.background : "transparent"
     }
@@ -43,8 +42,8 @@ PanelWindow {
     LeftSection {
         id: left
         anchors {
-            left: parent.left
             leftMargin: 3
+            left: parent.left
             verticalCenter: parent.verticalCenter
         }
         height: parent.height - 6
@@ -53,21 +52,22 @@ PanelWindow {
     // ---- CENTER ----
     MiddleSection {
         id: middle
+        height: parent.height - 6
         anchors {
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
         }
-        height: parent.height - 6
     }
 
     // ---- RIGHT ----
     RightSection {
         id: right
+        height: parent.height - 6
         anchors {
-            right: parent.right
             rightMargin: 3
+            right: parent.right
             verticalCenter: parent.verticalCenter
         }
-        height: parent.height - 6
     }
+
 }

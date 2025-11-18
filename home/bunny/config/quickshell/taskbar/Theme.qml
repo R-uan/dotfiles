@@ -15,16 +15,20 @@ Singleton {
     property string gray: "#CFC6C2"
     property string peach: "#FFD6BA"
     property string lavender: "#D9C3FF"
+
     // Bar Design
-    property int height: 40
-    property int radius: 2
+    property int height: 37
+    property int radius: 17
     property int spacing: 3
     property int margins: 0
     property bool fullBar: true
-    property real backgroundOpacity: 1
+    property int barWidth: 1000
+
     property int fontSize: 12
     property int fontWeight: 200
+    property real backgroundOpacity: 0.95
     property string fontFamily: "Hack Nerd Font"
+
     // Colour Scheme
     property string primaryHover: lighPurple
     property string secondaryHover: lighGreen

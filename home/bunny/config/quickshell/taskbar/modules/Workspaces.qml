@@ -21,7 +21,11 @@ Item {
 
             delegate: Rectangle {
                 id: wsBox
-                radius: 2
+                topLeftRadius: Theme.radius - 12
+                topRightRadius: Theme.radius - 12
+                bottomLeftRadius: Theme.radius - 7
+                bottomRightRadius: Theme.radius - 7
+
                 height: root.height
                 width: (modelData.active || modelData.urgent || hover.containsMouse) ? 50 : ws.implicitWidth + 10
                 color: modelData.urgent ? Theme.rose :

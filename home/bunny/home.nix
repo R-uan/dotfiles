@@ -18,6 +18,7 @@
     hyprcursor
     zed-editor
     networkmanager
+    wineWowPackages.stable
     gawk
     gnused
     procps      # for top
@@ -35,6 +36,8 @@
     SG = "/mnt/hdd/Code/soundgasm-playlist && npm run start";
   };
 
+  home.file.".config/btop".source = ./config/btop;
+  home.file.".config/hypr".source = ./config/hypr;
   home.file.".local/share/wallpapers".source = ./wallpapers;
   home.file.".config/quickshell".source = ./config/quickshell;
   home.stateVersion = "25.05";

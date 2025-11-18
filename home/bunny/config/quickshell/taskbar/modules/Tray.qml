@@ -15,14 +15,13 @@ Item {
     visible: { items.count > 0 }
     implicitWidth: layout.width + 16
     implicitHeight: parent.height
-    
+
     required property QsWindow statusBarWindow
 
     Rectangle {
         anchors.fill: parent
-        color: Theme.background
+        color: "transparent"
         border.color: Theme.border
-        opacity: Theme.backgroundOpacity
     }
 
     Row {
