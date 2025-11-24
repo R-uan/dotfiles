@@ -13,10 +13,8 @@ Item {
     id: root
     clip: true
     visible: { items.count > 0 }
-    implicitWidth: layout.width + 16
     implicitHeight: parent.height
-
-    required property QsWindow statusBarWindow
+    implicitWidth: layout.width + 16
 
     Rectangle {
         anchors.fill: parent
@@ -47,16 +45,16 @@ Item {
                         modelData.activate();
                     else {
                         if (modelData.hasMenu) {
-                            const pos = mapToItem(root.statusBarWindow.contentItem, 0, height + 5);
-                            const offsetX = pos.x + (width / 2) - (popup.implicitWidth / 2);
-                           modelData.display(popup, pos.x, pos.y);
+                            const pos = mapToItem(mainWindow.contentItem, 0, height + 10);
+                            console.log(mainWindow)
+                            modelData.display(popup, pos.x, pos.y);
                         }
                     }
                 }
 
                 PopupWindow {
                     id: popup
-                    anchor.window: root.statusBarWindow
+                    anchor.window: mainWindow
                 }
 
                 IconImage {

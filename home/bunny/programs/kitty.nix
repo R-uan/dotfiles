@@ -17,7 +17,7 @@
 
         foreground = "#E6DFF0";
         background = "#17131A";
-        background_opacity = "0.93";
+        background_opacity = "0.90";
 
         selection_foreground = "#17131A";
         selection_background = "#8B6FB4";

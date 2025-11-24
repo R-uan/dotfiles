@@ -9,10 +9,9 @@ import qs.taskbar.sections
 // Middle Section
 Rectangle {
     id: root
-    radius: Theme.radius
     color: "transparent"
+    radius: Theme.radius
     height: parent.height
-    required property QsWindow popup
     implicitWidth: clockRow.implicitWidth
 
     SystemClock {

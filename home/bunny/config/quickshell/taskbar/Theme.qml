@@ -26,7 +26,7 @@ Singleton {
 
     property int fontSize: 12
     property int fontWeight: 200
-    property real backgroundOpacity: 0.95
+    property real backgroundOpacity: 0.90
     property string fontFamily: "Hack Nerd Font"
 
     // Colour Scheme

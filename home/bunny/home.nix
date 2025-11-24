@@ -8,24 +8,26 @@
 
   home.packages = with pkgs; [
     vlc
+    lua
+    gimp
+    gawk
     rofi
     btop
+    procps      # for top
+    gnused
+    gnugrep
     discord
     obsidian
     nautilus
     hyprshot
     bluetuith
+    pulseaudio  # for pactl
     hyprcursor
     zed-editor
-    networkmanager
-    wineWowPackages.stable
-    gawk
-    gnused
-    procps      # for top
-    gnugrep
-    pulseaudio  # for pactl
     pavucontrol
+    networkmanager
     nerd-fonts.hack
+    wineWowPackages.stable
     nerd-fonts.jetbrains-mono
   ];
 
