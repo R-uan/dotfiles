@@ -4,8 +4,8 @@
     vimAlias = true;
   };
 
-  home.file.".config/nvim" = {
-    source = ../config/nvim;
-    recursive = true;
-  };
+ # home.file.".config/nvim" = {
+  #  source = ../config/nvim;
+   # recursive = true;
+  #};
 }

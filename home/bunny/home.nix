@@ -1,5 +1,9 @@
-{ config, pkgs, ... }: {
-  imports =[
+{
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
     ./programs/default.nix
   ];
 
@@ -7,27 +11,66 @@
   home.homeDirectory = "/home/bunny";
 
   home.packages = with pkgs; [
-    vlc
+    # Development Essentials
+    ## C/C++ Essentials
+    gcc
+    lld
+    cmake
+    ninja
+    binutils
+    gnumake
+    glibc.dev
+    pkg-config
+    clang-tools
+
+    ## Nix Language
+    nil # LSP
+    deadnix
+    alejandra # Formatter
+
+    ## Lua
     lua
-    gimp
-    gawk
-    rofi
-    btop
-    procps      # for top
-    gnused
-    gnugrep
-    discord
-    obsidian
-    nautilus
-    hyprshot
-    bluetuith
-    pulseaudio  # for pactl
-    hyprcursor
-    zed-editor
-    pavucontrol
-    networkmanager
+    lua-language-server
+
+    # Terminal Apps
+    fd # find replacement
+    gawk # text-processing language
+    btop # task manager
+    procps # for top
+    gnused # text surgery
+    gnugrep # grep
+    ripgrep # text search tool
+    bluetuith # bluetooth
+
+    # Desktop Modules
+    rofi # App Launcher
+    mako # notification displayer
+
+    # Daemons
+    networkmanager # network manager
+    pulseaudio # audio manager
+    libnotify # notifications
+
+    # Other Programs
+    vlc # video player
+    mpv # media player (for anki audio)
+    gimp # Image Editor
+    vscode # Code Editor
+    vivaldi # browser
+    discord # Messaging
+    anki-bin # Flashcards
+    obsidian # Markdown Notes
+    nautilus # file manager
+    hyprshot # Screen-capture
+    hyprcursor # hyprland cursor
+    zed-editor # Code Editor
+    dbeaver-bin # Database management
+    pavucontrol # PulseAudio control panel
+    wineWowPackages.stable # windows app runner
+
+    # Fonts
+    iosevka
     nerd-fonts.hack
-    wineWowPackages.stable
     nerd-fonts.jetbrains-mono
   ];
 
@@ -35,7 +78,7 @@
     EDITOR = "nvim";
     HDD = "/mnt/hdd";
     CODE = "/mnt/hdd/Code";
-    SG = "/mnt/hdd/Code/soundgasm-playlist && npm run start";
+    DTF = "/mnt/hdd/Code/dotfiles/";
   };
 
   home.file.".config/btop".source = ./config/btop;

@@ -1,6 +1,4 @@
 module TaskBar
-singleton Theme Theme.qml
-
 Bar 1.0 Bar.qml
 Tray 1.0 Tray.qml
 Network 1.0 Network.qml

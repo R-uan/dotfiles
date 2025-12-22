@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
+import qs
 import qs.taskbar
 import qs.taskbar.shared
 import qs.taskbar.modules
@@ -8,50 +9,50 @@ import qs.taskbar.sections
 
 // Middle Section
 Rectangle {
-    id: root
-    color: "transparent"
-    radius: Theme.radius
-    height: parent.height
-    implicitWidth: clockRow.implicitWidth
+  id: root
+  color: "transparent"
+  radius: Theme.radius
+  height: parent.height
+  implicitWidth: clockRow.implicitWidth
 
-    SystemClock {
-        id: sysclock
-        precision: SystemClock.Seconds
+  SystemClock {
+    id: sysclock
+    precision: SystemClock.Seconds
+  }
+
+  MouseArea {
+    enabled: true
+    anchors.fill: root
+    hoverEnabled: true
+
+    onEntered: {}
+
+    onExited: {}
+  }
+
+  RowLayout {
+    id: clockRow
+    anchors.fill: parent
+    anchors.margins: 3
+    spacing: 15
+    anchors.centerIn: parent
+
+    CommonText {
+      font.bold: true
+      color: Theme.foreground
+      font.pixelSize: Theme.fontSize
+      Layout.alignment: Qt.AlignVCenter
+      text: Qt.formatDateTime(sysclock.date, "HH:mm")
     }
 
-    MouseArea {
-        enabled: true
-        anchors.fill: root
-        hoverEnabled: true
+    Separator {}
 
-        onEntered: {
-        }
-
-        onExited: {
-        }
+    CommonText {
+      font.bold: true
+      color: Theme.foreground
+      font.pixelSize: Theme.fontSize
+      Layout.alignment: Qt.AlignVCenter
+      text: Qt.formatDateTime(sysclock.date, "ddd, dd MMM")
     }
-
-    RowLayout {
-        id: clockRow
-        anchors.fill: parent
-        anchors.margins: 3
-        spacing: 15
-        anchors.centerIn: parent
-
-        CommonText {
-            font.bold: true
-            color: Theme.foreground
-            font.pixelSize: Theme.fontSize
-            Layout.alignment: Qt.AlignVCenter
-            text: Qt.formatDateTime(sysclock.date, "  HH:mm")
-        }
-
-        CommonText {
-            font.bold: true
-            color: Theme.foreground
-            font.pixelSize: Theme.fontSize
-            Layout.alignment: Qt.AlignVCenter
-            text: Qt.formatDateTime(sysclock.date, "󰃭  ddd, MMM dd")
-        }
-    }
+  }
 }

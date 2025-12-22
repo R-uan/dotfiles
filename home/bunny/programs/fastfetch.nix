@@ -7,7 +7,7 @@
           type = "kitty";
           height = 16;
           padding = {
-            top = 1;
+            top = 0;
           };
         };
         display = { "separator" = " ›  "; };
@@ -55,12 +55,11 @@
         key = "  TER ";
         keyColor = "32";
       }
-
+      
       {
-        type = "packages";
-        format = "{2} (pacman)";
-        key = "  PKG ";
-        keyColor = "32";
+        type = "uptime";
+        key = "  UPT ";
+        keycolor = "32";
       }
 
       {

@@ -1,7 +1,7 @@
 
 
 # Main background, empty for terminal default, need to be empty if you want transparent background
-theme[main_bg]="#17131A" # Background
+theme[main_bg]="#0A0512" # Background
 
 
 

@@ -1,10 +1,9 @@
+import qs
 import QtQuick
-import ".."
 
 Text {
-  text: Theme.separator
+  text: "🐇"
+  font.pixelSize: 17
   font.family: Theme.fontFamily
   font.weight: Theme.fontWeight
-  color: Theme.separatorForeground
-  font.pixelSize: Theme.separatorSize
 }

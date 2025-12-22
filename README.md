@@ -65,3 +65,8 @@ sudo nixos-rebuild switch --rollback
 # Boot into specific generation (from GRUB menu)
 # Select generation at boot time
 ```
+
+#### TODO
+- Taskbar drop down
+- Wallpaper Selector
+- Power buttons

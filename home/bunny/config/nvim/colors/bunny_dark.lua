@@ -1,9 +1,8 @@
 -- colors/bunny_dark.lua
 -- Neovim theme ported from Helix theme "bunny_dark"
--- Author: Bunny (updated)
 
 local palette = {
-	darkPurple = "#17131A",
+	darkPurple = "#120014",
 	middPurple = "#5E4870",
 	lighPurple = "#B7A1D3",
 	darkGreen = "#536e50",
@@ -20,7 +19,7 @@ local palette = {
 	accent_pink = "#C6A5BC",
 
 	-- UI
-	bg0 = "#17131A",
+	bg0 = "#120014",
 	bg1 = "#221B26",
 	bg2 = "#312936",
 	bg3 = "#4B4354",

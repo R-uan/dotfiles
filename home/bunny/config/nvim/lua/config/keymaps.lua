@@ -3,7 +3,8 @@ local telescope = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", telescope.find_files, { desc = "Telescope find files" })
 vim.keymap.set("n", "<leader>fg", telescope.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { desc = "LSP Rename" })
-
+vim.keymap.set('n', '<leader>ci', vim.lsp.buf.code_action, { desc = 'Code action/Implement interface' })
+vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, { desc = 'Go to implementation' })
 local set = vim.keymap.set
 local opts = { noremap = true, silent = true }
 

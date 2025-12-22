@@ -45,7 +45,7 @@
       };
 
       directory = {
-        format = "[  ](fg:accent)[$path](fg:accent bold)";
+        format = "[   ](fg:accent)[$path](fg:accent bold)";
         style = "fg:accent_soft";
         truncation_length = 3;
         truncate_to_repo = false;
@@ -74,10 +74,10 @@
 
       palettes = {
         Bunny = {
-          background = "#17131A";
+          background = "#0A0512";
           background_soft = "#221B26";
           background_alt = "#312936";
-          accent = "#8B6FB4";
+          accent = "#CD9EFF";
           accent_dark = "#6E5898";
           accent_soft = "#B7A1D3";
           accent_pink = "#C6A5BC";

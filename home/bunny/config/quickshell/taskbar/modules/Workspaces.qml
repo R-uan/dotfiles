@@ -1,59 +1,97 @@
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
+import qs
 import qs.taskbar
 import qs.taskbar.shared
 import qs.taskbar.services
 
 Item {
-    id: root
-    height: parent.height
-    width: layout.implicitWidth + 6
+  id: root
+  height: parent.height
+  width: layout.implicitWidth + 10
 
-    Row {
-        id: layout
-        spacing: 6
-        anchors.centerIn: parent
+  Row {
+    id: layout
+    spacing: 12
+    anchors.centerIn: parent
 
-        Repeater {
-            id: workspaces
-            model: Hyprland.workspaces
+    Repeater {
+      id: workspaces
+      model: {
+        let workspaceList = Hyprland.workspaces.values || [];
+        let minWorkspaces = 6;
+        let result = [];
 
-            delegate: Rectangle {
-                id: wsBox
-                topLeftRadius: Theme.radius - 12
-                topRightRadius: Theme.radius - 12
-                bottomLeftRadius: Theme.radius - 7
-                bottomRightRadius: Theme.radius - 7
-
-                height: root.height
-                width: (modelData.active || modelData.urgent || hover.containsMouse) ? 50 : ws.implicitWidth + 10
-                color: modelData.urgent ? Theme.rose :
-                       hover.containsMouse ? Theme.secondaryHover :
-                       modelData.active ? Theme.primaryAccent :
-                       "transparent"
-                border.color: "transparent"
-
-                Behavior on width {
-                    NumberAnimation { duration: 100; easing.type: Easing.InOutQuad }
-                }
-
-                MouseArea {
-                    id: hover
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    onClicked: if (mouse.button === Qt.LeftButton) modelData.activate()
-                }
-
-                CommonText {
-                    id: ws
-                    anchors.centerIn: parent
-                    font.weight: 400
-                    text: modelData.active ? "󱩡" : modelData.id
-                    color: (hover.containsMouse || modelData.urgent)
-                           ? Theme.foregroundHover : Theme.foreground
-                }
-            }
+        if (workspaceList.length === 0) {
+          // No workspaces, create 6 placeholders
+          for (let i = 1; i <= minWorkspaces; i++) {
+            result.push({
+                          id: i,
+                          isDummy: true,
+                          activate: function () {
+                            Hyprland.dispatch(`workspace ${i}`);
+                          }
+                        });
+          }
+          return result;
         }
+
+        // Sort by id
+        let sorted = workspaceList.slice().sort((a, b) => a.id - b.id);
+
+        // Find the max id
+        let maxId = Math.max(...sorted.map(ws => ws.id), minWorkspaces);
+
+        // Fill in gaps
+        for (let i = 1; i <= maxId; i++) {
+          let existing = sorted.find(ws => ws.id === i);
+          if (existing) {
+            result.push(existing);
+          } else {
+            // Create dummy workspace for missing id
+            result.push({
+                          id: i,
+                          isDummy: true,
+                          activate: function () {
+                            Hyprland.dispatch(`workspace ${i}`);
+                          }
+                        });
+          }
+        }
+
+        return result;
+      }
+
+      delegate: Rectangle {
+        id: wsBox
+        radius: 60
+        // topLeftRadius: Theme.radius - 12
+        // topRightRadius: Theme.radius - 12
+        // bottomLeftRadius: Theme.radius - 7
+        // bottomRightRadius: Theme.radius - 7
+
+        width: 12
+        height: 12
+        color: modelData.active ? Theme.primary : modelData.urgent ? Theme.rose : hover.containsMouse
+                                                                     ? Theme.primaryHover : modelData.isDummy
+                                                                       ? Theme.secondary : Theme.tertiary
+
+        Behavior on width {
+          NumberAnimation {
+            duration: 100
+            easing.type: Easing.InOutQuad
+          }
+        }
+
+        MouseArea {
+          id: hover
+          anchors.fill: parent
+          hoverEnabled: true
+          onClicked: if (mouse.button === Qt.LeftButton)
+                       modelData.activate()
+        }
+      }
     }
+  }
 }

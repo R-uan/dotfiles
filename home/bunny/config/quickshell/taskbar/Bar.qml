@@ -1,6 +1,6 @@
-import "."
-import "shared"
-import "sections"
+import qs
+import qs.taskbar.shared
+import qs.taskbar.sections
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
@@ -8,70 +8,76 @@ import QtQuick.Controls
 import Quickshell.Widgets
 
 Scope {
-    Variants {
-        model: Quickshell.screens
+  Variants {
+    model: Quickshell.screens
 
-        PanelWindow {
-            visible: true
-            id: mainWindow
-            color: "transparent"
-            implicitHeight: Theme.height
-            implicitWidth: Theme.barWidth
-            objectName: "Status Bar Window"
+    PanelWindow {
+      id: mainWindow
+      visible: true
+      color: "transparent"
+      implicitWidth: Theme.barWidth
+      implicitHeight: Theme.barHeight
+      objectName: "Status Bar Window"
 
-            screen: modelData
-            property var modelData
+      screen: modelData
+      property var modelData
 
-            anchors {
-                top: true
-            }
+      anchors {
+        top: true
+      }
 
-            margins {
-                top: 0
-                bottom: -4
-                left: Theme.margins
-                right: Theme.margins
-            }
+      margins {
+        bottom: -4
+        top: Theme.margins
+        left: Theme.margins
+        right: Theme.margins
+      }
 
-            Rectangle {
-                anchors.fill: parent
-                bottomLeftRadius: Theme.radius
-                bottomRightRadius: Theme.radius
-                opacity: Theme.backgroundOpacity
-                color: Theme.fullBar ? Theme.background : "transparent"
-            }
+      Rectangle {
+        border.width: 2
+        anchors.fill: parent
+        color: Theme.background
+        topLeftRadius: Theme.radius
+        topRightRadius: Theme.radius
+        bottomLeftRadius: Theme.radius
+        bottomRightRadius: Theme.radius
+        border.color: Theme.borderColour
+        opacity: Theme.backgroundOpacity
+      }
 
-            // ---- LEFT ----
-            LeftSection {
-                id: left
-                anchors {
-                    leftMargin: 3
-                    left: parent.left
-                    verticalCenter: parent.verticalCenter
-                }
-                height: parent.height - 6
-            }
+      // ---- LEFT ----
+      LeftSection {
+        id: left
+        height: parent.height
 
-            // ---- CENTER ----
-            MiddleSection {
-                id: middle
-                height: parent.height - 6
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-            }
-
-            // ---- RIGHT ----
-            RightSection {
-                id: right
-                height: parent.height - 6
-                anchors {
-                    rightMargin: 3
-                    right: parent.right
-                    verticalCenter: parent.verticalCenter
-                }
-            }
+        anchors {
+          left: parent.left
+          verticalCenter: parent.verticalCenter
         }
+      }
+
+      // ---- CENTER ----
+      MiddleSection {
+        id: middle
+        height: parent.height
+
+        anchors {
+          verticalCenter: parent.verticalCenter
+          horizontalCenter: parent.horizontalCenter
+        }
+      }
+
+      // ---- RIGHT ----
+      RightSection {
+        id: right
+        height: parent.height
+
+        anchors {
+          rightMargin: 10
+          right: parent.right
+          verticalCenter: parent.verticalCenter
+        }
+      }
     }
+  }
 }

@@ -54,13 +54,13 @@ textbox-prompt-colon {
 
 entry {
     placeholder-color: @background-alt;
-    placeholder: " ᓚ₍ ^. .^₎";
-    padding: 0px 5px 8px 5px;  
+    placeholder: " c₍ ^. .^₎";
+    padding: 0px 5px 8px 5px;
     margin: 15px 0px 0px 15px;
     text-color: @selected;
     background-color: @background;
-    text-align: center; 
-    line-height: 30px;   
+    text-align: center;
+    line-height: 30px;
     font: @font;
 }
 
