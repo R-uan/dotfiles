@@ -29,12 +29,10 @@
       username = {
         show_always = true;
         disabled = false;
-        style_user = "fg:accent_pink bold";
-        style_root = "fg:accent_pink bold";
-        format = "[$user]($style)";
       };
 
       conda = {
+        style_user = "fg:pink bold";
         format = " [$symbol$environment](dimmed green) ";
       };
 
@@ -45,19 +43,19 @@
       };
 
       directory = {
-        format = "[   ](fg:accent)[$path](fg:accent bold)";
-        style = "fg:accent_soft";
+        format = "[   ](fg:primary)[$path](fg:primary bold)";
+        style = "fg:lprimary";
         truncation_length = 3;
         truncate_to_repo = false;
       };
 
       git_branch = {
-        format = "[[ ](fg:accent bold)$branch](fg:accent bold)";
-        style = "fg:accent_dark";
+        format = "[[ ](fg:primary bold)$branch](fg:primary bold)";
+        style = "fg:dprimary";
       };
 
       git_status = {
-        format = "[$all_status$ahead_behind](fg:accent_dark) ";
+        format = "[$all_status$ahead_behind](fg:dprimary) ";
         style = "fg:complementary";
         conflicted = "=";
         ahead = "⇡\${count}";
@@ -74,18 +72,12 @@
 
       palettes = {
         Bunny = {
-          background = "#0A0512";
-          background_soft = "#221B26";
-          background_alt = "#312936";
-          accent = "#CD9EFF";
-          accent_dark = "#6E5898";
-          accent_soft = "#B7A1D3";
-          accent_pink = "#C6A5BC";
-          foreground = "#E6DFF0";
-          foreground_muted = "#BFB3CB";
-          complementary = "#789659";
-          complementary_soft = "#9BB27A";
-          complementary_foreground = "#DAE8D0";
+          background = "#070707";
+          primary = "#7fb069";
+          dprimary = "#3d4a34";
+          lprimary = "#a8c69f";
+          complementary = "#b692d4";
+          pink = "#C6A5BC";
         };
       };
     };

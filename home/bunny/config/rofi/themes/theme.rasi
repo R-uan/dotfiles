@@ -1,87 +1,88 @@
 * {
     width: 600;
-    font: "JetBrainsMono Nerd Font 14";
+    font: "Iosevka 14";
 }
 
 @import                          "./colors.rasi"
 element-text, element-icon, mode-switcher {
-    background-color: inherit;
-    text-color: inherit;
-    border-radius: 20px;
     font: @font;
+    border-radius: 20px;
+    text-color: inherit;
+    background-color: inherit;
 }
 
 window {
-    border: 3px;
     font: @font;
     width: 800px;
-    border-radius: 2px;
-    border-color: @background-alt;
+
     border: 1px;
+    border-color: @primary;
+    border-radius: 7px;
+
     padding: 0px 20px 0px 0px;
     background-color: @background;
 }
 
 mainbox {
-    background-color: @background;
     font: @font;
+    background-color: @background;
 }
 
 inputbar {
+    font: @font;
+    padding: 2px;
+    border-radius: 7px;
     children: [prompt, entry];
     background-color: @background;
-    border-radius: 2px;
-    padding: 2px;
-    font: @font;
 }
 
 prompt {
-    enabled: false;
-    background-color: @selected;
-    padding: 5px;
-    text-color: @background;
-    border-radius: 2px;
-    text-align: center;
-    margin: 0px;
     font: @font;
+    margin: 0px;
+    padding: 5px;
+    enabled: false;
+    text-align: center;
+    text-color: @background;
+    background-color: @selected;
+    border-radius: 7px;
 }
 
 textbox-prompt-colon {
-    expand: false;
     str: ":";
     font: @font;
+    expand: false;
 }
 
 entry {
-    placeholder-color: @background-alt;
-    placeholder: " c₍ ^. .^₎";
-    padding: 0px 5px 8px 5px;
-    margin: 15px 0px 0px 15px;
-    text-color: @selected;
-    background-color: @background;
-    text-align: center;
-    line-height: 30px;
     font: @font;
+    line-height: 30px;
+    text-align: center;
+    text-color: @selected;
+    padding: 0px 5px 8px 5px;
+    placeholder: " c₍ ^. .^₎";
+    margin: 15px 0px 0px 15px;
+    placeholder-color: @primary;
+    background-color: @background;
 }
 
 listview {
+    lines: 4;
+    columns: 1;
     border: 0px;
+    font: @font;
+    border-radius: 0px;
+    fixed-height: true;
     padding: 4px 0px 13px;
     margin: 0px 0px 0px 20px;
-    columns: 1;
     background-color: @background;
-    fixed-height: true;
-    lines: 4;
-    border-radius: 0px;
-    font: @font;
 }
 
 element {
+    font: @font;
     padding: 5px;
     border-radius: 0px;
-    font: @font;
+    text-color: @primary;
     background-color: @background;
-    text-color: @background-alt;
 }
 
 element-icon {
@@ -92,7 +93,7 @@ element-icon {
 
 element selected {
     font: @font;
-    border-radius: 2px;
+    border-radius: 7px;
     text-color: @background;
-    background-color: @background-alt;
+    background-color: @primary;
 }

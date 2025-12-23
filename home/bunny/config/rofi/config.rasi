@@ -1,6 +1,6 @@
 /* Rofi config file */
 configuration {
-    font: "JetBrainsMono Nerd Font 14";
+    font: "Iosevka Font 14";
     show-icons: true;
     display-window: "Window";
     display-drun: "Search";
@@ -9,5 +9,5 @@ configuration {
 @theme "theme"
 
 listview {
-    lines: 6;
+    lines: 7;
 }

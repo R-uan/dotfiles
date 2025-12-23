@@ -77,13 +77,17 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     HDD = "/mnt/hdd";
-    CODE = "/mnt/hdd/Code";
-    DTF = "/mnt/hdd/Code/dotfiles/";
+    CODE = "/mnt/hdd/code";
+    DTF = "/mnt/hdd/code/dotfiles/";
+    #QML2_IMPORT_PATH = "${pkgs.quickshell}/lib/qt-6/qml";
   };
 
   home.file.".config/btop".source = ./config/btop;
+  home.file.".config/mako".source = ./config/mako;
   home.file.".config/hypr".source = ./config/hypr;
   home.file.".local/share/wallpapers".source = ./wallpapers;
   home.file.".config/quickshell".source = ./config/quickshell;
+
+  # Don't change this unless you're rebuilding the system cleanly
   home.stateVersion = "25.05";
 }

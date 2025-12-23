@@ -9,61 +9,63 @@
      };
 
     settings = {
-        enable_audio_bell = "no";
-        window_padding_width = 3;
-        remember_window_size = "yes";
-        initial_window_width = 740;
-        initial_window_height = 600;
+      enable_audio_bell = "no";
+      window_padding_width = 3;
+      remember_window_size = "yes";
+      initial_window_width = 740;
+      initial_window_height = 600;
 
-        foreground = "#E6DFF0";
-        background = "#120014";
-        background_opacity = "0.87";
+      foreground = "#a8c69f";
+      background = "#070707";
+      background_opacity = "0.80";
 
-        selection_foreground = "#0A0512";
-        selection_background = "#CD9EFF";
+      selection_foreground = "#070707";
+      selection_background = "#7fb069";
 
-        cursor = "#E6DFF0";
-        cursor_text_color = "#312936";
+      cursor = "#a8c69f";
+      cursor_text_color = "#070707";
 
-        url_color = "#C6A5BC";
+      url_color = "#b692d4";
 
-        active_border_color = "#CD9EFF";
-        inactive_border_color = "#6E5898";
-        bell_border_color = "#9BB27A";
+      active_border_color = "#7fb069";
+      inactive_border_color = "#556b47";
+      bell_border_color = "#b692d4";
 
-        wayland_titlebar_color = "#221B26";
-        macos_titlebar_color = "#221B26";
+      wayland_titlebar_color = "#202020";
+      macos_titlebar_color = "#202020";
 
-        active_tab_foreground = "#E6DFF0";
-        active_tab_background = "#CD9EFF";
-        inactive_tab_foreground = "#BFB3CB";
-        inactive_tab_background = "#221B26";
-        tab_bar_background = "#221B26";
+      active_tab_foreground = "#070707";
+      active_tab_background = "#7fb069";
+      inactive_tab_foreground = "#a8c69f";
+      inactive_tab_background = "#202020";
+      tab_bar_background = "#202020";
 
-        mark1_foreground = "#312936";
-        mark1_background = "#CD9EFF";
-        mark2_foreground = "#312936";
-        mark2_background = "#6E5898";
-        mark3_foreground = "#DAE8D0";
-        mark3_background = "#789659";
+      mark1_foreground = "#070707";
+      mark1_background = "#7fb069";
+      mark2_foreground = "#070707";
+      mark2_background = "#b692d4";
+      mark3_foreground = "#070707";
+      mark3_background = "#8fc277";
 
-        color0 = "#120014";
-        color1 = "#C6A5BC";
-        color2 = "#789659";
-        color3 = "#9BB27A";
-        color4 = "#CD9EFF";
-        color5 = "#6E5898";
-        color6 = "#B7A1D3";
-        color7 = "#E6DFF0";
+      # ANSI colors
+      color0 = "#070707";       # black
+      color1 = "#b692d4";       # red (purple)
+      color2 = "#7fb069";       # green
+      color3 = "#a8c69f";       # yellow (light sage)
+      color4 = "#6b4d82";       # blue (deep purple)
+      color5 = "#c4a3e0";       # magenta (light purple)
+      color6 = "#8fc277";       # cyan (bright green)
+      color7 = "#e0e0e0";       # white
 
-        color8  = "#221B26";
-        color9  = "#C6A5BC";
-        color10 = "#789659";
-        color11 = "#DAE8D0";
-        color12 = "#CD9EFF";
-        color13 = "#B7A1D3";
-        color14 = "#BFB3CB";
-        color15 = "#E6DFF0";
+      # Bright colors
+      color8  = "#2a2a2a";      # bright black
+      color9  = "#d4b5e8";      # bright red (lavender)
+      color10 = "#8fc277";      # bright green
+      color11 = "#b8d6af";      # bright yellow (very light sage)
+      color12 = "#b692d4";      # bright blue (soft purple)
+      color13 = "#d4b5e8";      # bright magenta (lavender)
+      color14 = "#a8c69f";      # bright cyan (light sage)
+      color15 = "#e0e0e0";      # bright white
     };
   };
 }

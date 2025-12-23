@@ -171,6 +171,16 @@ vim.lsp.config.pyright.setup = {
   ),
 }
 
+vim.lsp.config.terraformls   = {
+  on_attach = function()
+    print "Terraforming";
+  end,
+  filetypes = { "terraform", "hcl", "tf" },
+  settings = {
+    validateOnSave = true,
+  },
+}
+
 vim.lsp.enable {
   "clangd",
   "lua_ls",
@@ -179,4 +189,5 @@ vim.lsp.enable {
   "gopls",
   "ts_ls",
   "pyright",
+  "terraformls",
 }

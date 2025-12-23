@@ -1,22 +1,27 @@
 {
-  "background": "#0A0512",
-  "background_alt": "#332840",
-  "primaryPurple": "#C192E8",
-  "secondaryPurple": "#8F6FB3",
-  "tertiaryPurple": "#523F66",
-  "foreground": "#E6DFF0",
-  "foreground_muted": "#BFB3CB",
-  "primaryGreen": "#99FFCC",
-  "secondaryGreen": "#6BB38F",
-  "tertiaryGreen": "#365947",
-
   "highlight": "#6BB9A7",
   "warning": "#D46A8C",
   "success": "#A4CE70",
-  "chinese_black": "#0d0E20",
   "border": "#1d1c21",
   "rose": "#D46A8C",
-  "peach": "#FFD6BA",
-  "lavender": "#D9C3FF",
-  "font" = "Iosevka"
+  "font": "Iosevka",
+
+  "purple": "#b692d4",
+  "lpurple": "#d4b5e8",
+  "dpurple": "#4a3358",
+
+  "purpleAlt": "#6b4d82",
+  "lpurpleAlt": "#c4a3e0",
+  "dpurpleAlt": "#32233d",
+
+  "green": "#7fb069",
+  "lgreen": "#a8c69f",
+  "dgreen": "#3d4a34",
+
+  "greenAlt": "#556b47",
+  "lgreenAlt": "#8fc277",
+  "dgreenAlt": "#2a3424",
+
+  "black": "#070707",
+  "blackAlt": "#202020"
 }

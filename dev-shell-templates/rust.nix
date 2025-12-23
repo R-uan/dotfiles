@@ -1,28 +1,34 @@
 {
-  description = "Rust Dev Shell";
+  description = "Rust Development Enviroment";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, rust-overlay }:
-    let
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [ rust-overlay.overlays.default ];
-      };
+  outputs = {
+    flake-utils,
+    nixpkgs,
+    ...
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
     in {
-      devShells.x86_64-linux.default = pkgs.mkShell {
-        buildInputs = [
-          pkgs.rust-bin.stable.latest.default
-          pkgs.pkg-config
-          pkgs.cargo-watch
+      devShells.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          rustc
+          cargo
+          clippy
+          rustfmt
+          rust-analyzer
+          llvmPackages.clang
+          llvmPackages.libclang
         ];
-
-        shellHook = ''
-          echo "Rust shell ready. Try not to cry when borrow checker yells."
-        '';
       };
-    };
+
+      env = {
+        LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+        LD_LIBRARY_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+      };
+    });
 }

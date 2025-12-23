@@ -1,90 +1,95 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   programs.fastfetch = {
     enable = true;
     settings = {
-        logo = {
-          source = "${config.xdg.configHome}/fastfetch/ffimage.jpg";
-          type = "kitty";
-          height = 16;
-          padding = {
-            top = 0;
-          };
+      logo = {
+        source = "${config.xdg.configHome}/fastfetch/ffimage.jpg";
+        type = "kitty";
+        height = 15;
+        padding = {
+          top = 0;
+          left = 1;
         };
-        display = { "separator" = " ›  "; };
+      };
+      display = {"separator" = " ›  ";};
 
-    modules = [
-      {
-        type = "title";
-        key = "  USR ";
-        keyColor = "37";
-      }
+      modules = [
+        {
+          type = "title";
+          key = "  USR ";
+          keyColor = "37";
+        }
 
-      {
-        type = "separator";
-        string = "┌────────────────────────────────────────┐";
-        length = 1;
-      }
+        {
+          type = "separator";
+          string = "┌────────────────────────────────────────┐";
+          length = 1;
+        }
 
-      {
-        type = "os";
-        format = "{3}";
-        key = "  OPS ";
-        keyColor = "33";
-      }
+        {
+          type = "os";
+          format = "{3}";
+          key = "  OPS ";
+          keyColor = "33";
+        }
 
-      {
-        type = "kernel";
-        key = "  KNL ";
-        keyColor = "33";
-      }
+        {
+          type = "kernel";
+          key = "  KNL ";
+          keyColor = "33";
+        }
 
-      {
-        type = "wm";
-        key = "  WIM ";
-        keyColor = "33";
-      }
+        {
+          type = "wm";
+          key = "  WIM ";
+          keyColor = "33";
+        }
 
-      {
-        type = "shell";
-        key = "  SHL ";
-        keyColor = "32";
-      }
+        {
+          type = "shell";
+          key = "  SHL ";
+          keyColor = "32";
+        }
 
-      {
-        type = "terminal";
-        key = "  TER ";
-        keyColor = "32";
-      }
-      
-      {
-        type = "uptime";
-        key = "  UPT ";
-        keycolor = "32";
-      }
+        {
+          type = "terminal";
+          key = "  TER ";
+          keyColor = "32";
+        }
 
-      {
-        type = "cpu";
-        format = "{1}";
-        key = "  CPU ";
-        keyColor = "34";
-      }
+        {
+          type = "uptime";
+          key = "  UPT ";
+          keycolor = "32";
+        }
 
-      {
-        type = "gpu";
-        format = "{1} {2}";
-        key = "  GPU ";
-        keyColor = "34";
-      }
+        {
+          type = "cpu";
+          format = "{1}";
+          key = "  CPU ";
+          keyColor = "34";
+        }
 
-      {
-        type = "separator";
-        string = "└────────────────────────────────────────┘";
-        length = 1;
-      }
+        {
+          type = "gpu";
+          format = "{1} {2}";
+          key = "  GPU ";
+          keyColor = "34";
+        }
 
-      "break"
-      "colors"
-    ];
+        {
+          type = "separator";
+          string = "└────────────────────────────────────────┘";
+          length = 1;
+        }
+
+        "break"
+        "colors"
+      ];
     };
   };
 

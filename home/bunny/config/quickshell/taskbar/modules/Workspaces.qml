@@ -73,9 +73,11 @@ Item {
 
         width: 12
         height: 12
-        color: modelData.active ? Theme.primary : modelData.urgent ? Theme.rose : hover.containsMouse
-                                                                     ? Theme.primaryHover : modelData.isDummy
-                                                                       ? Theme.secondary : Theme.tertiary
+        color: modelData.active ? Theme.primary :
+               modelData.urgent ? Theme.rose :
+               modelData.isDummy ? 
+                hover.containsMouse ? Theme.lpurpleAlt : Theme.purpleAlt : // Dummy
+                hover.containsMouse ? Theme.lgreenAlt : Theme.greenAlt     // Active
 
         Behavior on width {
           NumberAnimation {

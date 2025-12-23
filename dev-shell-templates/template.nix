@@ -1,5 +1,5 @@
 {
-  description = "C/C++ Development Enviroment";
+  description = "";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -16,13 +16,19 @@
     in {
       devShells.default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          gdb
-          gcc
-          cmake
-          ninja
-          pkg-config
-          clang-tools # clangd, clang-tidy, clang-format
+          rustc
+          cargo
+          clippy
+          rustfmt
+          rust-analyzer
+          llvmPackages.clang
+          llvmPackages.libclang
         ];
+      };
+
+      env = {
+        LIBCLANG_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
+        LD_LIBRARY_PATH = "${pkgs.llvmPackages.libclang.lib}/lib";
       };
     });
 }
