@@ -1,11 +1,8 @@
-import qs
-import qs.taskbar.shared
+import qs.shared
 import qs.taskbar.sections
+
 import QtQuick
 import Quickshell
-import QtQuick.Layouts
-import QtQuick.Controls
-import Quickshell.Widgets
 
 Scope {
   Variants {
@@ -24,25 +21,15 @@ Scope {
 
       anchors {
         top: true
+        left: true
+        right: true
       }
 
       margins {
         bottom: -4
         top: Theme.margins
-        left: Theme.margins
-        right: Theme.margins
-      }
-
-      Rectangle {
-        border.width: 2
-        anchors.fill: parent
-        color: Theme.background
-        topLeftRadius: Theme.radius
-        topRightRadius: Theme.radius
-        bottomLeftRadius: Theme.radius
-        bottomRightRadius: Theme.radius
-        border.color: Theme.borderColour
-        opacity: Theme.backgroundOpacity
+        left: Theme.margins + 15
+        right: Theme.margins + 15
       }
 
       // ---- LEFT ----
@@ -73,7 +60,6 @@ Scope {
         height: parent.height
 
         anchors {
-          rightMargin: 10
           right: parent.right
           verticalCenter: parent.verticalCenter
         }

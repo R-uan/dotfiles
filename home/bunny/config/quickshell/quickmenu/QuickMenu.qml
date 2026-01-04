@@ -1,12 +1,10 @@
+import qs.shared
+
 import QtQuick
 import Quickshell
 import QtQuick.Effects
 import QtQuick.Window
 import QtQuick.Layouts
-import qs
-import qs.taskbar
-import qs.taskbar.shared
-import qs.taskbar.modules
 
 PanelWindow {
   id: quickMenu

@@ -1,11 +1,7 @@
 module TaskBar
 Bar 1.0 Bar.qml
-Tray 1.0 Tray.qml
-Network 1.0 Network.qml
-PowerButton 1.0 PowerButton.qml
-SysResources 1.0 SysResources.qml
-Volume 1.0 Volume.qml
-Workspaces 1.0 Workspaces.qml
-DateTime 1.0 DateTime.qml
-TheButton 1.0 TheButton.qml
-LeftSection 1.0 sections/LeftSection.qml
+Tray 1.0 modules/Tray.qml
+Network 1.0 modules/Network.qml
+SysResources 1.0 modules/SysResources.qml
+Workspaces 1.0 modules/Workspaces.qml
+TheButton 1.0 modules/TheButton.qml

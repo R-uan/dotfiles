@@ -1,15 +1,13 @@
+import qs.shared
+
 import QtQuick
 import QtQuick.Window
 import QtQuick.Layouts
-import qs
-import qs.taskbar
-import qs.taskbar.shared
 
 Item {
-  Layout.leftMargin: 7
-  Layout.preferredWidth: nix.width
   Layout.alignment: Qt.AlignVCenter
   Layout.preferredHeight: parent.height
+  Layout.preferredWidth: nix.width + (parent.height - nix.width)
 
   MouseArea {
     id: mouseArea
@@ -31,7 +29,7 @@ Item {
     id: nix
     text: "󱄅"
     font.pixelSize: 27
-    color: Theme.primary
+    color: Theme.foreground
     anchors.centerIn: parent
   }
 }

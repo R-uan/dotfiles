@@ -1,29 +1,34 @@
+import qs.shared
+import qs.taskbar.modules
+
 import QtQuick
 import QtQuick.Window
 import QtQuick.Layouts
-import qs
-import qs.taskbar
-import qs.taskbar.modules
 
 // Left Section
-Rectangle {
+Item {
   id: root
-  border.width: 0
-  radius: Theme.radius
+  width: layout.width
   height: parent.height
-  color: Theme.background
-  opacity: Theme.backgroundOpacity
 
   RowLayout {
     id: layout
     anchors.margins: 0
-    anchors.fill: parent
+    height: parent.height
 
-    TheButton {}
+    TheButton {
+      SolidBackground {
+        z: -1
+        anchors.fill: parent
+      }
+    }
 
-    Workspaces {
-      Layout.alignment: Qt.AlignVCenter
+    SysResources {
       Layout.preferredHeight: parent.height
+      SolidBackground {
+        z: -1
+        anchors.fill: parent
+      }
     }
   }
 }

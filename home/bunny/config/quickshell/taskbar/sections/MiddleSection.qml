@@ -1,58 +1,26 @@
-import QtQuick
-import Quickshell
-import QtQuick.Layouts
-import qs
-import qs.taskbar
-import qs.taskbar.shared
+import qs.shared
 import qs.taskbar.modules
-import qs.taskbar.sections
+
+import QtQuick
+import QtQuick.Window
+import QtQuick.Layouts
 
 // Middle Section
-Rectangle {
+Item {
   id: root
-  color: "transparent"
-  radius: Theme.radius
+  width: layout.width
   height: parent.height
-  implicitWidth: clockRow.implicitWidth
-
-  SystemClock {
-    id: sysclock
-    precision: SystemClock.Seconds
-  }
-
-  MouseArea {
-    enabled: true
-    anchors.fill: root
-    hoverEnabled: true
-
-    onEntered: {}
-
-    onExited: {}
-  }
 
   RowLayout {
-    id: clockRow
-    anchors.fill: parent
-    anchors.margins: 3
-    spacing: 15
-    anchors.centerIn: parent
+    id: layout
+    anchors.margins: 0
+    height: parent.height
 
-    CommonText {
-      font.bold: true
-      color: Theme.foreground
-      font.pixelSize: Theme.fontSize
-      Layout.alignment: Qt.AlignVCenter
-      text: Qt.formatDateTime(sysclock.date, "HH:mm")
-    }
-
-    Separator {}
-
-    CommonText {
-      font.bold: true
-      color: Theme.foreground
-      font.pixelSize: Theme.fontSize
-      Layout.alignment: Qt.AlignVCenter
-      text: Qt.formatDateTime(sysclock.date, "ddd, dd MMM")
+    Workspaces {
+      SolidBackground {
+        z: -1
+        anchors.fill: parent
+      }
     }
   }
 }

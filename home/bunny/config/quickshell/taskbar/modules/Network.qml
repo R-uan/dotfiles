@@ -1,9 +1,10 @@
+import qs
+import qs.shared
+import qs.taskbar.services
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
-import qs
-import qs.taskbar.shared
-import qs.taskbar.services
 
 Rectangle {
   radius: 2

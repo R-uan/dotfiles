@@ -7,7 +7,7 @@ Singleton {
   property int barHeight: 33
   property int barWidth: 1500
   property real backgroundOpacity: 1
-  property int radius: 6
+  property int radius: 4
   property int spacing: 3
   property int margins: 2
   // Font

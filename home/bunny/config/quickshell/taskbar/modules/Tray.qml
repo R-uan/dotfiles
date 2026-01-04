@@ -1,10 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import qs
-import qs.taskbar.shared
-import qs.taskbar.services
-
+import qs.shared
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray

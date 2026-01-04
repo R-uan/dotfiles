@@ -1,5 +1,5 @@
-import qs
 import QtQuick
+import qs.shared
 
 Text {
   color: Theme.foreground
