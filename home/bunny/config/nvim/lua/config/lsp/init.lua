@@ -1,0 +1,7 @@
+require("config.lsp.c-cpp")
+require("config.lsp.python")
+require("config.lsp.lua")
+require("config.lsp.nix")
+require("config.lsp.typescript")
+require("config.lsp.csharp")
+require("config.lsp.rust")

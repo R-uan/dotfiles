@@ -7,4 +7,5 @@ SysResources 1.0 SysResources.qml
 Volume 1.0 Volume.qml
 Workspaces 1.0 Workspaces.qml
 DateTime 1.0 DateTime.qml
+TheButton 1.0 TheButton.qml
 LeftSection 1.0 sections/LeftSection.qml

@@ -14,6 +14,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  programs.nix-ld.enable = true;
 
   networking.hostName = "ruan-nixos";
   networking.networkmanager.enable = true;

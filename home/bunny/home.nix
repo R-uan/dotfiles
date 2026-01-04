@@ -47,17 +47,19 @@
     mako # notification displayer
 
     # Daemons
-    networkmanager # network manager
-    pulseaudio # audio manager
     libnotify # notifications
+    pulseaudio # audio manager
+    networkmanager # network manager
 
     # Other Programs
     vlc # video player
-    mpv # media player (for anki audio)
-    gimp # Image Editor
+    krita # Image Editor
     vscode # Code Editor
     vivaldi # browser
-    discord # Messaging
+    (discord.override {
+      withVencord = true;
+    }) # Messaging
+    mplayer
     anki-bin # Flashcards
     obsidian # Markdown Notes
     nautilus # file manager
@@ -71,6 +73,7 @@
     # Fonts
     iosevka
     nerd-fonts.hack
+    noto-fonts-cjk-serif
     nerd-fonts.jetbrains-mono
   ];
 

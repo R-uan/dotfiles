@@ -5,7 +5,7 @@ import Quickshell
 Singleton {
   // Bar Design
   property int barHeight: 33
-  property int barWidth: 1270
+  property int barWidth: 1500
   property real backgroundOpacity: 1
   property int radius: 6
   property int spacing: 3
@@ -46,7 +46,7 @@ Singleton {
   property string background: black
 
   property string borderColour: blackAlt
-  
+
   property string primaryHover: lgreen
   property string secondaryHover: dpurple
   property string tertiaryHover: dpurpleAlt

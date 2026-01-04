@@ -13,7 +13,7 @@ Item {
 
   Row {
     id: layout
-    spacing: 12
+    spacing: 10
     anchors.centerIn: parent
 
     Repeater {
@@ -65,7 +65,7 @@ Item {
 
       delegate: Rectangle {
         id: wsBox
-        radius: 60
+        radius: 3
         // topLeftRadius: Theme.radius - 12
         // topRightRadius: Theme.radius - 12
         // bottomLeftRadius: Theme.radius - 7
@@ -73,11 +73,14 @@ Item {
 
         width: 12
         height: 12
-        color: modelData.active ? Theme.primary :
-               modelData.urgent ? Theme.rose :
-               modelData.isDummy ? 
-                hover.containsMouse ? Theme.lpurpleAlt : Theme.purpleAlt : // Dummy
-                hover.containsMouse ? Theme.lgreenAlt : Theme.greenAlt     // Active
+        color: modelData.active ? Theme.primary : modelData.urgent ? Theme.rose : modelData.isDummy
+                                                                     ? hover.containsMouse ? Theme.lpurpleAlt :
+                                                                                             Theme.purpleAlt :
+                                                                                             // Dummy
+                                                                                             hover.containsMouse
+                                                                                             ? Theme.lgreenAlt :
+                                                                                               Theme.greenAlt
+        // Active
 
         Behavior on width {
           NumberAnimation {

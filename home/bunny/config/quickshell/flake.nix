@@ -16,6 +16,7 @@
     in {
       devShells.default = pkgs.mkShell {
         buildInputs = [
+          pkgs.kdePackages.qt5compat
           pkgs.kdePackages.qtdeclarative
         ];
 
