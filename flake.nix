@@ -12,6 +12,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nbfc-linux = {
       url = "github:nbfc-linux/nbfc-linux";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,6 +54,7 @@
 
           ({pkgs, ...}: {
             environment.systemPackages = [
+              inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
               (inputs.awww.packages.${pkgs.system}.awww)
               (inputs.quickshell.packages.${pkgs.system}.default.override {
                 withWayland = true;

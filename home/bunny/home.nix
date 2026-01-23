@@ -50,22 +50,19 @@
     libnotify # notifications
     pulseaudio # audio manager
     networkmanager # network manager
-
     # Other Programs
     vlc # video player
     krita # Image Editor
-    vscode # Code Editor
-    vivaldi # browser
     (discord.override {
       withVencord = true;
     }) # Messaging
     mplayer
+    osu-lazer
     anki-bin # Flashcards
     obsidian # Markdown Notes
     nautilus # file manager
     hyprshot # Screen-capture
     hyprcursor # hyprland cursor
-    zed-editor # Code Editor
     dbeaver-bin # Database management
     pavucontrol # PulseAudio control panel
     wineWowPackages.stable # windows app runner

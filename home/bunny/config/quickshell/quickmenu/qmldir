@@ -1,2 +1,4 @@
 module QuickMenu
 QuickMenu 1.0 QuickMenu.qml
+Card 1.0 Card.qml
+DirectoryShortcut 1.0 DirectoryShortcut.qml

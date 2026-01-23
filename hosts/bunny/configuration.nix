@@ -33,6 +33,16 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk
+      qt6Packages.fcitx5-chinese-addons
+      libsForQt5.fcitx5-qt
+      kdePackages.fcitx5-configtool
+    ];
+  };
+
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
   services.displayManager.defaultSession = "hyprland";
@@ -58,8 +68,7 @@
     ignoreShellProgramCheck = true;
     extraGroups = ["networkmanager" "wheel" "docker"];
     packages = with pkgs; [
-      kdePackages.kate
-      #  thunderbird
+      thunderbird
     ];
   };
 
@@ -76,11 +85,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
-      # offload = {
-      #  enable = true;
-      #  enableOffloadCmd = true; # Lets you use `nvidia-offload %command%` in steam
-      # };
-
       sync.enable = true;
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
@@ -109,6 +113,7 @@
   ];
 
   hardware.enableAllFirmware = true;
+
   fileSystems."/mnt/hdd" = {
     device = "/dev/disk/by-uuid/5af9c46f-3e7b-4f9a-a7bb-c4864b82f781";
     fsType = "ext4";
@@ -140,27 +145,9 @@
     CPUQuota = "200%";
   };
 
-  hardware.bluetooth.enable = true;
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-      CPU_MIN_PERF_ON_AC = 0;
-      CPU_MAX_PERF_ON_AC = 100;
-      CPU_MIN_PERF_ON_BAT = 0;
-      CPU_MAX_PERF_ON_BAT = 20;
-
-      #Optional helps save long term battery health
-      START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-      STOP_CHARGE_THRESH_BAT0 = 70; # 70 and above it stops charging
-    };
-  };
   services.flatpak.enable = true;
+  hardware.bluetooth.enable = true;
+
   services.mpd = {
     enable = true;
     musicDirectory = "/mnt/hdd/home/Music/";

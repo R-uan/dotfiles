@@ -32,7 +32,7 @@ Singleton {
   property string lgreenAlt: "#8fc277"
   property string dgreenAlt: "#2a3424"
 
-  property string black: "#070707"
+  property string black: "#121312"
   property string blackAlt: "#202020"
 
   property string rose: "#D46A8C"

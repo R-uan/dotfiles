@@ -39,14 +39,9 @@ Item {
             if (modelData.hasMenu) {
               const pos = mapToItem(mainWindow.contentItem, 0, height + 10);
               console.log(mainWindow);
-              modelData.display(popup, pos.x, pos.y);
+              modelData.display(mainWindow, pos.x, pos.y);
             }
           }
-        }
-
-        PopupWindow {
-          id: popup
-          anchor.window: mainWindow
         }
 
         IconImage {

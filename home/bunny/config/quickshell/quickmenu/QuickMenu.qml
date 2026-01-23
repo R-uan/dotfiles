@@ -1,4 +1,5 @@
 import qs.shared
+import qs.quickmenu
 
 import QtQuick
 import Quickshell
@@ -9,94 +10,70 @@ import QtQuick.Layouts
 PanelWindow {
   id: quickMenu
   visible: false
-  implicitHeight: 350
+  implicitHeight: 600
   color: "transparent"
-  implicitWidth: Theme.barWidth
+  implicitWidth: 800
   objectName: "Status Bar Window"
-  margins.top: Theme.barHeight + 7
+  margins.top: Theme.barHeight + 5
   exclusionMode: ExclusionMode.Ignore
 
   property alias timer: timer
 
-  anchors {
-    top: true
-  }
-
-  RowLayout {
+  // This is the main layout
+  ColumnLayout {
     anchors.fill: parent
+    // This is the top segment
+    RowLayout {
+      Layout.fillWidth: true
+      Layout.preferredHeight: parent.height / 2
 
-    Item {
-      Layout.fillHeight: true
-      Layout.preferredWidth: 250
+      Card {}
+      DirectoryShortcut {}
+    }
 
-      ColumnLayout {
-        anchors.centerIn: parent
+    ColumnLayout {
+      Layout.fillWidth: true
+      Layout.preferredHeight: parent.height / 2
 
-        Item {
-          Layout.preferredWidth: 220
-          Layout.preferredHeight: 220
+      Item {
+        Layout.preferredHeight: 50
+        Layout.preferredWidth: 210
 
-          Image {
-            id: img
-            visible: false
-            anchors.fill: parent
-            source: "cardimg.jpg"
-          }
+        SolidBackground {
+          anchors.fill: parent
+        }
 
-          MultiEffect {
-            source: img
-            anchors.fill: img
-            maskEnabled: true
-            maskSource: mask
-          }
+        CommonText {
+          text: ""
+          font.pixelSize: 22
+          color: Theme.foreground
+          anchors.centerIn: parent
+        }
 
-          // Rectangle {
-          //   radius: 17
-          //   border.width: 1
-          //   anchors.fill: parent
-          //   color: "transparent"
-          //   border.color: Theme.borderColour
-          // }
+        MouseArea {
+          id: mouseArea
+          anchors.fill: parent
 
-          Item {
-            id: mask
-            width: img.width
-            height: img.height
-            layer.enabled: true
-            visible: false
-
-            Rectangle {
-              radius: 17
-              color: "black"
-              width: img.width
-              height: img.height
+          onClicked: {
+            if (wallpicker.visible) {
+              wallpicker.visible = false;
+              wallpicker.timer.running = false;
+            } else {
+              wallpicker.visible = true;
+              mouse.accepted = true;  // Add this to prevent propagation
+              // quickMenu.timer.interval = 2000;
+              // quickMenu.timer.running = true;
             }
           }
-        }
-
-        CommonText {
-          Layout.topMargin: 15
-          Layout.alignment: Qt.AlignHCenter
-          font.pixelSize: Theme.fontSize + 7
-          text: "ForgetfulBnnuy"
-          font.weight: 900
-        }
-
-        CommonText {
-          Layout.alignment: Qt.AlignHCenter
-          font.pixelSize: Theme.fontSize + 4
-          font.weight: 400
-          text: "ruan"
         }
       }
 
       Rectangle {
-        z: -1
+        color: "transparent"
+        border.color: "blue"
         border.width: 2
-        radius: Theme.radius
-        anchors.fill: parent
-        color: Theme.background
-        border.color: Theme.borderColour
+        Layout.fillWidth: true
+        Layout.fillHeight: true
       }
     }
   }
@@ -115,6 +92,7 @@ PanelWindow {
     id: area
     hoverEnabled: true
     anchors.fill: parent
+    propagateComposedEvents: true  // Add this line
 
     onExited: {
       timer.running = true;
@@ -124,17 +102,5 @@ PanelWindow {
       timer.running = false;
       timer.interval = 1000;
     }
-  }
-
-  Rectangle {
-    // border.width: 2
-    anchors.fill: parent
-    color: "transparent" // Theme.background
-    topLeftRadius: Theme.radius
-    topRightRadius: Theme.radius
-    bottomLeftRadius: Theme.radius
-    bottomRightRadius: Theme.radius
-    // border.color: Theme.borderColour
-    opacity: Theme.backgroundOpacity
   }
 }
