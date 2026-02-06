@@ -12,7 +12,7 @@
         height = 15;
         padding = {
           top = 0;
-          left = 1;
+          left = 0;
         };
       };
       display = {"separator" = " ›  ";};

@@ -1,4 +1,5 @@
 return {
+  -- This is the comand line :
   "folke/noice.nvim",
   event = "VeryLazy",
   dependencies = {
@@ -29,55 +30,29 @@ return {
       backend = "nui",
     },
 
+    presets = {
+      -- you can enable a preset by setting it to true, or a table that will override the preset config
+      -- you can also add custom presets that you can enable/disable with enabled=true
+      bottom_search = true,          -- use a classic bottom cmdline for search
+      command_palette = false,       -- position the cmdline and popupmenu together
+      long_message_to_split = false, -- long messages will be sent to a split
+      inc_rename = false,            -- enables an input dialog for inc-rename.nvim
+    },
+
     views = {
       cmdline_popup = {
         border = {
-          style = "rounded",
+          style = "none",
+          padding = { 1, 2 },
         },
-        position = {
-          row = "40%",
-          col = "50%",
-        },
-        size = {
-          width = 60,
-          height = "auto",
+        filter_options = {},
+        win_options = {
+          winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
         },
       },
-    },
-
-    presets = {
-      bottom_search = false,
-      command_palette = true,
-      long_message_to_split = false,
-      inc_rename = true,
-      lsp_doc_border = true,
     },
   },
   config = function(_, opts)
     require "noice".setup(opts)
-
-    vim.api.nvim_set_hl(0, "NoiceCmdlinePopup", {
-      bg = "#070707",
-      fg = "#a8c69f", -- lgreen
-    })
-
-    vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorder", {
-      bg = "#070707",
-      fg = "#7fb069", -- dgreen
-    })
-
-    vim.api.nvim_set_hl(0, "NoiceCmdlineIcon", {
-      fg = "#7fb069", -- green (PRIMARY)
-    })
-
-    vim.api.nvim_set_hl(0, "NoiceConfirmBorder", {
-      fg = "#7fb069",
-      bg = "#070707",
-    })
-
-    vim.api.nvim_set_hl(0, "NoicePopupmenuMatch", {
-      fg = "#7fb069",
-      bold = true,
-    })
   end,
 }

@@ -1,5 +1,5 @@
 * {
     background:     #070707;
-    primary:        #7fb069;
+    primary:        #7a9b7f;
     selected:       @primary;
 }

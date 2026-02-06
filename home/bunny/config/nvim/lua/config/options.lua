@@ -15,24 +15,26 @@ vim.opt.foldlevel = 99 -- Open all folds by default
 
 vim.opt.whichwrap:append "<,>,h,l,[,]"
 vim.opt.scrolloff = 10
-vim.g.rust_recommended_style = 0
 
-vim.cmd([[
+vim.g.rust_recommended_style = 0
+vim.g.python_recommended_style = 0
+
+vim.cmd [[
   highlight DiagnosticVirtualTextError guifg=#D46A8C guibg=NONE gui=italic
   highlight DiagnosticVirtualTextWarn  guifg=#D46A8C guibg=NONE gui=italic
   highlight DiagnosticVirtualTextInfo  guifg=#A4CE70 guibg=NONE gui=italic
   highlight DiagnosticVirtualTextHint  guifg=#A4CE70 guibg=NONE gui=italic
-]])
+]]
 
-vim.diagnostic.config({
-	virtual_text = {
-		prefix = "",
-		spacing = 1,
-	}, -- inline error messages
-	signs = false, -- gutter signs
-	underline = false, -- underline problem
-	float = { border = "rounded" },
-})
+vim.diagnostic.config {
+  virtual_text = {
+    prefix = "",
+    spacing = 1,
+  },                -- inline error messages
+  signs = false,    -- gutter signs
+  underline = true, -- underline problem
+  float = { border = "rounded" },
+}
 
 -- necessary for nvim-tree
 vim.g.loaded_netrw = 1

@@ -40,6 +40,7 @@
     gnused # text surgery
     gnugrep # grep
     ripgrep # text search tool
+    inetutils #net utils
     bluetuith # bluetooth
 
     # Desktop Modules
@@ -57,7 +58,7 @@
       withVencord = true;
     }) # Messaging
     mplayer
-    osu-lazer
+    vscodium
     anki-bin # Flashcards
     obsidian # Markdown Notes
     nautilus # file manager
@@ -65,6 +66,9 @@
     hyprcursor # hyprland cursor
     dbeaver-bin # Database management
     pavucontrol # PulseAudio control panel
+    dxvk
+    lutris
+    winetricks
     wineWowPackages.stable # windows app runner
 
     # Fonts
@@ -85,7 +89,6 @@
   home.file.".config/btop".source = ./config/btop;
   home.file.".config/mako".source = ./config/mako;
   home.file.".config/hypr".source = ./config/hypr;
-  home.file.".local/share/wallpapers".source = ./wallpapers;
   home.file.".config/quickshell".source = ./config/quickshell;
 
   # Don't change this unless you're rebuilding the system cleanly

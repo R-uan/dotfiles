@@ -1,5 +1,7 @@
-vim.lsp.config.clangd        = {
-  on_attach = function()
+vim.lsp.config.clangd = {
+  on_attach = function(client, bufnr)
+    local navic = require "nvim-navic"
+    navic.attach(client, bufnr)
     print "Clangd Language Server Attached!"
   end,
   filetypes = {
@@ -25,4 +27,4 @@ vim.lsp.config.clangd        = {
   },
 }
 
-vim.lsp.enable("clangd")
+vim.lsp.enable "clangd"

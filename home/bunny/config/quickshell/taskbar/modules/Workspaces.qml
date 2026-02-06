@@ -147,9 +147,9 @@ Item {
           if (model.urgent)
             return Theme.rose;
           if (model.isDummy) {
-            return hover.containsMouse ? Theme.lpurpleAlt : Theme.purpleAlt;
+            return hover.containsMouse ? Theme.secondaryHover : Theme.secondary;
           }
-          return hover.containsMouse ? Theme.lgreenAlt : Theme.primary;
+          return hover.containsMouse ? Theme.primaryHover : Theme.tertiary;
         }
 
         Behavior on width {
@@ -168,8 +168,8 @@ Item {
 
         MouseArea {
           id: hover
-          anchors.fill: parent
           hoverEnabled: true
+          anchors.fill: parent
           onClicked: {
             if (mouse.button === Qt.LeftButton) {
               Hyprland.dispatch(`workspace ${model.workspaceId}`);

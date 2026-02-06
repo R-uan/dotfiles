@@ -15,39 +15,34 @@ Singleton {
   property int fontWeight: 400
   property string fontFamily: "Iosevka"
   // Colour Palette
-
-  property string purple: "#b692d4"
-  property string lpurple: "#d4b5e8"
-  property string dpurple: "#4a3358"
-
-  property string purpleAlt: "#6b4d82"
-  property string lpurpleAlt: "#c4a3e0"
-  property string dpurpleAlt: "#32233d"
-
-  property string green: "#7fb069"
-  property string lgreen: "#a8c69f"
-  property string dgreen: "#3d4a34"
-
-  property string greenAlt: "#556b47"
-  property string lgreenAlt: "#8fc277"
-  property string dgreenAlt: "#2a3424"
-
+  property string greenDarker: "#2d3a2e"
+  property string greenDark: "#3d4a3e"
+  property string greenMid: "#6b7c6e"
+  property string greenBase: "#8a9d8f"
+  property string greenLight: "#a8b9aa"
+  property string greenLighter: "#c5d3c6"
+  property string greenAccent: "#7a9b7f"
+  property string greenWarm: "#8d9e88"
+  property string greenCool: "#84a089"
+  property string grey: "#5a6a5a"
+  property string success: "#7a9b7f"
+  property string warning: "#9da88d"
+  property string error: "#9d8a8a"
+  // Backgrounds
+  property string bg0: "transparent"
+  property string bg1: "#1a1f1a"
+  property string bg2: "#232823"
+  property string bg3: "#2d322d"
   property string black: "#121312"
-  property string blackAlt: "#202020"
-
-  property string rose: "#D46A8C"
-  property string lrose: "#fd9eff"
   // Colour Scheme
-  property string primary: green
-  property string secondary: purple
-  property string tertiary: greenAlt
+  property string primary: greenMid
+  property string secondary: greenDarker
+  property string tertiary: greenWarm
 
-  property string foreground: lgreen
+  property string foreground: greenLight
   property string background: black
+  property string borderColour: bg3
 
-  property string borderColour: blackAlt
-
-  property string primaryHover: lgreen
-  property string secondaryHover: dpurple
-  property string tertiaryHover: dpurpleAlt
+  property string primaryHover: greenLighter
+  property string secondaryHover: greenDark
 }
