@@ -10,21 +10,33 @@
   home.username = "bunny";
   home.homeDirectory = "/home/bunny";
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    name = "Bibata-Modern-Classic";
+    size = 24;
+    package = pkgs.bibata-cursors;
+  };
+
   home.packages = with pkgs; [
     # Development Essentials
+    
     ## C/C++ Essentials
+
     gcc
     lld
     cmake
     ninja
-    binutils
     gnumake
+    binutils
+    patchelf
     glibc.dev
     pkg-config
     clang-tools
 
     ## Nix Language
-    nil # LSP
+    
+    nil       
     deadnix
     alejandra # Formatter
 
@@ -34,6 +46,7 @@
 
     # Terminal Apps
     fd # find replacement
+    yazi # file manager
     gawk # text-processing language
     btop # task manager
     procps # for top
@@ -41,7 +54,7 @@
     gnugrep # grep
     ripgrep # text search tool
     inetutils #net utils
-    bluetuith # bluetooth
+    bluetuith # bluetooth interface
 
     # Desktop Modules
     rofi # App Launcher
@@ -51,25 +64,24 @@
     libnotify # notifications
     pulseaudio # audio manager
     networkmanager # network manager
+    
     # Other Programs
     vlc # video player
+    dxvk
     krita # Image Editor
-    (discord.override {
-      withVencord = true;
-    }) # Messaging
-    mplayer
-    vscodium
+    mplayer # media player (for anki)
+    firefox # browser
     anki-bin # Flashcards
     obsidian # Markdown Notes
     nautilus # file manager
-    hyprshot # Screen-capture
+    hyprshot # screenshots
+    vscode-fhs # code editor
+    winetricks 
     hyprcursor # hyprland cursor
-    dbeaver-bin # Database management
-    pavucontrol # PulseAudio control panel
-    dxvk
-    lutris
-    winetricks
+    dbeaver-bin # database management
+    pavucontrol # pulseAudio control panel
     wineWowPackages.stable # windows app runner
+    (discord.override { withVencord = true; })
 
     # Fonts
     iosevka
@@ -86,6 +98,7 @@
     #QML2_IMPORT_PATH = "${pkgs.quickshell}/lib/qt-6/qml";
   };
 
+  # home.file.".config/nvim".source = .config/nvim;
   home.file.".config/btop".source = ./config/btop;
   home.file.".config/mako".source = ./config/mako;
   home.file.".config/hypr".source = ./config/hypr;

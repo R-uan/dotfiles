@@ -54,9 +54,9 @@
 
           ({pkgs, ...}: {
             environment.systemPackages = [
-              inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-              (inputs.awww.packages.${pkgs.system}.awww)
-              (inputs.quickshell.packages.${pkgs.system}.default.override {
+              # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+              (inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww)
+              (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
                 withWayland = true;
                 withX11 = false;
                 withPipewire = true;
