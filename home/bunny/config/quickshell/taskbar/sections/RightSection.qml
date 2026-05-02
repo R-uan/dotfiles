@@ -12,7 +12,7 @@ Item {
 
   RowLayout {
     id: layout
-    spacing: 5
+    spacing: Theme.spacing
     height: parent.height
 
     Tray {

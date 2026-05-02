@@ -28,8 +28,8 @@ Scope {
       margins {
         bottom: -4
         top: Theme.margins
-        left: Theme.margins + 15
-        right: Theme.margins + 15
+        left: Theme.margins + 7
+        right: Theme.margins + 7
       }
 
       // ---- LEFT ----

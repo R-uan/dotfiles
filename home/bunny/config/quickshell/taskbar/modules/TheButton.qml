@@ -28,8 +28,8 @@ Item {
   CommonText {
     id: nix
     text: "󱄅"
-    font.pixelSize: 27
     color: Theme.foreground
     anchors.centerIn: parent
+    font.pixelSize: Theme.barHeight * 0.8
   }
 }

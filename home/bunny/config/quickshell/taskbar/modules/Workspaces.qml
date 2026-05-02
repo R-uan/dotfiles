@@ -129,7 +129,7 @@ Item {
 
   Row {
     id: layout
-    spacing: 10
+    spacing: Theme.spacing + 5
     anchors.centerIn: parent
 
     Repeater {

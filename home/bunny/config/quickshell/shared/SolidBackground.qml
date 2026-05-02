@@ -3,10 +3,11 @@ import qs.shared
 import QtQuick.Window
 
 Rectangle {
-  border.width: 1
+  border.width: 0
   width: parent.width
   radius: Theme.radius
   height: parent.height
   color: Theme.background
+  opacity: Theme.backgroundOpacity
   border.color: Theme.borderColour
 }

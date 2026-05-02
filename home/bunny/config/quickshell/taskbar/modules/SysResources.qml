@@ -12,7 +12,7 @@ Item {
 
   RowLayout {
     id: layout
-    spacing: 12
+    spacing: 13
     anchors.centerIn: parent
     Repeater {
       model: SysResourcesManager.stats

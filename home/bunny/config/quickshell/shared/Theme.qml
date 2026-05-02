@@ -4,12 +4,12 @@ import Quickshell
 
 Singleton {
   // Bar Design
-  property int barHeight: 33
-  property int barWidth: 1500
-  property real backgroundOpacity: 1
-  property int radius: 4
-  property int spacing: 3
+  property int radius: 7
+  property int spacing: 5
   property int margins: 2
+  property int barHeight: 32
+  property int barWidth: 1500
+  property real backgroundOpacity: 0.93
   // Font
   property int fontSize: 14
   property int fontWeight: 400
@@ -33,15 +33,15 @@ Singleton {
   property string bg1: "#1a1f1a"
   property string bg2: "#232823"
   property string bg3: "#2d322d"
-  property string black: "#121312"
+  property string black: "#171919"
   // Colour Scheme
   property string primary: greenMid
   property string secondary: greenDarker
   property string tertiary: greenWarm
 
-  property string foreground: greenLight
   property string background: black
-  property string borderColour: bg3
+  property string foreground: greenLighter
+  property string borderColour: "#303030"
 
   property string primaryHover: greenLighter
   property string secondaryHover: greenDark

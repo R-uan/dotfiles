@@ -15,6 +15,7 @@ Item {
     id: layout
     anchors.margins: 0
     height: parent.height
+    spacing: Theme.spacing
 
     TheButton {
       SolidBackground {
