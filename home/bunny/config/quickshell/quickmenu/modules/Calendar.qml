@@ -38,6 +38,13 @@ Item {
     }
   }
 
+  Timer {
+    interval: 60000  // check every minute
+    running: true
+    repeat: true
+    onTriggered: today = new Date()
+  }
+
   function nextMonth() {
     if (displayMonth === 11) {
       displayMonth = 0;

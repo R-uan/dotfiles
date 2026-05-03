@@ -54,6 +54,9 @@
 
           ({pkgs, ...}: {
             environment.systemPackages = [
+              (pkgs.writeShellScriptBin "rebuild" ''
+                exec nixos-rebuild switch --flake /mnt/hdd/home/dotfiles#bunny "$@"
+              '')
               # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
               (inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww)
               (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {

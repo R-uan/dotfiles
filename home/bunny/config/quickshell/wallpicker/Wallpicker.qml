@@ -22,7 +22,7 @@ PanelWindow {
   }
 
   property var wallpaperPaths: []
-  property string hoveredPath: ""
+  property bool isHovered: false
 
   // — Background —
   SolidBackground {
@@ -46,6 +46,14 @@ PanelWindow {
     id: applyWallpaper
     running: false
     command: []
+  }
+
+  // — Auto-hide timer —
+  Timer {
+    id: hideTimer
+    interval: 1000
+    running: false
+    onTriggered: wallpicker.visible = false
   }
 
   // — Main layout —
@@ -96,13 +104,22 @@ PanelWindow {
       cellHeight: Math.floor(cellWidth * 0.5625) + 6
       clip: true
       cacheBuffer: 200
-      reuseItems: true
+      reuseItems: false  // prevents delegate reuse bugs with MultiEffect
 
       ScrollBar.vertical: ScrollBar {
         id: scrollBar
         policy: ScrollBar.AsNeeded
         interactive: true
         width: 8
+
+        onPressedChanged: {
+          if (pressed) {
+            hideTimer.running = false;
+          } else {
+            if (!wallpicker.isHovered)
+              hideTimer.running = true;
+          }
+        }
 
         contentItem: Rectangle {
           radius: 4
@@ -122,8 +139,12 @@ PanelWindow {
       }
 
       delegate: Item {
+        id: delegateRoot
         width: wallpapers.cellWidth
         height: wallpapers.cellHeight
+
+        // capture modelData before it goes out of scope
+        property string wallPath: modelData
 
         Item {
           anchors.fill: parent
@@ -134,7 +155,7 @@ PanelWindow {
             id: img
             visible: false
             anchors.fill: parent
-            source: modelData
+            source: delegateRoot.wallPath
             asynchronous: true
             sourceSize.width: width
             sourceSize.height: height
@@ -168,7 +189,7 @@ PanelWindow {
             anchors.fill: parent
             radius: Theme.radius
             color: Theme.black
-            opacity: hoverArea.containsMouse ? 0.35 : 0
+            opacity: cellHover.containsMouse ? 0.35 : 0
             Behavior on opacity {
               NumberAnimation {
                 duration: 150
@@ -182,7 +203,7 @@ PanelWindow {
             radius: Theme.radius
             color: "transparent"
             border.color: Theme.greenAccent
-            border.width: hoverArea.containsMouse ? 2 : 0
+            border.width: cellHover.containsMouse ? 2 : 0
             Behavior on border.width {
               NumberAnimation {
                 duration: 150
@@ -190,13 +211,13 @@ PanelWindow {
             }
           }
 
-          // — Mouse —
+          // — Click + hover —
           MouseArea {
-            id: hoverArea
+            id: cellHover
             anchors.fill: parent
             hoverEnabled: true
             onClicked: {
-              applyWallpaper.command = ["swww", "img", modelData, "--transition-type", "center"];
+              applyWallpaper.command = ["awww", "img", delegateRoot.wallPath, "--transition-type", "center"];
               applyWallpaper.running = true;
             }
           }
@@ -205,38 +226,14 @@ PanelWindow {
     }
   }
 
-  // — Auto-hide timer —
-  Timer {
-    id: hideTimer
-    interval: 1000
-    running: false
-    onTriggered: wallpicker.visible = false
-  }
-
-  MouseArea {
-    id: area
-    anchors.fill: parent
-    anchors.rightMargin: 24
-    hoverEnabled: true
-    propagateComposedEvents: true
-    onExited: {
-      if (!scrollBar.pressed)
-        hideTimer.running = true;
-    }
-    onEntered: {
-      hideTimer.running = false;
-      hideTimer.interval = 1000;
-    }
-  }
-
-  Connections {
-    target: scrollBar
-    function onPressedChanged() {
-      if (!scrollBar.pressed) {
-        if (!area.containsMouse)
-          hideTimer.running = true;
-      } else {
+  // — Hover detection for hide logic —
+  HoverHandler {
+    onHoveredChanged: {
+      wallpicker.isHovered = hovered;
+      if (hovered) {
         hideTimer.running = false;
+      } else if (!scrollBar.pressed) {
+        hideTimer.running = true;
       }
     }
   }
