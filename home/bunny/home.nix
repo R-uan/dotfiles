@@ -45,6 +45,7 @@
     yazi # file manager
     gawk # text-processing language
     btop # task manager
+    unar
     procps # for top
     gnused # text surgery
     gnugrep # grep
@@ -89,19 +90,21 @@
     # Fonts
     iosevka
     noto-fonts-cjk-serif
+    nerd-fonts.jetbrains-mono
   ];
 
   home.sessionVariables = {
     EDITOR = "code";
     HDD = "/mnt/hdd";
-    CODE = "/mnt/hdd/code";
-    #QML2_IMPORT_PATH = "${pkgs.quickshell}/lib/qt-6/qml";
+    CODE = "/mnt/hdd/home/code";
+    DOTFILES = "/mnt/hdd/home/dotfiles";
   };
 
   # home.file.".config/nvim".source = .config/nvim;
   home.file.".config/btop".source = ./config/btop;
   home.file.".config/mako".source = ./config/mako;
   home.file.".config/hypr".source = ./config/hypr;
+  home.file.".config/yazi".source = ./config/yazi;
   home.file.".config/quickshell".source = ./config/quickshell;
 
   # Don't change this unless you're rebuilding the system cleanly

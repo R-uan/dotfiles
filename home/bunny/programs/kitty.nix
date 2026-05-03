@@ -18,7 +18,7 @@
       initial_window_height = 600;
       foreground = "#a8b9aa";
       background = "#171919";
-      background_opacity = "0.93";
+      background_opacity = "0.95";
       selection_foreground = "#121312";
       selection_background = "#7a9b7f";
       cursor = "#a8b9aa";

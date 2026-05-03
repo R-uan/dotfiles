@@ -1,0 +1,122 @@
+// Weather.qml
+import QtQuick
+import QtQuick.Layouts
+import qs.shared
+import qs.quickmenu.services
+
+Item {
+  id: root
+
+  function conditionIcon(desc) {
+    const d = desc.toLowerCase();
+    if (d.includes("sunny") || d.includes("clear"))
+      return "☀️";
+    if (d.includes("partly cloudy"))
+      return "⛅";
+    if (d.includes("cloud") || d.includes("overcast"))
+      return "☁";
+    if (d.includes("drizzle") || d.includes("light rain"))
+      return "🌦";
+    if (d.includes("rain") || d.includes("shower"))
+      return "🌧";
+    if (d.includes("thunder") || d.includes("storm"))
+      return "⛈";
+    if (d.includes("snow") || d.includes("sleet"))
+      return "🌨";
+    if (d.includes("fog") || d.includes("mist"))
+      return "🌫";
+    if (d.includes("blizzard"))
+      return "❄";
+    return "🌡";
+  }
+
+  // — Background —
+  SolidBackground {
+    anchors.fill: parent
+  }
+
+  // — Loading —
+  Text {
+    visible: WeatherService.loading
+    anchors.centerIn: parent
+    text: "Loading…"
+    color: Theme.grey
+    font.pixelSize: Theme.fontSize
+    font.family: Theme.fontFamily
+  }
+
+  // — Error —
+  Text {
+    visible: WeatherService.hasError && !WeatherService.loading
+    anchors.centerIn: parent
+    text: "Could not fetch weather"
+    color: Theme.error
+    font.pixelSize: Theme.fontSize - 2
+    font.family: Theme.fontFamily
+  }
+
+  // — Content —
+  RowLayout {
+    spacing: 15
+    visible: !WeatherService.loading && !WeatherService.hasError
+    anchors.centerIn: parent
+
+    // Left: icon
+    Text {
+      font.pixelSize: 35
+      Layout.alignment: Qt.AlignVCenter
+      text: root.conditionIcon(WeatherService.condition)
+    }
+
+    // Right: info
+    ColumnLayout {
+      Layout.fillWidth: true
+      Layout.alignment: Qt.AlignVCenter
+      spacing: 3
+
+      Text {
+        text: WeatherService.tempC + "°C"
+        color: Theme.foreground
+        font.pixelSize: 20
+        font.family: Theme.fontFamily
+        font.weight: Font.Medium
+      }
+
+      Text {
+        text: WeatherService.condition
+        color: Theme.greenBase
+        font.pixelSize: Theme.fontSize - 2
+        font.family: Theme.fontFamily
+      }
+    }
+    ColumnLayout {
+      RowLayout {
+        spacing: 4
+        Text {
+          text: "💧"
+          font.pixelSize: 11
+        }
+        Text {
+          text: WeatherService.humidity + "%"
+          color: Theme.greenLight
+          font.pixelSize: Theme.fontSize - 2
+          font.family: Theme.fontFamily
+        }
+      }
+
+      RowLayout {
+        spacing: 4
+        Text {
+          text: "💨"
+          font.pixelSize: 11
+        }
+        Text {
+          text: WeatherService.windSpeed + " km/h "
+          color: Theme.greenLight
+          font.pixelSize: Theme.fontSize - 2
+          font.family: Theme.fontFamily
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ Singleton {
   property int margins: 2
   property int barHeight: 32
   property int barWidth: 1500
-  property real backgroundOpacity: 0.93
+  property real backgroundOpacity: 0.95
   // Font
   property int fontSize: 14
   property int fontWeight: 400
@@ -41,7 +41,7 @@ Singleton {
 
   property string background: black
   property string foreground: greenLighter
-  property string borderColour: "#303030"
+  property string borderColour: black
 
   property string primaryHover: greenLighter
   property string secondaryHover: greenDark

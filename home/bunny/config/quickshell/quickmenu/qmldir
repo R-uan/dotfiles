@@ -1,4 +1,7 @@
 module QuickMenu
 QuickMenu 1.0 QuickMenu.qml
-Card 1.0 Card.qml
-DirectoryShortcut 1.0 DirectoryShortcut.qml
+Card 1.0 modules/Card.qml
+Weather 1.0 modules/Weather.qml
+Calendar 1.0 modules/Calendar.qml
+OpenWallpicker 1.0 modules/OpenWallpicker.qml
+DirectoryShortcut 1.0 modules/DirectoryShortcut.qml

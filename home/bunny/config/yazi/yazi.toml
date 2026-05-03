@@ -1,0 +1,50 @@
+[mgr]
+ratio          = [2, 3, 3]   # Panel width ratios (parent:current:preview)
+linemode = "size"
+sort_by        = "size"
+sort_sensitive = false
+sort_reverse   = false
+sort_dir_first = true
+show_hidden    = true
+show_symlink   = true
+
+[preview]
+tab_size      = 2
+max_width     = 600
+max_height    = 900
+cache_dir     = ""           # Defaults to system temp
+image_filter  = "triangle"
+image_quality = 75
+sixel_fraction = 15
+ueberzug_scale = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+[opener]
+extract = [
+  { run = 'unar "$1"', desc = "Extract (unar)" },
+]
+play = [
+  { run = 'vlc "$@"', desc = "Play with VLC" },
+]
+edit = [
+  { run = 'code "$@"', desc = "Open in VSCode" },
+]
+open = [
+  { run = 'xdg-open "$@"' },
+]
+run_exe = [
+  { run = 'wine "$1"', desc = "Run with Wine" },
+]
+
+[open]
+rules = [
+  { name = "*.exe", use = "run_exe" },
+  { mime = "text/*",                      use = "edit" },
+  { mime = "image/*",                     use = "open" },
+  { mime = "video/*",                     use = "play" },
+  { mime = "audio/*",                     use = "play" },
+  { mime = "application/pdf",             use = ["open"] },  # xdg-open → Firefox if set as default
+  { mime = "application/zip",             use = "extract" },
+  { mime = "application/x-dosexec",      use = "run_exe" },
+  { mime = "application/x-ms-dos-executable", use = "run_exe" },
+]

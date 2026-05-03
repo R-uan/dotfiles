@@ -8,9 +8,6 @@ import QtQuick.Layouts
 
 // Card
 Item {
-  Layout.fillHeight: true
-  Layout.preferredWidth: 210
-
   SolidBackground {
     anchors.fill: parent
   }
@@ -20,8 +17,8 @@ Item {
     anchors.centerIn: parent
 
     Item {
-      Layout.preferredWidth: 140
-      Layout.preferredHeight: 140
+      Layout.preferredWidth: 150
+      Layout.preferredHeight: 150
       Layout.alignment: Qt.AlignHCenter
 
       Image {
@@ -67,15 +64,15 @@ Item {
       Layout.preferredWidth: 210
 
       CommonText {
-        font.pixelSize: Theme.fontSize + 7
+        font.pixelSize: Theme.fontSize + 17
         Layout.alignment: Qt.AlignHCenter
-        font.weight: 500
+        font.weight: 400
         text: "Ruan"
       }
 
       CommonText {
         Layout.alignment: Qt.AlignHCenter
-        font.pixelSize: Theme.fontSize
+        font.pixelSize: Theme.fontSize + 1
         text: "@forgetfullbnnuy"
         font.weight: 300
       }

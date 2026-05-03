@@ -1,6 +1,6 @@
 import qs.shared
 import qs.quickmenu
-
+import qs.quickmenu.services
 import QtQuick
 import Quickshell
 import QtQuick.Effects
@@ -10,70 +10,61 @@ import QtQuick.Layouts
 PanelWindow {
   id: quickMenu
   visible: false
-  implicitHeight: 600
   color: "transparent"
-  implicitWidth: 800
   objectName: "Status Bar Window"
-  margins.top: Theme.barHeight + 5
   exclusionMode: ExclusionMode.Ignore
+  implicitWidth: mainLayout.implicitWidth
+  implicitHeight: mainLayout.implicitHeight
+
+  margins {
+    top: Theme.barHeight + Theme.margins + 2
+    left: Theme.margins + 15
+  }
 
   property alias timer: timer
 
-  // This is the main layout
-  ColumnLayout {
-    anchors.fill: parent
-    // This is the top segment
-    RowLayout {
-      Layout.fillWidth: true
-      Layout.preferredHeight: parent.height / 2
+  // — Main layout —
+  RowLayout {
+    id: mainLayout
+    anchors.top: parent.top
+    anchors.left: parent.left
+    spacing: 6
 
-      Card {}
-      DirectoryShortcut {}
-    }
-
+    // Column 1
     ColumnLayout {
-      Layout.fillWidth: true
-      Layout.preferredHeight: parent.height / 2
+      spacing: 6
 
-      Item {
-        Layout.preferredHeight: 50
-        Layout.preferredWidth: 210
-
-        SolidBackground {
-          anchors.fill: parent
-        }
-
-        CommonText {
-          text: ""
-          font.pixelSize: 22
-          color: Theme.foreground
-          anchors.centerIn: parent
-        }
-
-        MouseArea {
-          id: mouseArea
-          anchors.fill: parent
-
-          onClicked: {
-            if (wallpicker.visible) {
-              wallpicker.visible = false;
-              wallpicker.timer.running = false;
-            } else {
-              wallpicker.visible = true;
-              mouse.accepted = true;  // Add this to prevent propagation
-              // quickMenu.timer.interval = 2000;
-              // quickMenu.timer.running = true;
-            }
-          }
-        }
+      Card {
+        Layout.preferredWidth: 240
+        Layout.preferredHeight: 300
       }
 
-      Rectangle {
-        color: "transparent"
-        border.color: "blue"
-        border.width: 2
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+      OpenWallpicker {
+        Layout.preferredWidth: 240
+        Layout.preferredHeight: 65
+      }
+    }
+
+    // Column 2
+    ColumnLayout {
+      DirectoryShortcut {
+        Layout.preferredWidth: 240
+        Layout.preferredHeight: 370
+      }
+    }
+
+    // Column 3
+    ColumnLayout {
+      spacing: 6
+
+      Calendar {
+        Layout.preferredWidth: 240
+        Layout.preferredHeight: 295
+      }
+
+      Weather {
+        Layout.preferredWidth: 240
+        Layout.preferredHeight: 65
       }
     }
   }
@@ -82,22 +73,15 @@ PanelWindow {
     id: timer
     interval: 1000
     running: false
-
-    onTriggered: {
-      quickMenu.visible = false;
-    }
+    onTriggered: quickMenu.visible = false
   }
 
   MouseArea {
     id: area
     hoverEnabled: true
     anchors.fill: parent
-    propagateComposedEvents: true  // Add this line
-
-    onExited: {
-      timer.running = true;
-    }
-
+    propagateComposedEvents: true
+    onExited: timer.running = true
     onEntered: {
       timer.running = false;
       timer.interval = 1000;
