@@ -1,7 +1,0 @@
-module TaskBar
-Bar 1.0 Bar.qml
-Tray 1.0 modules/Tray.qml
-Network 1.0 modules/Network.qml
-SysResources 1.0 modules/SysResources.qml
-Workspaces 1.0 modules/Workspaces.qml
-TheButton 1.0 modules/TheButton.qml

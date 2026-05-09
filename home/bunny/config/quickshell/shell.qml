@@ -1,21 +1,21 @@
 //@ pragma UseQApplication
-import "taskbar"
-import "quickmenu"
-import "wallpicker"
+import "windows/startmenu"
+import "windows/wallpapers"
+import "windows/taskbar"
 
 import QtQuick
 import Quickshell
 
 ShellRoot {
-  Bar {
+  Taskbar {
     id: taskbar
   }
 
-  QuickMenu {
-    id: quickMenu
+  Startmenu {
+    id: startmenu
   }
 
-  Wallpicker {
-    id: wallpicker
+  Wallpapers {
+    id: wallpapers
   }
 }

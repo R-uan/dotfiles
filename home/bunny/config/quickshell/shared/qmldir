@@ -1,5 +1,4 @@
-module Shared
-CommonText 1.0 CommonText.qml
-singleton Theme 1.0 Theme.qml
-SolidBackground 1.0 SolidBackground.qml
-singleton Configuration 1.0 Configuration.qml
+module qs.shared
+
+StyledText 1.0 StyledText.qml
+Background 1.0 Background.qml

@@ -1,0 +1,13 @@
+module qs.windows.taskbar.components
+
+LeftSection 1.0 LeftSection.qml
+RightSection 1.0 RightSection.qml
+MiddleSection 1.0 MiddleSection.qml
+
+Tray 1.0 Tray.qml
+Playing 1.0 Playing.qml
+Network 1.0 Network.qml
+YepClock 1.0 YepClock.qml
+Startup 1.0 Startup.qml
+Workspaces 1.0 Workspaces.qml
+Resources 1.0 Resources.qml
