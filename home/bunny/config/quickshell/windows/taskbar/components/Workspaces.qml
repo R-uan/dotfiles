@@ -7,7 +7,7 @@ import Quickshell.Hyprland
 Item {
   id: root
   height: parent.height
-  width: layout.implicitWidth + 20
+  implicitWidth: layout.implicitWidth
 
   ListModel {
     id: workspaceModel

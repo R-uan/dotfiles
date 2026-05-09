@@ -8,21 +8,29 @@ import QtQuick.Layouts
 
 Item {
   id: root
-  width: 200
   height: parent.height
+  implicitWidth: layout.implicitWidth + 20
 
   RowLayout {
     id: layout
-    spacing: 13
+    spacing: Theme.spacing * 2
     anchors.centerIn: parent
 
     Repeater {
       model: ResourcesService.stats
-      delegate: StyledText {
-        id: text
-        text: modelData
-        color: Theme.foreground
-        Layout.alignment: Qt.AlignVCenter
+      delegate: RowLayout {
+        spacing: Theme.spacing * 2
+
+        SeparatorDot {
+          Layout.alignment: Qt.AlignVCenter
+          visible: index > 0
+        }
+
+        StyledText {
+          text: modelData
+          color: Theme.foreground
+          Layout.alignment: Qt.AlignVCenter
+        }
       }
     }
   }

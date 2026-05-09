@@ -1,3 +1,4 @@
+import qs.config
 import qs.shared
 
 import QtQuick
@@ -7,7 +8,7 @@ import QtQuick.Layouts
 Item {
   id: root
   height: parent.height
-  width: clockRow.implicitWidth + 20
+  implicitWidth: layout.implicitWidth + 20
 
   SystemClock {
     id: sysclock
@@ -15,10 +16,10 @@ Item {
   }
 
   RowLayout {
-    id: clockRow
-    spacing: 10
+    id: layout
     height: parent.height
     anchors.centerIn: parent
+    spacing: Theme.spacing * 2
 
     StyledText {
       text: ""
@@ -28,6 +29,10 @@ Item {
       font.bold: true
       Layout.alignment: Qt.AlignVCenter
       text: Qt.formatDateTime(sysclock.date, "ddd, dd MMM")
+    }
+
+    SeparatorDot {
+      Layout.alignment: Qt.AlignVCenter
     }
 
     StyledText {

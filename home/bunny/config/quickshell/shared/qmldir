@@ -2,3 +2,6 @@ module qs.shared
 
 StyledText 1.0 StyledText.qml
 Background 1.0 Background.qml
+SharpBackground 1.0 SharpBackground.qml
+SeparatorLine 1.0 SeparatorLine.qml
+SeparatorDot 1.0 SeparatorDot.qml

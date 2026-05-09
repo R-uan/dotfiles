@@ -10,11 +10,9 @@ import Quickshell.Services.SystemTray
 Item {
   id: root
   clip: true
-  visible: {
-    items.count > 0;
-  }
+  visible: { items.count > 0; }
   implicitHeight: parent.height
-  implicitWidth: layout.width + 16
+  implicitWidth: layout.implicitWidth + 20
 
   Row {
     id: layout

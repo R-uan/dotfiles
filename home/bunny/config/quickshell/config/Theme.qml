@@ -5,12 +5,12 @@ import Quickshell
 
 Singleton {
   // Bar Design
-  property int radius: 7
+  property int radius: 5
   property int spacing: 5
-  property int margins: 2
+  property int margins: 0
   property int barHeight: 32
   property int barWidth: 1500
-  property real backgroundOpacity: 0.99
+  property real backgroundOpacity: 0.97
   // Font
   property int fontSize: 14
   property int fontWeight: 400

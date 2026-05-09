@@ -27,15 +27,13 @@ Item {
                                                                           ) + "..." : artist
   readonly property string titleDisplay: title.length > titleChars ? title.slice(0, titleChars - 3).trim()
                                                                      + "..." : title
-  width: Math.min(maxWidth, hasArtist ? margins + iconWidth + separatorWidth + spacing * 3
-                                        + artistDisplay.length * charsPerPx + titleDisplay.length
-                                        * charsPerPx : margins + iconWidth + spacing * 2
-                                        + titleDisplay.length * charsPerPx)
+  implicitWidth: Math.min(maxWidth, hasArtist
+  ? margins + iconWidth + separatorWidth + spacing * 3
+    + artistDisplay.length * charsPerPx + titleDisplay.length * charsPerPx
+  : margins + iconWidth + spacing * 2
+    + titleDisplay.length * charsPerPx)
   height: 30
 
-  Background {
-    anchors.fill: parent
-  }
 
   RowLayout {
     anchors.verticalCenter: parent.verticalCenter

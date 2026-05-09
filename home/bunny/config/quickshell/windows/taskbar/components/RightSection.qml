@@ -9,34 +9,42 @@ import QtQuick.Layouts
 Item {
   id: root
   height: parent.height
-  width: layout.implicitWidth
+  implicitWidth: layout.implicitWidth + height
+
+  SharpBackground {
+    skewX: 1
+    scaleX: 1.06
+    anchors.fill: parent
+    bottomLeftRadius: Theme.radius
+  }
 
   RowLayout {
     id: layout
-    spacing: Theme.spacing
     height: parent.height
-
-    Network {
-      implicitHeight: parent.height
-      Background {
-        z: -1
-        anchors.fill: parent
-      }
-    }
+    spacing: Theme.spacing
+    anchors.right: parent.right
 
     Tray {
       Layout.preferredHeight: parent.height
-      Background {
-        z: -1
-        anchors.fill: parent
-      }
+    }
+
+    SeparatorLine {
+      Layout.alignment: Qt.AlignVCenter
+      Layout.preferredHeight: parent.height * 0.5
+    }
+
+    Network {
+      Layout.preferredHeight: parent.height
+    }
+
+    SeparatorLine {
+      Layout.alignment: Qt.AlignVCenter
+      Layout.preferredHeight: parent.height * 0.5
     }
 
     YepClock {
-      Background {
-        z: -1
-        anchors.fill: parent
-      }
+      Layout.rightMargin: 5
+      implicitHeight: parent.height
     }
   }
 }

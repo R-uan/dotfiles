@@ -7,8 +7,8 @@ import QtQuick.Layouts
 import QtQuick.Window
 
 Item {
-  Layout.preferredWidth: textItem.width + 16
-
+  
+  implicitWidth: textItem.implicitWidth + 20
   MouseArea {
     id: mouseArea
     hoverEnabled: true
