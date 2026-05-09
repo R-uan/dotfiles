@@ -1,5 +1,6 @@
 import qs.shared
 import qs.quickmenu
+import qs.quickmenu.modules
 import qs.quickmenu.services
 import QtQuick
 import Quickshell
@@ -9,7 +10,7 @@ import QtQuick.Layouts
 
 PanelWindow {
   id: quickMenu
-  visible: false
+  visible: true
   color: "transparent"
   objectName: "Status Bar Window"
   exclusionMode: ExclusionMode.Ignore
@@ -26,9 +27,9 @@ PanelWindow {
   // — Main layout —
   RowLayout {
     id: mainLayout
+    spacing: 6
     anchors.top: parent.top
     anchors.left: parent.left
-    spacing: 6
 
     // Column 1
     ColumnLayout {
@@ -65,6 +66,14 @@ PanelWindow {
       Weather {
         Layout.preferredWidth: 240
         Layout.preferredHeight: 65
+      }
+    }
+
+    // Column 4
+    ColumnLayout {
+      MediaPlayer {
+        Layout.preferredWidth: 250
+        Layout.preferredHeight: 370
       }
     }
   }

@@ -1,5 +1,6 @@
 import qs.shared
 import qs.taskbar.sections
+import qs.taskbar.modules
 
 import QtQuick
 import Quickshell
