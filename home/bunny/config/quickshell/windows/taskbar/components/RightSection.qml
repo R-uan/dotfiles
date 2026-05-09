@@ -16,6 +16,14 @@ Item {
     spacing: Theme.spacing
     height: parent.height
 
+    Network {
+      implicitHeight: parent.height
+      Background {
+        z: -1
+        anchors.fill: parent
+      }
+    }
+
     Tray {
       Layout.preferredHeight: parent.height
       Background {

@@ -1,7 +1,9 @@
+import qs.config
+import qs.shared
+
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Io
-import qs.shared
 
 Item {
   id: root
@@ -16,9 +18,14 @@ Item {
     command: []
   }
 
-  function openYazi(path) {
-    launcher.command = ["kitty", "--", "bash", "-c", "yazi '" + path + "'; exec bash"];
-    launcher.running = true;
+  function openYazi(folder) {
+    var proc = Qt.createQmlObject(`
+      import Quickshell.Io
+      Process {
+        running: true
+        command: ["${Config.scriptsDir}/openfilemanager.sh", "${Config.homeShortcutDir}/${folder}"]
+      }
+    `, root);
   }
 
   ListModel {
@@ -55,27 +62,27 @@ Item {
 
   ListView {
     id: list
+    spacing: 0
+    clip: true
+    model: dirModel
+    interactive: false
     anchors.fill: parent
     anchors.topMargin: 10
     anchors.bottomMargin: 10
-    model: dirModel
-    spacing: 0
-    interactive: false
-    clip: true
 
     delegate: Item {
-      width: list.width
       height: 50
+      width: list.width
 
       StyledText {
-        font.pixelSize: 17
         text: model.icon
+        font.pixelSize: 17
         anchors.centerIn: parent
       }
 
       MouseArea {
         anchors.fill: parent
-        onClicked: root.openYazi(Configuration.dirPath + "/" + model.folder)
+        onClicked: root.openYazi(`${model.folder}`)
       }
     }
   }

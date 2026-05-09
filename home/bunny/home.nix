@@ -72,9 +72,12 @@
     dxvk
     krita # Image Editor
     mplayer # media player (for anki)
-    
+
+    chromium
     firefox # browser
     firefox-devedition
+    super-productivity
+    telegram-desktop
 
     anki-bin # Flashcards
     obsidian # Markdown Notes
@@ -84,7 +87,7 @@
     hyprcursor # hyprland cursor
     dbeaver-bin # database management
     pavucontrol # pulseAudio control panel
-    
+
     (discord.override {withVencord = true;})
 
     # Fonts

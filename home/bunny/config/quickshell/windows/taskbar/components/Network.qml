@@ -1,15 +1,13 @@
-import qs
+import qs.config
 import qs.shared
-import qs.taskbar.services
+import qs.services
 
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Window
 
-Rectangle {
-  radius: 2
+Item {
   Layout.preferredWidth: textItem.width + 16
-  color: mouseArea.containsMouse ? Theme.primaryHover : Theme.background
 
   MouseArea {
     id: mouseArea
@@ -21,6 +19,6 @@ Rectangle {
     id: textItem
     color: Theme.foreground
     anchors.centerIn: parent
-    text: NetworkManager.connection
+    text: NetworkService.connection
   }
 }

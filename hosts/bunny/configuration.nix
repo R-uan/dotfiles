@@ -24,6 +24,10 @@
     networkmanager.enable = true;
   };
 
+  networking.hosts = {
+    "127.0.0.1" = ["www.apoioteste.sitemidas" "apoioteste.sitemidas" "www.site17.sitemidas" "painelteste.sitemidas" "www.site10.sitemidas" "site10.sitemidas"];
+  };
+
   # ------ LOCALE ------
 
   time.timeZone = "America/Bahia";
@@ -72,7 +76,6 @@
   # ------ VIDEO ------
   services.xserver.enable = true;
   services.displayManager.defaultSession = "hyprland";
-
 
   users.users.bunny = {
     isNormalUser = true;
