@@ -20,7 +20,8 @@ Item {
   ColumnLayout {
     id: layout
     spacing: Config.spacing
-    anchors.centerIn: parent
+    anchors.left: parent.left      // instead of anchors.centerIn: parent
+    anchors.right: parent.right
     implicitWidth: parent.width
     Layout.alignment: Qt.AlignHCenter
 
@@ -39,7 +40,7 @@ Item {
       Item {
         height: parent.width
         Layout.bottomMargin: -10
-        width: parent.implicitWidth
+        width: parent.width
 
         StyledText {
           color: root.textColor
@@ -53,7 +54,7 @@ Item {
       Item {
         Layout.topMargin: -10
         height: parent.width
-        width: parent.implicitWidth
+        width: parent.width
 
         StyledText {
           anchors.centerIn: parent
@@ -79,7 +80,7 @@ Item {
       Item {
         Layout.bottomMargin: -12
         height: parent.width
-        width: parent.implicitWidth
+        width: parent.width
 
         StyledText {
           color: root.textColor
@@ -94,7 +95,7 @@ Item {
         Layout.topMargin: -9
         Layout.bottomMargin: -8
         height: parent.width
-        width: parent.implicitWidth
+        width: parent.width
 
         StyledText {
           color: root.textColor
@@ -108,7 +109,7 @@ Item {
       Item {
         Layout.topMargin: -15
         height: parent.width
-        width: parent.implicitWidth
+        width: parent.width
 
         StyledText {
           color: root.textColor
