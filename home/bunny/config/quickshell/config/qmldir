@@ -1,4 +1,5 @@
 module qs.config
 
-singleton Theme 1.0 Theme.qml
 singleton Config 1.0 Config.qml
+singleton ThemeDark 1.0 Theme.dark.qml
+singleton ThemeLight 1.0 Theme.light.qml

@@ -102,7 +102,7 @@ Item {
             anchors.centerIn: parent
             text: ""
             visible: player?.canGoPrevious
-            font.pixelSize: Theme.fontSize * 2
+            font.pixelSize: Config.fontSize * 2
           }
 
           onClicked: {
@@ -120,7 +120,7 @@ Item {
           StyledText {
             anchors.centerIn: parent
             text: player?.isPlaying ? "" : ""
-            font.pixelSize: Theme.fontSize * 2
+            font.pixelSize: Config.fontSize * 2
             visible: player?.canPlay
           }
 
@@ -140,7 +140,7 @@ Item {
             anchors.centerIn: parent
             text: ""
             visible: player?.canGoNext
-            font.pixelSize: Theme.fontSize * 2
+            font.pixelSize: Config.fontSize * 2
           }
 
           onClicked: {

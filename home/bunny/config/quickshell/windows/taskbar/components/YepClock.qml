@@ -1,39 +1,124 @@
 import qs.shared
-
+import qs.config
 import QtQuick
 import Quickshell
 import QtQuick.Layouts
 
 Item {
   id: root
-  height: parent.height
-  width: clockRow.implicitWidth + 20
+  width: parent.width
+  height: layout.implicitHeight + 10
 
   SystemClock {
     id: sysclock
     precision: SystemClock.Seconds
   }
 
-  RowLayout {
-    id: clockRow
-    spacing: 10
-    height: parent.height
-    anchors.centerIn: parent
+  readonly property string accentColor: Config.darkMode ? ThemeDark.colour6 : ThemeLight.primary3
+  readonly property string textColor:   Config.darkMode ? ThemeDark.background0 : ThemeLight.background0
 
-    StyledText {
-      text: ""
+  ColumnLayout {
+    id: layout
+    spacing: Config.spacing
+    anchors.left: parent.left      // instead of anchors.centerIn: parent
+    anchors.right: parent.right
+    implicitWidth: parent.width
+    Layout.alignment: Qt.AlignHCenter
+
+    // Time
+    ColumnLayout {
+      id: time
+      spacing: 0
+      implicitWidth: parent.width - 8
+      Layout.alignment: Qt.AlignHCenter
+
+      Background {
+        anchors.fill: parent
+        color: root.accentColor
+      }
+
+      Item {
+        height: parent.width
+        Layout.bottomMargin: -10
+        width: parent.width
+
+        StyledText {
+          color: root.textColor
+          anchors.centerIn: parent
+          Layout.alignment: Qt.AlignHCenter
+          font.pixelSize: Config.fontSize + 5
+          text: Qt.formatDateTime(sysclock.date, "hh")
+        }
+      }
+
+      Item {
+        Layout.topMargin: -10
+        height: parent.width
+        width: parent.width
+
+        StyledText {
+          anchors.centerIn: parent
+          Layout.alignment: Qt.AlignHCenter
+          font.pixelSize: Config.fontSize + 5
+          text: Qt.formatDateTime(sysclock.date, "mm")
+          color: root.textColor
+        }
+      }
     }
 
-    StyledText {
-      font.bold: true
-      Layout.alignment: Qt.AlignVCenter
-      text: Qt.formatDateTime(sysclock.date, "ddd, dd MMM")
-    }
+    // Date
+    ColumnLayout {
+      spacing: 0
+      implicitWidth: parent.width - 8
+      Layout.alignment: Qt.AlignHCenter
 
-    StyledText {
-      font.bold: true
-      Layout.alignment: Qt.AlignVCenter
-      text: Qt.formatDateTime(sysclock.date, "HH:mm")
+      Background {
+        anchors.fill: parent
+        color: root.accentColor
+      }
+
+      Item {
+        Layout.bottomMargin: -12
+        height: parent.width
+        width: parent.width
+
+        StyledText {
+          color: root.textColor
+          anchors.centerIn: parent
+          Layout.alignment: Qt.AlignHCenter
+          font.pixelSize: Config.fontSize + 0
+          text: Qt.formatDateTime(sysclock.date, "ddd")
+        }
+      }
+
+      Item {
+        Layout.topMargin: -9
+        Layout.bottomMargin: -8
+        height: parent.width
+        width: parent.width
+
+        StyledText {
+          color: root.textColor
+          anchors.centerIn: parent
+          Layout.alignment: Qt.AlignHCenter
+          font.pixelSize: Config.fontSize + 5
+          text: Qt.formatDateTime(sysclock.date, "dd")
+        }
+      }
+
+      Item {
+        Layout.topMargin: -15
+        height: parent.width
+        width: parent.width
+
+        StyledText {
+          color: root.textColor
+          anchors.centerIn: parent
+          font.pixelSize: Config.fontSize + 0
+          Layout.alignment: Qt.AlignHCenter
+          text: Qt.formatDateTime(sysclock.date, "MMM")
+        }
+      }
     }
   }
 }

@@ -3,8 +3,8 @@ import qs.config
 import QtQuick
 
 Text {
-  color: Theme.foreground
-  font.family: Theme.fontFamily
-  font.weight: Theme.fontWeight
-  font.pixelSize: Theme.fontSize
+  font.family: Config.fontFamily
+  font.weight: Config.fontWeight
+  font.pixelSize: Config.fontSize
+  color: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
 }

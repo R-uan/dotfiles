@@ -54,6 +54,7 @@
     bluetuith # bluetooth interface
 
     # Desktop Modules
+    vicinae
     rofi # App Launcher
     mako # notification displayer
 

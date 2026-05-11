@@ -7,6 +7,15 @@ import QtQuick.Controls
 
 Item {
   id: root
+
+  // — Theme aliases —
+  readonly property color colBackground1: Config.darkMode ? ThemeDark.background1  : ThemeLight.background1
+  readonly property color colForeground0: Config.darkMode ? ThemeDark.foreground0  : ThemeLight.foreground0
+  readonly property color colPrimary3:    Config.darkMode ? ThemeDark.primary3     : ThemeLight.primary3
+  readonly property color colPrimary0:    Config.darkMode ? ThemeDark.primary0     : ThemeLight.primary0
+  readonly property color colColour6:     Config.darkMode ? ThemeDark.colour6      : ThemeLight.colour5
+  readonly property color colText:        Config.darkMode ? ThemeDark.background0  : ThemeLight.background0
+
   Background {
     anchors.fill: parent
   }
@@ -16,43 +25,30 @@ Item {
   property int displayYear: today.getFullYear()
   property int displayMonth: today.getMonth()
 
-  property var monthNames: ["January", "February", "March", "April", "May", "June", "July", "August",
-    "September", "October", "November", "December"]
+  property var monthNames: ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"]
 
   readonly property int cellH: 24
   readonly property int cellW: Math.floor((root.width - 24) / 7)
 
-  function daysInMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate();
-  }
-
-  function firstDayOfMonth(year, month) {
-    return new Date(year, month, 1).getDay();
-  }
+  function daysInMonth(year, month) { return new Date(year, month + 1, 0).getDate() }
+  function firstDayOfMonth(year, month) { return new Date(year, month, 1).getDay() }
 
   function prevMonth() {
-    if (displayMonth === 0) {
-      displayMonth = 11;
-      displayYear -= 1;
-    } else {
-      displayMonth -= 1;
-    }
-  }
-
-  Timer {
-    interval: 60000  // check every minute
-    running: true
-    repeat: true
-    onTriggered: today = new Date()
+    if (displayMonth === 0) { displayMonth = 11; displayYear -= 1 }
+    else { displayMonth -= 1 }
   }
 
   function nextMonth() {
-    if (displayMonth === 11) {
-      displayMonth = 0;
-      displayYear += 1;
-    } else {
-      displayMonth += 1;
-    }
+    if (displayMonth === 11) { displayMonth = 0; displayYear += 1 }
+    else { displayMonth += 1 }
+  }
+
+  Timer {
+    interval: 60000
+    running: true
+    repeat: true
+    onTriggered: today = new Date()
   }
 
   ColumnLayout {
@@ -67,25 +63,16 @@ Item {
       Rectangle {
         width: 24
         height: 24
-        radius: Theme.radius
-        color: prevHover.containsMouse ? Theme.bg3 : "transparent"
-        Behavior on color {
-          ColorAnimation {
-            duration: 120
-          }
-        }
+        radius: Config.radius
+        color: prevHover.containsMouse ? root.colBackground1 : "transparent"
+        Behavior on color { ColorAnimation { duration: 120 } }
 
-        Text {
+        StyledText {
           anchors.centerIn: parent
           text: "‹"
           font.pixelSize: 16
-          font.family: Theme.fontFamily
-          color: prevHover.containsMouse ? Theme.foreground : Theme.greenBase
-          Behavior on color {
-            ColorAnimation {
-              duration: 120
-            }
-          }
+          color: prevHover.containsMouse ? root.colForeground0 : root.colPrimary0
+          Behavior on color { ColorAnimation { duration: 120 } }
         }
 
         MouseArea {
@@ -96,38 +83,28 @@ Item {
         }
       }
 
-      Text {
+      StyledText {
         Layout.fillWidth: true
         horizontalAlignment: Text.AlignHCenter
         text: root.monthNames[root.displayMonth] + "  " + root.displayYear
-        color: Theme.foreground
-        font.pixelSize: Theme.fontSize
-        font.family: Theme.fontFamily
+        color: root.colForeground0
+        font.pixelSize: Config.fontSize
         font.weight: Font.Medium
       }
 
       Rectangle {
         width: 24
         height: 24
-        radius: Theme.radius
-        color: nextHover.containsMouse ? Theme.bg3 : "transparent"
-        Behavior on color {
-          ColorAnimation {
-            duration: 120
-          }
-        }
+        radius: Config.radius
+        color: nextHover.containsMouse ? root.colBackground1 : "transparent"
+        Behavior on color { ColorAnimation { duration: 120 } }
 
-        Text {
+        StyledText {
           anchors.centerIn: parent
           text: "›"
           font.pixelSize: 16
-          font.family: Theme.fontFamily
-          color: nextHover.containsMouse ? Theme.foreground : Theme.greenBase
-          Behavior on color {
-            ColorAnimation {
-              duration: 120
-            }
-          }
+          color: nextHover.containsMouse ? root.colForeground0 : root.colPrimary0
+          Behavior on color { ColorAnimation { duration: 120 } }
         }
 
         MouseArea {
@@ -144,15 +121,14 @@ Item {
       Layout.fillWidth: true
       Repeater {
         model: ["S", "M", "T", "W", "T", "F", "S"]
-        Text {
+        StyledText {
           width: root.cellW
           height: 18
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter
           text: modelData
-          color: Theme.grey
-          font.pixelSize: Theme.fontSize - 3
-          font.family: Theme.fontFamily
+          color: root.colPrimary3
+          font.pixelSize: Config.fontSize - 3
           font.weight: Font.Medium
         }
       }
@@ -174,10 +150,10 @@ Item {
 
           property int offset: index - root.firstDayOfMonth(root.displayYear, root.displayMonth)
           property int dayNum: offset + 1
-          property bool inMonth: dayNum >= 1 && dayNum <= root.daysInMonth(root.displayYear,
-                                                                           root.displayMonth)
-          property bool isToday: inMonth && dayNum === root.today.getDate() && root.displayMonth
-                                 === root.today.getMonth() && root.displayYear === root.today.getFullYear()
+          property bool inMonth: dayNum >= 1 && dayNum <= root.daysInMonth(root.displayYear, root.displayMonth)
+          property bool isToday: inMonth && dayNum === root.today.getDate()
+                                 && root.displayMonth === root.today.getMonth()
+                                 && root.displayYear === root.today.getFullYear()
 
           width: root.cellW
           height: root.cellH
@@ -186,29 +162,23 @@ Item {
             anchors.centerIn: parent
             width: parent.width - 4
             height: parent.height - 2
-            radius: Theme.radius
-            color: dayCell.isToday ? Theme.greenAccent : (cellHover.containsMouse && dayCell.inMonth
-                                                          ? Theme.bg3 : "transparent")
-            Behavior on color {
-              ColorAnimation {
-                duration: 100
-              }
-            }
+            radius: Config.radius
+            color: dayCell.isToday
+              ? root.colPrimary0
+              : (cellHover.containsMouse && dayCell.inMonth ? root.colBackground1 : "transparent")
+            Behavior on color { ColorAnimation { duration: 100 } }
           }
 
-          Text {
+          StyledText {
             anchors.centerIn: parent
             text: dayCell.inMonth ? dayCell.dayNum : ""
-            font.pixelSize: Theme.fontSize - 2
-            font.family: Theme.fontFamily
-            color: dayCell.isToday ? Theme.black : dayCell.inMonth ? (cellHover.containsMouse
-                                                                      ? Theme.foreground : Theme.greenLight) :
-                                                                     "transparent"
-            Behavior on color {
-              ColorAnimation {
-                duration: 100
-              }
-            }
+            font.pixelSize: Config.fontSize - 2
+            color: dayCell.isToday
+              ? root.colText
+              : dayCell.inMonth
+                ? (cellHover.containsMouse ? root.colForeground0 : root.colPrimary3)
+                : "transparent"
+            Behavior on color { ColorAnimation { duration: 100 } }
           }
 
           MouseArea {

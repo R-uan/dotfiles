@@ -60,8 +60,8 @@
               # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
               (inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww)
               (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-                withWayland = true;
                 withX11 = false;
+                withWayland = true;
                 withPipewire = true;
                 withHyprland = true;
               })
