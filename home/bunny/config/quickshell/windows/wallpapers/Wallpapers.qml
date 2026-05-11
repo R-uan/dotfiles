@@ -1,14 +1,12 @@
 import qs.shared
 import qs.config
 
-// wallpapers.qml
 import QtQuick
 import Quickshell
 import Quickshell.Io
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls
-
 
 PanelWindow {
   id: wallpapers
@@ -20,9 +18,19 @@ PanelWindow {
 
   margins {
     bottom: 10
-    left: Theme.margins + 15
-    top: Theme.barHeight + Theme.margins + 2
+    left: Config.margins + 15
+    top: Config.thickness + Config.margins + 2
   }
+
+  // — Theme aliases —
+  readonly property color colForeground0: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
+  readonly property color colPrimary0:    Config.darkMode ? ThemeDark.primary0    : ThemeLight.primary0
+  readonly property color colPrimary3:    Config.darkMode ? ThemeDark.primary3    : ThemeLight.primary3
+  readonly property color colBackground1: Config.darkMode ? ThemeDark.background1 : ThemeLight.background1
+  readonly property color colBorder:      Config.darkMode ? ThemeDark.border      : ThemeLight.border
+  readonly property color colColour5:     Config.darkMode ? ThemeDark.colour5     : ThemeLight.colour4
+  readonly property color colColour3:     Config.darkMode ? ThemeDark.colour3     : ThemeLight.colour2
+  readonly property color colOverlay:     Config.darkMode ? "#000000"             : "#1a2a1c"
 
   property var wallpaperPaths: []
   property bool isHovered: false
@@ -69,23 +77,19 @@ PanelWindow {
     RowLayout {
       Layout.fillWidth: true
 
-      Text {
+      StyledText {
         text: "Wallpapers"
-        color: Theme.foreground
-        font.pixelSize: Theme.fontSize + 1
-        font.family: Theme.fontFamily
+        color: wallpapers.colForeground0
+        font.pixelSize: Config.fontSize + 1
         font.weight: Font.Medium
       }
 
-      Item {
-        Layout.fillWidth: true
-      }
+      Item { Layout.fillWidth: true }
 
-      Text {
+      StyledText {
         text: wallpapers.wallpaperPaths.length + " found"
-        color: Theme.grey
-        font.pixelSize: Theme.fontSize - 2
-        font.family: Theme.fontFamily
+        color: wallpapers.colPrimary3
+        font.pixelSize: Config.fontSize - 2
       }
     }
 
@@ -93,7 +97,7 @@ PanelWindow {
     Rectangle {
       Layout.fillWidth: true
       height: 1
-      color: Theme.borderColour
+      color: wallpapers.colBorder
       opacity: 0.5
     }
 
@@ -126,17 +130,15 @@ PanelWindow {
 
         contentItem: Rectangle {
           radius: 4
-          color: scrollBar.pressed ? Theme.greenAccent : scrollBar.hovered ? Theme.greenLight : Theme.greenMid
-          Behavior on color {
-            ColorAnimation {
-              duration: 120
-            }
-          }
+          color: scrollBar.pressed  ? wallpapers.colPrimary0
+               : scrollBar.hovered  ? wallpapers.colColour5
+               :                      wallpapers.colColour3
+          Behavior on color { ColorAnimation { duration: 120 } }
         }
 
         background: Rectangle {
           radius: 4
-          color: Theme.bg3
+          color: wallpapers.colBackground1
           opacity: 0.5
         }
       }
@@ -181,7 +183,7 @@ PanelWindow {
             visible: false
             Rectangle {
               anchors.fill: parent
-              radius: Theme.radius
+              radius: Config.radius
               color: "black"
             }
           }
@@ -189,28 +191,20 @@ PanelWindow {
           // — Hover overlay —
           Rectangle {
             anchors.fill: parent
-            radius: Theme.radius
-            color: Theme.black
+            radius: Config.radius
+            color: wallpapers.colOverlay
             opacity: cellHover.containsMouse ? 0.35 : 0
-            Behavior on opacity {
-              NumberAnimation {
-                duration: 150
-              }
-            }
+            Behavior on opacity { NumberAnimation { duration: 150 } }
           }
 
           // — Hover border —
           Rectangle {
             anchors.fill: parent
-            radius: Theme.radius
+            radius: Config.radius
             color: "transparent"
-            border.color: Theme.greenAccent
+            border.color: wallpapers.colPrimary0
             border.width: cellHover.containsMouse ? 2 : 0
-            Behavior on border.width {
-              NumberAnimation {
-                duration: 150
-              }
-            }
+            Behavior on border.width { NumberAnimation { duration: 150 } }
           }
 
           MouseArea {

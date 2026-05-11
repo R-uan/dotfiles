@@ -4,42 +4,49 @@ import qs.config
 
 import QtQuick
 import Quickshell
+import QtQuick.Layouts
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 
 Item {
   id: root
   clip: true
-  visible: {
-    items.count > 0;
-  }
-  implicitHeight: parent.height
-  implicitWidth: layout.width + 16
+  visible: items.count > 0
+  implicitWidth: parent.width
+  implicitHeight: layout.height + 10
+  readonly property string accentColor: Config.darkMode ? ThemeDark.colour6 : ThemeLight.primary3
 
-  Row {
+
+  ColumnLayout {
     id: layout
-    spacing: 3
-    anchors.centerIn: root
-    layoutDirection: Qt.RightToLeft
+    spacing: 5
+    anchors.centerIn: parent
+    implicitWidth: parent.width - 8
+
+    Background {
+      anchors.fill: parent
+      color: root.accentColor
+      visible: Config.darkMode === false
+    }
 
     Repeater {
       id: items
       model: SystemTray.items
       delegate: MouseArea {
         id: trayItem
-        implicitWidth: Theme.fontSize * 1.09
-        implicitHeight: Theme.fontSize * 1.09
+        Layout.alignment: Qt.AlignHCenter
+        implicitWidth: Config.fontSize * 1.09
+        implicitHeight: Config.fontSize * 1.09
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-
+        Layout.bottomMargin: 5
         required property SystemTrayItem modelData
 
         onClicked: event => {
-          if (event.button === Qt.LeftButton)
-          modelData.activate();
-          else {
+          if (event.button === Qt.LeftButton) {
+            modelData.activate();
+          } else {
             if (modelData.hasMenu) {
               const pos = mapToItem(mainWindow.contentItem, 0, height + 10);
-              console.log(mainWindow);
               modelData.display(mainWindow, pos.x, pos.y);
             }
           }
@@ -48,7 +55,6 @@ Item {
         IconImage {
           asynchronous: true
           anchors.fill: parent
-
           source: {
             let icon = trayItem.modelData.icon;
             if (icon.includes("?path=")) {

@@ -6,9 +6,8 @@ import Quickshell.Hyprland
 
 Item {
   id: root
-  height: parent.height
-  width: layout.implicitWidth + 20
-
+  width: parent.width
+  height: layout.implicitHeight + 10
   ListModel {
     id: workspaceModel
   }
@@ -20,12 +19,10 @@ Item {
   Connections {
     target: Hyprland.workspaces
     function onValuesChanged() {
-      // Use a small delay to let the active property update
       updateTimer.restart();
     }
   }
 
-  // Watch for active property changes on individual workspaces
   Repeater {
     model: Hyprland.workspaces.values || []
     Item {
@@ -38,7 +35,6 @@ Item {
     }
   }
 
-  // Timer to delay updates slightly so active property can update
   Timer {
     id: updateTimer
     interval: 50
@@ -46,7 +42,6 @@ Item {
     onTriggered: updateWorkspaceModel()
   }
 
-  // Also try connecting to activeWorkspace property directly
   property int activeWorkspaceId: Hyprland.activeWorkspace ? Hyprland.activeWorkspace.id : -1
 
   onActiveWorkspaceIdChanged: {
@@ -58,78 +53,58 @@ Item {
     let minWorkspaces = 6;
     let targetWorkspaces = [];
 
-    // Debug logging
-    if (workspaceList.length > 0) {
-      let ws = workspaceList[0];
-    }
-
-    // Find active workspace from the list
     let activeWorkspace = workspaceList.find(ws => ws.active);
     let activeId = activeWorkspace ? activeWorkspace.id : -1;
 
     if (workspaceList.length === 0) {
-      // No workspaces, create 6 placeholders
       for (let i = 1; i <= minWorkspaces; i++) {
         targetWorkspaces.push({
-                                workspaceId: i,
-                                isDummy: true,
-                                active: i === activeId  // Check if this is the active workspace
-                                        ,
-                                urgent: false
-                              });
+          workspaceId: i,
+          isDummy: true,
+          active: i === activeId,
+          urgent: false
+        });
       }
     } else {
-      // Sort by id
       let sorted = workspaceList.slice().sort((a, b) => a.id - b.id);
-
-      // Find the max id
       let maxId = Math.max(...sorted.map(ws => ws.id), minWorkspaces);
 
-      // Fill in gaps
       for (let i = 1; i <= maxId; i++) {
         let existing = sorted.find(ws => ws.id === i);
         if (existing) {
           targetWorkspaces.push({
-                                  workspaceId: existing.id,
-                                  isDummy: false,
-                                  active: existing.id
-                                          === activeId  // Always use activeId, not existing.active
-                                          ,
-                                  urgent: existing.urgent || false
-                                });
+            workspaceId: existing.id,
+            isDummy: false,
+            active: existing.id === activeId,
+            urgent: existing.urgent || false
+          });
         } else {
-          // Create dummy workspace for missing id
           targetWorkspaces.push({
-                                  workspaceId: i,
-                                  isDummy: true,
-                                  active: i === activeId  // Check if this is the active workspace
-                                          ,
-                                  urgent: false
-                                });
+            workspaceId: i,
+            isDummy: true,
+            active: i === activeId,
+            urgent: false
+          });
         }
       }
     }
 
-    // Update existing items or add/remove as needed
     for (let i = 0; i < targetWorkspaces.length; i++) {
       if (i < workspaceModel.count) {
-        // Update existing item
         workspaceModel.set(i, targetWorkspaces[i]);
       } else {
-        // Append new item
         workspaceModel.append(targetWorkspaces[i]);
       }
     }
 
-    // Remove excess items
     while (workspaceModel.count > targetWorkspaces.length) {
       workspaceModel.remove(workspaceModel.count - 1);
     }
   }
 
-  Row {
+  Column {
     id: layout
-    spacing: Theme.spacing + 5
+    spacing: Config.spacing + 5
     anchors.centerIn: parent
 
     Repeater {
@@ -139,20 +114,28 @@ Item {
       delegate: Rectangle {
         id: wsBox
         radius: 3
-        height: 12
-        width: model.active ? 24 : 12
+        width: 16
+        height: model.active ? 32 : 16
+
+        // Resolved theme properties
+        readonly property color colPrimary0:      Config.darkMode ? ThemeDark.primary0      : ThemeLight.primary0
+        readonly property color colPrimary1:      Config.darkMode ? ThemeDark.primary1      : ThemeLight.primary1
+        readonly property color colPrimary2:      Config.darkMode ? ThemeDark.primary2      : ThemeLight.primary2
+        readonly property color colPrimary0Hover: Config.darkMode ? ThemeDark.primary0Hover : ThemeLight.primary0Hover
+        readonly property color colPrimary2Hover: Config.darkMode ? ThemeDark.primary2Hover : ThemeLight.primary2Hover
+        readonly property color colError:         Config.darkMode ? ThemeDark.error         : ThemeLight.error
+
         color: {
           if (model.active)
-            return Theme.primary;
+            return colPrimary0;
           if (model.urgent)
-            return Theme.rose;
-          if (model.isDummy) {
-            return hover.containsMouse ? Theme.secondaryHover : Theme.secondary;
-          }
-          return hover.containsMouse ? Theme.primaryHover : Theme.tertiary;
+            return colError;
+          if (model.isDummy)
+            return hover.containsMouse ? colPrimary2Hover : colPrimary2;
+          return hover.containsMouse ? colPrimary0Hover : colPrimary1;
         }
 
-        Behavior on width {
+        Behavior on height {
           NumberAnimation {
             duration: 70
             easing.type: Easing.InOutQuad

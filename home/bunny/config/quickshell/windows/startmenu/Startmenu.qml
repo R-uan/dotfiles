@@ -2,7 +2,6 @@ import qs.shared
 import qs.config
 import qs.services
 import qs.windows.startmenu.components
-
 import QtQuick
 import Quickshell
 import QtQuick.Effects
@@ -13,14 +12,14 @@ PanelWindow {
   id: quickMenu
   visible: false
   color: "transparent"
-  objectName: "Status Bar Window"
+  objectName: "Start Menu"
   exclusionMode: ExclusionMode.Ignore
   implicitWidth: mainLayout.implicitWidth
   implicitHeight: mainLayout.implicitHeight
-
+  
   margins {
-    top: Theme.barHeight + Theme.margins + 2
-    left: Theme.margins + 15
+    left: Config.margins + 15
+    top: Config.thickness + Config.margins + 2
   }
 
   property alias timer: timer
@@ -35,12 +34,12 @@ PanelWindow {
     // Column 1
     ColumnLayout {
       spacing: 6
+      Layout.alignment: Qt.AlignVCenter
 
       Card {
         Layout.preferredWidth: 240
         Layout.preferredHeight: 300
       }
-
       OpenWallpapers {
         Layout.preferredWidth: 240
         Layout.preferredHeight: 65
@@ -49,6 +48,8 @@ PanelWindow {
 
     // Column 2
     ColumnLayout {
+      Layout.alignment: Qt.AlignVCenter
+
       HomeShortcut {
         Layout.preferredWidth: 240
         Layout.preferredHeight: 370
@@ -58,12 +59,12 @@ PanelWindow {
     // Column 3
     ColumnLayout {
       spacing: 6
+      Layout.alignment: Qt.AlignVCenter
 
       Calendar {
         Layout.preferredWidth: 240
         Layout.preferredHeight: 295
       }
-
       Weather {
         Layout.preferredWidth: 240
         Layout.preferredHeight: 65
@@ -72,6 +73,8 @@ PanelWindow {
 
     // Column 4
     ColumnLayout {
+      Layout.alignment: Qt.AlignVCenter
+
       MediaPlayer {
         Layout.preferredWidth: 250
         Layout.preferredHeight: 370

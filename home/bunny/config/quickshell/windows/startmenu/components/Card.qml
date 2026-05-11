@@ -58,7 +58,7 @@ Item {
       Layout.preferredWidth: 210
 
       StyledText {
-        font.pixelSize: Theme.fontSize * 1.7
+        font.pixelSize: Config.fontSize * 1.7
         Layout.alignment: Qt.AlignHCenter
         font.weight: 400
         text: "Ruan"
@@ -66,7 +66,7 @@ Item {
 
       StyledText {
         Layout.alignment: Qt.AlignHCenter
-        font.pixelSize: Theme.fontSize + 1
+        font.pixelSize: Config.fontSize + 1
         text: "bunny@ruan-nixos"
         font.weight: 300
       }

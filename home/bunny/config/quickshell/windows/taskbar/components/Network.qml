@@ -7,7 +7,8 @@ import QtQuick.Layouts
 import QtQuick.Window
 
 Item {
-  Layout.preferredWidth: textItem.width + 16
+  implicitWidth: textItem.width
+  implicitHeight: textItem.height + 10
 
   MouseArea {
     id: mouseArea
@@ -17,7 +18,6 @@ Item {
 
   StyledText {
     id: textItem
-    color: Theme.foreground
     anchors.centerIn: parent
     text: NetworkService.connection
   }

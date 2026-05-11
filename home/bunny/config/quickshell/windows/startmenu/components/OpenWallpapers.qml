@@ -15,8 +15,8 @@ Item {
   StyledText {
     text: ""
     font.pixelSize: 22
-    color: Theme.foreground
     anchors.centerIn: parent
+    color: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
   }
 
   MouseArea {
@@ -29,8 +29,6 @@ Item {
         wallpapers.timer.running = false;
       } else {
         wallpapers.visible = true;
-        // quickMenu.timer.interval = 2000;
-        // quickMenu.timer.running = true;
       }
     }
   }

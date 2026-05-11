@@ -12,7 +12,11 @@ Singleton {
   property string ramUsage: "??"
   property string cpuUsage: "??"
 
-  property var stats: [cpuUsage, ramUsage, sysTemp] // This will hold the system stats
+  property var stats: [
+    {label: "cpu", value: cpuUsage}, 
+    {label: "ram", value: ramUsage}, 
+    {label: "tem", value: sysTemp}
+  ] // This will hold the system stats
 
   Process {
     id: tempProc

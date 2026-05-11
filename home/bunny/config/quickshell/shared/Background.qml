@@ -6,9 +6,9 @@ import QtQuick.Window
 Rectangle {
   border.width: 1
   width: parent.width
-  radius: Theme.radius
+  radius: Config.radius
   height: parent.height
-  color: Theme.background
-  opacity: Theme.backgroundOpacity
-  border.color: Theme.borderColour
+  opacity: Config.backgroundOpacity
+  border.color: Config.darkMode ? ThemeDark.border : ThemeLight.border
+  color: Config.darkMode ? ThemeDark.background0 : ThemeLight.background0
 }

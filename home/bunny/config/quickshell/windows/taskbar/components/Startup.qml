@@ -6,9 +6,9 @@ import QtQuick.Window
 import QtQuick.Layouts
 
 Item {
-  Layout.alignment: Qt.AlignVCenter
-  Layout.preferredHeight: parent.height
-  Layout.preferredWidth: nix.width + (parent.height - nix.width)
+  id: root
+  implicitWidth: parent.width
+  implicitHeight: (parent.width - nix.height) + 10
 
   MouseArea {
     id: mouseArea
@@ -20,8 +20,6 @@ Item {
         startmenu.timer.running = false;
       } else {
         startmenu.visible = true;
-        // startmenu.timer.interval = 2000;
-        // startmenu.timer.running = true;
       }
     }
   }
@@ -29,8 +27,7 @@ Item {
   StyledText {
     id: nix
     text: "󱄅"
-    color: Theme.foreground
     anchors.centerIn: parent
-    font.pixelSize: Theme.barHeight * 0.8
+    font.pixelSize: Config.thickness * 0.7
   }
 }

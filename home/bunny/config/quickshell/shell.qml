@@ -1,7 +1,7 @@
 //@ pragma UseQApplication
+import "windows/taskbar"
 import "windows/startmenu"
 import "windows/wallpapers"
-import "windows/taskbar"
 
 import QtQuick
 import Quickshell
