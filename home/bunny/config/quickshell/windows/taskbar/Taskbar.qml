@@ -11,7 +11,7 @@ Scope {
         model: Quickshell.screens
         Scope {
             required property var modelData
-            property int secondaryBarsSize: 7
+            property int secondaryBarsSize: 4
 
             // LEFT
             PanelWindow {
