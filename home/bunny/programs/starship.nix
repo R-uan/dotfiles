@@ -11,7 +11,7 @@
       format = ''$directory $character'';
       right_format = ''$git_branch'';
       add_newline = false;
-      # Disable language modules
+
       c.disabled = true;
       cmake.disabled = true;
       haskell.disabled = true;
@@ -24,29 +24,35 @@
       nodejs.disabled = true;
       java.disabled = true;
       golang.disabled = true;
+
       username = {
         show_always = true;
         disabled = false;
       };
+
       conda = {
         style_user = "fg:pink bold";
         format = " [$symbol$environment](dimmed green) ";
       };
+
       character = {
         success_symbol = "[🐇](green bold)";
         error_symbol = "[🐇](rose)";
         vicmd_symbol = "[🐇](accent)";
       };
+
       directory = {
         format = "[  ](fg:primary)[$path](fg:primary bold)";
         style = "fg:lprimary";
         truncation_length = 3;
         truncate_to_repo = false;
       };
+
       git_branch = {
         format = "[[  ](fg:primary bold)$branch](fg:primary bold)";
         style = "fg:dprimary";
       };
+
       git_status = {
         format = "[$all_status$ahead_behind](fg:dprimary) ";
         style = "fg:complementary";
@@ -62,17 +68,18 @@
         renamed = "»\${count}";
         deleted = "\${count}";
       };
+
       palettes = {
         Bunny = {
-          background = "#121312";
-          primary = "#7a9b7f";
-          dprimary = "#3d4a3e";
-          lprimary = "#a8b9aa";
-          green = "#7a9b7f";
-          complementary = "#8d9e88";
-          accent = "#84a089";
-          rose = "#9d8a8a";
-          pink = "#9da88d";
+          background    = "#131714"; # background0
+          primary       = "#83977f"; # colour4 / primary0
+          dprimary      = "#374a39"; # colour2
+          lprimary      = "#c2d4bc"; # colour7
+          green         = "#7a9e78"; # success
+          complementary = "#8d9e82"; # colour5 / primary1
+          accent        = "#a3b89e"; # colour6
+          rose          = "#a07a7a"; # error
+          pink          = "#a8a87a"; # warning
         };
       };
     };
