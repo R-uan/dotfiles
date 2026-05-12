@@ -27,7 +27,7 @@ QtObject {
   readonly property string primary2Hover: colour2
 
   // Backgrounds (darkest → lightest surface)
-  readonly property string background0: "#131714"
+  readonly property string background0: "#171919"
   readonly property string background1: "#1c231e"
   readonly property string background2: "#263328"
   readonly property string border:      background1

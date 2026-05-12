@@ -71,7 +71,7 @@
 
       palettes = {
         Bunny = {
-          background    = "#131714"; # background0
+          background    = "#171919"; # background0
           primary       = "#83977f"; # colour4 / primary0
           dprimary      = "#374a39"; # colour2
           lprimary      = "#c2d4bc"; # colour7
