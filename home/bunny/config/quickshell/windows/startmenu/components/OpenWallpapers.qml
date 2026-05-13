@@ -8,10 +8,6 @@ import QtQuick.Window
 import QtQuick.Layouts
 
 Item {
-  Background {
-    anchors.fill: parent
-  }
-
   StyledText {
     text: ""
     font.pixelSize: 22

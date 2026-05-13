@@ -7,10 +7,8 @@ import Quickshell.Io
 
 Item {
   id: root
-
-  Background {
-    anchors.fill: parent
-  }
+  width: 500
+  height: Math.max(listLeft.height, listCenter.height, listRight.height)
 
   Process {
     id: launcher
@@ -29,60 +27,82 @@ Item {
   }
 
   ListModel {
-    id: dirModel
-    ListElement {
-      icon: "code"
-      folder: "code"
+    id: dirModelLeft
+    ListElement { icon: "code";      folder: "code"      }
+    ListElement { icon: "desktop";   folder: "desktop"   }
+    ListElement { icon: "documents"; folder: "documents" }
+  }
+
+  ListModel {
+    id: dirModelCenter
+    ListElement { icon: "downloads"; folder: "downloads" }
+    ListElement { icon: "dotfiles";  folder: "dotfiles"  }
+  }
+
+  ListModel {
+    id: dirModelRight
+    ListElement { icon: "images"; folder: "images" }
+    ListElement { icon: "music";  folder: "music"  }
+  }
+
+  Row {
+    anchors.left: parent.left
+    anchors.right: parent.right
+    spacing: 4
+
+    ListView {
+      id: listLeft
+      width: (parent.width - parent.spacing * 2) / 3
+      height: contentHeight + topMargin + bottomMargin
+      spacing: 0
+      clip: true
+      model: dirModelLeft
+      interactive: false
+      topMargin: 10
+      bottomMargin: 10
+      delegate: dirDelegate
     }
-    ListElement {
-      icon: "desktop"
-      folder: "desktop"
+
+    ListView {
+      id: listCenter
+      width: (parent.width - parent.spacing * 2) / 3
+      height: contentHeight + topMargin + bottomMargin
+      spacing: 0
+      clip: true
+      model: dirModelCenter
+      interactive: false
+      topMargin: 10
+      bottomMargin: 10
+      delegate: dirDelegate
     }
-    ListElement {
-      icon: "documents"
-      folder: "documents"
-    }
-    ListElement {
-      icon: "downloads"
-      folder: "downloads"
-    }
-    ListElement {
-      icon: "dotfiles"
-      folder: "dotfiles"
-    }
-    ListElement {
-      icon: "images"
-      folder: "images"
-    }
-    ListElement {
-      icon: "music"
-      folder: "music"
+
+    ListView {
+      id: listRight
+      width: (parent.width - parent.spacing * 2) / 3
+      height: contentHeight + topMargin + bottomMargin
+      spacing: 0
+      clip: true
+      model: dirModelRight
+      interactive: false
+      topMargin: 10
+      bottomMargin: 10
+      delegate: dirDelegate
     }
   }
 
-  ListView {
-    id: list
-    spacing: 0
-    clip: true
-    model: dirModel
-    interactive: false
-    anchors.fill: parent
-    anchors.topMargin: 10
-    anchors.bottomMargin: 10
-
-    delegate: Item {
-      height: 50
-      width: list.width
-
+  Component {
+    id: dirDelegate
+    Item {
+      implicitHeight: 50
+      width: ListView.view.width
       StyledText {
         text: model.icon
         font.pixelSize: 17
         anchors.centerIn: parent
       }
-
       MouseArea {
         anchors.fill: parent
-        onClicked: root.openYazi(`${model.folder}`)
+        onClicked: root.openYazi(model.folder)
       }
     }
   }

@@ -2,6 +2,7 @@ import qs.shared
 import qs.config
 import qs.services
 import qs.windows.startmenu.components
+
 import QtQuick
 import Quickshell
 import QtQuick.Effects
@@ -10,49 +11,77 @@ import QtQuick.Layouts
 
 PanelWindow {
   id: quickMenu
-  visible: false
+  visible: true 
   color: "transparent"
   objectName: "Start Menu"
-  exclusionMode: ExclusionMode.Ignore
-  implicitWidth: mainLayout.implicitWidth
+  exclusionMode: ExclusionMode.Normal
+  implicitWidth: 500 
   implicitHeight: mainLayout.implicitHeight
   
+  
+  anchors {
+      top: true
+      left: true
+      right: false
+  }
+
   margins {
-    left: Config.margins + 15
-    top: Config.thickness + Config.margins + 2
+    top: 4
+    left: 4
+  }
+
+  Background {
+    radius: 12
   }
 
   property alias timer: timer
-
-  // — Main layout —
-  RowLayout {
+  
+  ColumnLayout {
     id: mainLayout
-    spacing: 6
-    anchors.top: parent.top
-    anchors.left: parent.left
+    spacing: 0
+    implicitWidth: parent.width
 
-    // Column 1
-    ColumnLayout {
+    // Column 
+    RowLayout {
       spacing: 6
       Layout.alignment: Qt.AlignVCenter
+      Layout.preferredWidth: quickMenu.width
 
       Card {
-        Layout.preferredWidth: 240
-        Layout.preferredHeight: 300
+        Layout.margins: 10
+        Layout.preferredHeight: 150 
+        Layout.preferredWidth: quickMenu.width - 20
       }
-      OpenWallpapers {
-        Layout.preferredWidth: 240
-        Layout.preferredHeight: 65
+    }
+  
+    ColumnLayout {
+      HomeShortcut {
+        Layout.preferredWidth: quickMenu.width 
       }
     }
 
     // Column 2
-    ColumnLayout {
+    RowLayout {
       Layout.alignment: Qt.AlignVCenter
 
-      HomeShortcut {
+      ColumnLayout {
+        spacing:0 
+
+        Calendar {
+          Layout.preferredWidth: 240
+          Layout.preferredHeight: 295
+        }
+
+        Weather {
+          Layout.preferredWidth: 240
+          Layout.preferredHeight: 65
+        }
+      }
+
+
+      MediaPlayer {
         Layout.preferredWidth: 240
-        Layout.preferredHeight: 370
+        Layout.preferredHeight: 360
       }
     }
 
@@ -60,25 +89,16 @@ PanelWindow {
     ColumnLayout {
       spacing: 6
       Layout.alignment: Qt.AlignVCenter
-
-      Calendar {
-        Layout.preferredWidth: 240
-        Layout.preferredHeight: 295
-      }
-      Weather {
+      OpenWallpapers {
         Layout.preferredWidth: 240
         Layout.preferredHeight: 65
       }
+
     }
 
     // Column 4
     ColumnLayout {
       Layout.alignment: Qt.AlignVCenter
-
-      MediaPlayer {
-        Layout.preferredWidth: 250
-        Layout.preferredHeight: 370
-      }
     }
   }
 

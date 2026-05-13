@@ -10,9 +10,6 @@ import Quickshell.Services.Mpris
 
 Item {
   property MprisPlayer player: Mpris.players.values[0] ?? null
-  Background {
-    anchors.fill: parent
-  }
 
   ColumnLayout {
     spacing: 17

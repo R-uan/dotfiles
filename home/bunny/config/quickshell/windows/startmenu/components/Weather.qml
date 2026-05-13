@@ -21,11 +21,6 @@ Item {
     return "🌡";
   }
 
-  // — Background —
-  Background {
-    anchors.fill: parent
-  }
-
   // — Loading —
   StyledText {
     text: "Loading…"

@@ -16,10 +16,6 @@ Item {
   readonly property color colColour6:     Config.darkMode ? ThemeDark.colour6      : ThemeLight.colour5
   readonly property color colText:        Config.darkMode ? ThemeDark.background0  : ThemeLight.background0
 
-  Background {
-    anchors.fill: parent
-  }
-
   // — State —
   property var today: new Date()
   property int displayYear: today.getFullYear()

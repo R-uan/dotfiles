@@ -4,3 +4,4 @@ singleton ResourcesService 1.0 ResourcesService.qml
 singleton WeatherService 1.0 WeatherService.qml
 singleton NetworkService 1.0 NetworkService.qml
 singleton VolumeService 1.0 VolumeService.qml
+singleton WallpaperService 1.0 WallpaperService.qml
