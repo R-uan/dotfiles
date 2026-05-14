@@ -15,22 +15,32 @@ Item {
     id: layout
     anchors.margins: 0
     implicitWidth: parent.width
-    spacing: Config.spacing * 1.06
+    spacing: Config.spacing * 1.50
 
-    Tray {
-      // Debug {}
-    }
+    // Debug {}
+    Tray {}
 
-    Resources {
-      // Debug {}
-    }
+    // Debug {}
+    Resources {}
 
-    SystemServices {
-      // Debug {}
-    }
+    // Debug {}
+    SystemServices {}
 
-    YepClock {
-      // Debug {}
+    // Debug {}
+    YepClock {}
+
+    Item {
+      Layout.topMargin: -5
+      Layout.bottomMargin: 10
+      implicitWidth: parent.width
+      implicitHeight: pb.height
+
+      StyledText {
+        id: pb
+        font.pixelSize: 20
+        anchors.centerIn: parent
+        text: "󰐥"
+      }
     }
   }
 }

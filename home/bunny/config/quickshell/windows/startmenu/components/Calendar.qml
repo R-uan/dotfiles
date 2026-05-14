@@ -9,35 +9,47 @@ Item {
   id: root
 
   // — Theme aliases —
-  readonly property color colBackground1: Config.darkMode ? ThemeDark.background1  : ThemeLight.background1
-  readonly property color colForeground0: Config.darkMode ? ThemeDark.foreground0  : ThemeLight.foreground0
-  readonly property color colPrimary3:    Config.darkMode ? ThemeDark.primary3     : ThemeLight.primary3
-  readonly property color colPrimary0:    Config.darkMode ? ThemeDark.primary0     : ThemeLight.primary0
-  readonly property color colColour6:     Config.darkMode ? ThemeDark.colour6      : ThemeLight.colour5
-  readonly property color colText:        Config.darkMode ? ThemeDark.background0  : ThemeLight.background0
+  readonly property color colBackground1: Config.darkMode ? ThemeDark.background1 : ThemeLight.background1
+  readonly property color colForeground0: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
+  readonly property color colPrimary3: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+  readonly property color colPrimary0: Config.darkMode ? ThemeDark.primary0 : ThemeLight.primary0
+  readonly property color colColour6: Config.darkMode ? ThemeDark.colour6 : ThemeLight.colour5
+  readonly property color colText: Config.darkMode ? ThemeDark.background0 : ThemeLight.background0
 
   // — State —
   property var today: new Date()
   property int displayYear: today.getFullYear()
   property int displayMonth: today.getMonth()
 
-  property var monthNames: ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"]
+  property var monthNames: ["January", "February", "March", "April", "May", "June", "July", "August",
+    "September", "October", "November", "December"]
 
   readonly property int cellH: 24
   readonly property int cellW: Math.floor((root.width - 24) / 7)
 
-  function daysInMonth(year, month) { return new Date(year, month + 1, 0).getDate() }
-  function firstDayOfMonth(year, month) { return new Date(year, month, 1).getDay() }
+  function daysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+  function firstDayOfMonth(year, month) {
+    return new Date(year, month, 1).getDay();
+  }
 
   function prevMonth() {
-    if (displayMonth === 0) { displayMonth = 11; displayYear -= 1 }
-    else { displayMonth -= 1 }
+    if (displayMonth === 0) {
+      displayMonth = 11;
+      displayYear -= 1;
+    } else {
+      displayMonth -= 1;
+    }
   }
 
   function nextMonth() {
-    if (displayMonth === 11) { displayMonth = 0; displayYear += 1 }
-    else { displayMonth += 1 }
+    if (displayMonth === 11) {
+      displayMonth = 0;
+      displayYear += 1;
+    } else {
+      displayMonth += 1;
+    }
   }
 
   Timer {
@@ -61,14 +73,22 @@ Item {
         height: 24
         radius: Config.radius
         color: prevHover.containsMouse ? root.colBackground1 : "transparent"
-        Behavior on color { ColorAnimation { duration: 120 } }
+        Behavior on color {
+          ColorAnimation {
+            duration: 120
+          }
+        }
 
         StyledText {
           anchors.centerIn: parent
           text: "‹"
           font.pixelSize: 16
           color: prevHover.containsMouse ? root.colForeground0 : root.colPrimary0
-          Behavior on color { ColorAnimation { duration: 120 } }
+          Behavior on color {
+            ColorAnimation {
+              duration: 120
+            }
+          }
         }
 
         MouseArea {
@@ -93,14 +113,22 @@ Item {
         height: 24
         radius: Config.radius
         color: nextHover.containsMouse ? root.colBackground1 : "transparent"
-        Behavior on color { ColorAnimation { duration: 120 } }
+        Behavior on color {
+          ColorAnimation {
+            duration: 120
+          }
+        }
 
         StyledText {
           anchors.centerIn: parent
           text: "›"
           font.pixelSize: 16
           color: nextHover.containsMouse ? root.colForeground0 : root.colPrimary0
-          Behavior on color { ColorAnimation { duration: 120 } }
+          Behavior on color {
+            ColorAnimation {
+              duration: 120
+            }
+          }
         }
 
         MouseArea {
@@ -116,7 +144,7 @@ Item {
     Row {
       Layout.fillWidth: true
       Repeater {
-        model: ["S", "M", "T", "W", "T", "F", "S"]
+        model: ["S", "T", "Q", "Q", "S", "S", "D"]
         StyledText {
           width: root.cellW
           height: 18
@@ -146,10 +174,10 @@ Item {
 
           property int offset: index - root.firstDayOfMonth(root.displayYear, root.displayMonth)
           property int dayNum: offset + 1
-          property bool inMonth: dayNum >= 1 && dayNum <= root.daysInMonth(root.displayYear, root.displayMonth)
-          property bool isToday: inMonth && dayNum === root.today.getDate()
-                                 && root.displayMonth === root.today.getMonth()
-                                 && root.displayYear === root.today.getFullYear()
+          property bool inMonth: dayNum >= 1 && dayNum <= root.daysInMonth(root.displayYear,
+                                                                           root.displayMonth)
+          property bool isToday: inMonth && dayNum === root.today.getDate() && root.displayMonth
+                                 === root.today.getMonth() && root.displayYear === root.today.getFullYear()
 
           width: root.cellW
           height: root.cellH
@@ -159,22 +187,27 @@ Item {
             width: parent.width - 4
             height: parent.height - 2
             radius: Config.radius
-            color: dayCell.isToday
-              ? root.colPrimary0
-              : (cellHover.containsMouse && dayCell.inMonth ? root.colBackground1 : "transparent")
-            Behavior on color { ColorAnimation { duration: 100 } }
+            color: dayCell.isToday ? root.colPrimary0 : (cellHover.containsMouse && dayCell.inMonth
+                                                         ? root.colBackground1 : "transparent")
+            Behavior on color {
+              ColorAnimation {
+                duration: 100
+              }
+            }
           }
 
           StyledText {
             anchors.centerIn: parent
             text: dayCell.inMonth ? dayCell.dayNum : ""
             font.pixelSize: Config.fontSize - 2
-            color: dayCell.isToday
-              ? root.colText
-              : dayCell.inMonth
-                ? (cellHover.containsMouse ? root.colForeground0 : root.colPrimary3)
-                : "transparent"
-            Behavior on color { ColorAnimation { duration: 100 } }
+            color: dayCell.isToday ? root.colText : dayCell.inMonth ? (cellHover.containsMouse
+                                                                       ? root.colForeground0 :
+                                                                         root.colPrimary3) : "transparent"
+            Behavior on color {
+              ColorAnimation {
+                duration: 100
+              }
+            }
           }
 
           MouseArea {

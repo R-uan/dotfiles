@@ -1,0 +1,5 @@
+module qs.windows.taskbar.components.sections
+
+LeftSection 1.0 LeftSection.qml
+RightSection 1.0 RightSection.qml
+MiddleSection 1.0 MiddleSection.qml

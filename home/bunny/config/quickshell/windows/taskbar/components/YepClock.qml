@@ -15,108 +15,43 @@ Item {
   }
 
   readonly property string accentColor: Config.darkMode ? ThemeDark.colour6 : ThemeLight.primary3
-  readonly property string textColor:   Config.darkMode ? ThemeDark.background0 : ThemeLight.background0
+  readonly property string textColor: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.background0
 
-  ColumnLayout {
-    id: layout
-    spacing: Config.spacing
-    anchors.left: parent.left      // instead of anchors.centerIn: parent
-    anchors.right: parent.right
-    implicitWidth: parent.width
-    Layout.alignment: Qt.AlignHCenter
+  Item {
+    width: parent.width
+    height: parent.height
 
-    // Time
     ColumnLayout {
-      id: time
-      spacing: 0
-      implicitWidth: parent.width - 8
-      Layout.alignment: Qt.AlignHCenter
+      id: layout
+      spacing: Config.spacing
+      anchors.centerIn: parent
+      width: parent.width - 10
 
       Background {
-        anchors.fill: parent
-        color: root.accentColor
-      }
+        radius: 36
+        Layout.fillWidth: true
+        color: ThemeDark.background2
+        implicitHeight: innerLayout.implicitHeight + 20
 
-      Item {
-        height: parent.width
-        Layout.bottomMargin: -10
-        width: parent.width
-
-        StyledText {
-          color: root.textColor
+        ColumnLayout {
+          id: innerLayout
+          width: parent.width
           anchors.centerIn: parent
-          Layout.alignment: Qt.AlignHCenter
-          font.pixelSize: Config.fontSize + 5
-          text: Qt.formatDateTime(sysclock.date, "hh")
-        }
-      }
 
-      Item {
-        Layout.topMargin: -10
-        height: parent.width
-        width: parent.width
+          StyledText {
+            color: root.textColor
+            Layout.bottomMargin: -10
+            Layout.alignment: Qt.AlignHCenter
+            font.pixelSize: Config.fontSize + 5
+            text: Qt.formatDateTime(sysclock.date, "hh")
+          }
 
-        StyledText {
-          anchors.centerIn: parent
-          Layout.alignment: Qt.AlignHCenter
-          font.pixelSize: Config.fontSize + 5
-          text: Qt.formatDateTime(sysclock.date, "mm")
-          color: root.textColor
-        }
-      }
-    }
-
-    // Date
-    ColumnLayout {
-      spacing: 0
-      implicitWidth: parent.width - 8
-      Layout.alignment: Qt.AlignHCenter
-
-      Background {
-        anchors.fill: parent
-        color: root.accentColor
-      }
-
-      Item {
-        Layout.bottomMargin: -12
-        height: parent.width
-        width: parent.width
-
-        StyledText {
-          color: root.textColor
-          anchors.centerIn: parent
-          Layout.alignment: Qt.AlignHCenter
-          font.pixelSize: Config.fontSize + 0
-          text: Qt.formatDateTime(sysclock.date, "ddd")
-        }
-      }
-
-      Item {
-        Layout.topMargin: -9
-        Layout.bottomMargin: -8
-        height: parent.width
-        width: parent.width
-
-        StyledText {
-          color: root.textColor
-          anchors.centerIn: parent
-          Layout.alignment: Qt.AlignHCenter
-          font.pixelSize: Config.fontSize + 5
-          text: Qt.formatDateTime(sysclock.date, "dd")
-        }
-      }
-
-      Item {
-        Layout.topMargin: -15
-        height: parent.width
-        width: parent.width
-
-        StyledText {
-          color: root.textColor
-          anchors.centerIn: parent
-          font.pixelSize: Config.fontSize + 0
-          Layout.alignment: Qt.AlignHCenter
-          text: Qt.formatDateTime(sysclock.date, "MMM")
+          StyledText {
+            color: root.textColor
+            Layout.alignment: Qt.AlignHCenter
+            font.pixelSize: Config.fontSize + 5
+            text: Qt.formatDateTime(sysclock.date, "mm")
+          }
         }
       }
     }

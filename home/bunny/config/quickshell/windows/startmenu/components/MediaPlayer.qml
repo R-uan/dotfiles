@@ -11,8 +11,8 @@ import Quickshell.Services.Mpris
 Item {
   property MprisPlayer player: Mpris.players.values[0] ?? null
 
-  ColumnLayout {
-    spacing: 17
+  RowLayout {
+    spacing: 50
     anchors.centerIn: parent
 
     // Image
@@ -65,83 +65,89 @@ Item {
       }
     }
 
-    // Info
     ColumnLayout {
-      spacing: 0
-      Layout.topMargin: 5
-      Layout.alignment: Qt.AlignHCenter
-      StyledText {
+      spacing: 5
+      // Info
+      ColumnLayout {
+        spacing: 0
+        Layout.topMargin: 5
         Layout.alignment: Qt.AlignHCenter
-        text: player?.trackTitle ? player.trackTitle.length >= 29 ? `${player.trackTitle.slice(0, 24).trim()
-                                                                    }...` : player.trackTitle : "Thoughts"
-      }
+        StyledText {
+          font.pixelSize: Config.fontSize + 3
+          Layout.alignment: Qt.AlignHCenter
+          text: player?.trackTitle ? player.trackTitle.length >= 29 ? `${player.trackTitle.slice(0, 24).trim()
+                                                                      }...` : player.trackTitle : "Thoughts"
+        }
 
-      StyledText {
-        Layout.alignment: Qt.AlignHCenter
-        text: player?.trackArtist ? player.trackArtist.length > 25 ? `${player.trackArtist.slice(0, 20).trim()
-                                                                     }...` : player.trackArtist : "Your mind."
-      }
-    }
-
-    // Controls
-    RowLayout {
-      spacing: 12
-      visible: player?.canControl
-      Layout.alignment: Qt.AlignHCenter
-
-      Item {
-        implicitWidth: 30
-        implicitHeight: 30
-
-        MouseArea {
-          anchors.fill: parent
-          StyledText {
-            anchors.centerIn: parent
-            text: ""
-            visible: player?.canGoPrevious
-            font.pixelSize: Config.fontSize * 2
-          }
-
-          onClicked: {
-            player?.previous();
-          }
+        StyledText {
+          font.pixelSize: Config.fontSize + 3
+          Layout.alignment: Qt.AlignHCenter
+          text: player?.trackArtist ? player.trackArtist.length > 25 ? `${player.trackArtist.slice(0, 20).trim(
+                                                                         )}...` : player.trackArtist :
+                                                                       "Your mind."
         }
       }
 
-      Item {
-        implicitWidth: 30
-        implicitHeight: 30
+      // Controls
+      RowLayout {
+        spacing: 12
+        visible: player?.canControl
+        Layout.alignment: Qt.AlignHCenter
 
-        MouseArea {
-          anchors.fill: parent
-          StyledText {
-            anchors.centerIn: parent
-            text: player?.isPlaying ? "" : ""
-            font.pixelSize: Config.fontSize * 2
-            visible: player?.canPlay
-          }
+        Item {
+          implicitWidth: 30
+          implicitHeight: 30
 
-          onClicked: {
-            player?.togglePlaying();
+          MouseArea {
+            anchors.fill: parent
+            StyledText {
+              anchors.centerIn: parent
+              text: ""
+              visible: player?.canGoPrevious
+              font.pixelSize: Config.fontSize * 2
+            }
+
+            onClicked: {
+              player?.previous();
+            }
           }
         }
-      }
 
-      Item {
-        implicitWidth: 30
-        implicitHeight: 30
+        Item {
+          implicitWidth: 30
+          implicitHeight: 30
 
-        MouseArea {
-          anchors.fill: parent
-          StyledText {
-            anchors.centerIn: parent
-            text: ""
-            visible: player?.canGoNext
-            font.pixelSize: Config.fontSize * 2
+          MouseArea {
+            anchors.fill: parent
+            StyledText {
+              anchors.centerIn: parent
+              text: player?.isPlaying ? "" : ""
+              font.pixelSize: Config.fontSize * 2
+              visible: player?.canPlay
+            }
+
+            onClicked: {
+              player?.togglePlaying();
+            }
           }
+        }
 
-          onClicked: {
-            player?.next();
+        Item {
+          implicitWidth: 30
+          implicitHeight: 30
+
+          MouseArea {
+            anchors.fill: parent
+            StyledText {
+              anchors.centerIn: parent
+              text: ""
+              visible: player?.canGoNext
+              font.pixelSize: Config.fontSize * 2
+            }
+
+            onClicked: {
+              player?.next();
+            }
           }
         }
       }

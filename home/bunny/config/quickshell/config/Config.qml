@@ -12,7 +12,7 @@ Singleton {
   // General Configs
   property real backgroundOpacity: 0.99
   property bool darkMode: true
-  property int thickness: 35
+  property int thickness: 40
   property int rounding: 16
   property int spacing: 5
   property int margins: 0

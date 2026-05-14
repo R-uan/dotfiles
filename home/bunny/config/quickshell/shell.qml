@@ -1,4 +1,6 @@
 //@ pragma UseQApplication
+//@ pragma Env QS_DISABLE_FILE_WATCHER=false
+
 import "windows/taskbar"
 import "windows/startmenu"
 import "windows/wallpapers"

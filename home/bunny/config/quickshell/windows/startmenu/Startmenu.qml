@@ -11,18 +11,17 @@ import QtQuick.Layouts
 
 PanelWindow {
   id: quickMenu
-  visible: true 
+  visible: false
+  implicitWidth: 500
   color: "transparent"
   objectName: "Start Menu"
   exclusionMode: ExclusionMode.Normal
-  implicitWidth: 500 
   implicitHeight: mainLayout.implicitHeight
-  
-  
+
   anchors {
-      top: true
-      left: true
-      right: false
+    top: true
+    left: true
+    right: false
   }
 
   margins {
@@ -35,70 +34,45 @@ PanelWindow {
   }
 
   property alias timer: timer
-  
+
   ColumnLayout {
     id: mainLayout
     spacing: 0
-    implicitWidth: parent.width
+    width: parent.width          // width, not implicitWidth
 
-    // Column 
     RowLayout {
       spacing: 6
-      Layout.alignment: Qt.AlignVCenter
-      Layout.preferredWidth: quickMenu.width
+      Layout.fillWidth: true   // fill instead of referencing quickMenu.width
 
       Card {
         Layout.margins: 10
-        Layout.preferredHeight: 150 
-        Layout.preferredWidth: quickMenu.width - 20
-      }
-    }
-  
-    ColumnLayout {
-      HomeShortcut {
-        Layout.preferredWidth: quickMenu.width 
+        Layout.preferredHeight: 150
+        Layout.fillWidth: true
       }
     }
 
-    // Column 2
+    HomeShortcut {
+      Layout.fillWidth: true   // removed pointless ColumnLayout wrapper
+    }
+
+    MediaPlayer {
+      Layout.preferredHeight: 200
+      Layout.fillWidth: true
+    }
+
     RowLayout {
-      Layout.alignment: Qt.AlignVCenter
-
-      ColumnLayout {
-        spacing:0 
-
-        Calendar {
-          Layout.preferredWidth: 240
-          Layout.preferredHeight: 295
-        }
-
-        Weather {
-          Layout.preferredWidth: 240
-          Layout.preferredHeight: 65
-        }
+      spacing: 0
+      Layout.fillWidth: true
+      Calendar {
+        Layout.preferredHeight: 295
+        Layout.fillWidth: true  // let the layout distribute width
       }
 
-
-      MediaPlayer {
-        Layout.preferredWidth: 240
-        Layout.preferredHeight: 360
-      }
-    }
-
-    // Column 3
-    ColumnLayout {
-      spacing: 6
-      Layout.alignment: Qt.AlignVCenter
-      OpenWallpapers {
-        Layout.preferredWidth: 240
+      Weather {
+        Layout.rightMargin: 5
+        Layout.preferredWidth: 100
         Layout.preferredHeight: 65
       }
-
-    }
-
-    // Column 4
-    ColumnLayout {
-      Layout.alignment: Qt.AlignVCenter
     }
   }
 
