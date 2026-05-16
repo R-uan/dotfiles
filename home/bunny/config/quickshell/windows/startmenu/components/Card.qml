@@ -1,7 +1,6 @@
 import qs.shared
 import qs.config
 import qs.services
-
 import QtQuick
 import Quickshell
 import QtQuick.Effects
@@ -11,16 +10,22 @@ import QtQuick.Layouts
 // Card
 Item {
   id: root
+  implicitHeight: col.implicitHeight
+  implicitWidth: col.implicitWidth
+
   ColumnLayout {
+    id: col
     spacing: 25
     anchors.centerIn: parent
 
-
     Item {
       Layout.preferredWidth: root.width
-      Layout.preferredHeight: root.height
+      // Height follows the image's natural aspect ratio
+      Layout.preferredHeight: img.sourceSize.height > 0
+        ? img.sourceSize.height * (root.width / img.sourceSize.width)
+        : root.width
       Layout.alignment: Qt.AlignHCenter
-          clip: true  // clips vertical overflow
+      clip: true
 
       Image {
         id: img
@@ -28,12 +33,11 @@ Item {
         mipmap: true
         visible: false
         width: parent.width
-        fillMode: Image.PreserveAspectCrop      
+        height: parent.height
+        fillMode: Image.PreserveAspectCrop
         source: WallpaperService.wallpaperPath
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        height: sourceSize.height * (parent.width / sourceSize.width)  // scale proportionally
-    }
+        anchors.centerIn: parent
+      }
 
       MultiEffect {
         source: img
@@ -48,9 +52,8 @@ Item {
         height: img.height
         layer.enabled: true
         visible: false
-
         Rectangle {
-          radius: 2
+          radius: 8
           color: "black"
           width: img.width
           height: img.height
@@ -59,24 +62,5 @@ Item {
         }
       }
     }
-
-    //ColumnLayout {
-    //  spacing: 2
-    //  Layout.preferredWidth: 210
-
-    //  StyledText {
-    //    font.pixelSize: Config.fontSize * 1.7
-    //    Layout.alignment: Qt.AlignHCenter
-    //    font.weight: 400
-    //    text: "Ruan"
-    //  }
-
-    //  StyledText {
-    //    Layout.alignment: Qt.AlignHCenter
-    //    font.pixelSize: Config.fontSize + 1
-    //    text: "bunny@ruan-nixos"
-    //    font.weight: 300
-    //  }
-    //}
   }
 }

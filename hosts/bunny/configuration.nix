@@ -18,14 +18,28 @@
   programs.nix-ld.enable = true;
 
   # ------ NETWORK ------
+  services.resolved.enable = true;
+  networking.resolvconf.useLocalResolver = false;
 
   networking = {
     hostName = "ruan-nixos";
     networkmanager.enable = true;
-  };
 
-  networking.hosts = {
-    "127.0.0.1" = ["www.apoioteste.sitemidas" "apoioteste.sitemidas" "www.site17.sitemidas" "painelteste.sitemidas" "www.site10.sitemidas" "site10.sitemidas"];
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
+
+    hosts = {
+      "127.0.0.1" = [
+        "www.apoioteste.sitemidas"
+        "apoioteste.sitemidas"
+        "www.site17.sitemidas"
+        "painelteste.sitemidas"
+        "www.site10.sitemidas"
+        "site10.sitemidas"
+      ];
+    };
   };
 
   # ------ LOCALE ------

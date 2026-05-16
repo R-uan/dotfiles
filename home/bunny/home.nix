@@ -37,9 +37,11 @@
     deadnix
     alejandra # Formatter
     ## Lua
-    lua
     lua-language-server
-
+    (lua52Packages.lua.withPackages (ps:
+      with ps; [
+        luafilesystem
+      ]))
     # Terminal Apps
     fd # find replacement
     yazi # file manager

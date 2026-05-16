@@ -11,33 +11,37 @@ import QtQuick.Controls
 PanelWindow {
   id: wallpapers
   visible: false
-  implicitWidth: 860
-  implicitHeight: 620
+  implicitWidth: 420
   color: "transparent"
-  exclusionMode: ExclusionMode.Ignore
+  exclusionMode: ExclusionMode.Normal
 
-  margins {
-    bottom: 10
-    left: Config.margins + 15
-    top: Config.thickness + Config.margins + 2
+  anchors {
+    top: true
+    left: true
+    bottom: true
+    right: false
   }
 
-  // — Theme aliases —
   readonly property color colForeground0: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
-  readonly property color colPrimary0:    Config.darkMode ? ThemeDark.primary0    : ThemeLight.primary0
-  readonly property color colPrimary3:    Config.darkMode ? ThemeDark.primary3    : ThemeLight.primary3
+  readonly property color colPrimary0: Config.darkMode ? ThemeDark.primary0 : ThemeLight.primary0
+  readonly property color colPrimary3: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
   readonly property color colBackground1: Config.darkMode ? ThemeDark.background1 : ThemeLight.background1
-  readonly property color colBorder:      Config.darkMode ? ThemeDark.border      : ThemeLight.border
-  readonly property color colColour5:     Config.darkMode ? ThemeDark.colour5     : ThemeLight.colour4
-  readonly property color colColour3:     Config.darkMode ? ThemeDark.colour3     : ThemeLight.colour2
-  readonly property color colOverlay:     Config.darkMode ? "#000000"             : "#1a2a1c"
+  readonly property color colBorder: Config.darkMode ? ThemeDark.border : ThemeLight.border
+  readonly property color colColour5: Config.darkMode ? ThemeDark.colour5 : ThemeLight.colour4
+  readonly property color colColour3: Config.darkMode ? ThemeDark.colour3 : ThemeLight.colour2
+  readonly property color colOverlay: Config.darkMode ? "#0a120b" : "#1a2a1c"
 
   property var wallpaperPaths: []
   property bool isHovered: false
 
-  // — Background —
+  margins {
+    top: 4
+    left: 4
+    bottom: 4
+  }
+
   Background {
-    anchors.fill: parent
+    radius: 12
   }
 
   // — Fetch wallpaper paths —
@@ -70,8 +74,8 @@ PanelWindow {
   // — Main layout —
   ColumnLayout {
     anchors.fill: parent
-    anchors.margins: 16
-    spacing: 12
+    anchors.margins: 12
+    spacing: 10
 
     // — Header —
     RowLayout {
@@ -84,7 +88,9 @@ PanelWindow {
         font.weight: Font.Medium
       }
 
-      Item { Layout.fillWidth: true }
+      Item {
+        Layout.fillWidth: true
+      }
 
       StyledText {
         text: wallpapers.wallpaperPaths.length + " found"
@@ -108,7 +114,8 @@ PanelWindow {
       Layout.fillHeight: true
       model: wallpapers.wallpaperPaths
       cellWidth: Math.floor(width / 3)
-      cellHeight: Math.floor(cellWidth * 0.5625) + 6
+      // Portrait aspect ratio ~9:16 to match the tall cards in the image
+      cellHeight: Math.floor(cellWidth * 1.78) + 6
       clip: true
       cacheBuffer: 200
       reuseItems: false
@@ -130,10 +137,13 @@ PanelWindow {
 
         contentItem: Rectangle {
           radius: 4
-          color: scrollBar.pressed  ? wallpapers.colPrimary0
-               : scrollBar.hovered  ? wallpapers.colColour5
-               :                      wallpapers.colColour3
-          Behavior on color { ColorAnimation { duration: 120 } }
+          color: scrollBar.pressed ? wallpapers.colPrimary0 : scrollBar.hovered ? wallpapers.colColour5 :
+                                                                                  wallpapers.colColour3
+          Behavior on color {
+            ColorAnimation {
+              duration: 120
+            }
+          }
         }
 
         background: Rectangle {
@@ -152,7 +162,8 @@ PanelWindow {
 
         Item {
           anchors.fill: parent
-          anchors.margins: 6
+          // Tighter spacing between cards, matching the image's compact grid
+          anchors.margins: 4
 
           // — Thumbnail —
           Image {
@@ -174,7 +185,7 @@ PanelWindow {
             maskSource: mask
           }
 
-          // — Mask —
+          // — Mask with larger radius for prominent rounded corners —
           Item {
             id: mask
             width: img.width
@@ -183,7 +194,8 @@ PanelWindow {
             visible: false
             Rectangle {
               anchors.fill: parent
-              radius: Config.radius
+              // Larger radius for the big rounded corners visible in the image
+              radius: Config.radius * 2.5
               color: "black"
             }
           }
@@ -191,20 +203,28 @@ PanelWindow {
           // — Hover overlay —
           Rectangle {
             anchors.fill: parent
-            radius: Config.radius
+            radius: Config.radius * 2.5
             color: wallpapers.colOverlay
             opacity: cellHover.containsMouse ? 0.35 : 0
-            Behavior on opacity { NumberAnimation { duration: 150 } }
+            Behavior on opacity {
+              NumberAnimation {
+                duration: 150
+              }
+            }
           }
 
           // — Hover border —
           Rectangle {
             anchors.fill: parent
-            radius: Config.radius
+            radius: Config.radius * 2.5
             color: "transparent"
             border.color: wallpapers.colPrimary0
             border.width: cellHover.containsMouse ? 2 : 0
-            Behavior on border.width { NumberAnimation { duration: 150 } }
+            Behavior on border.width {
+              NumberAnimation {
+                duration: 150
+              }
+            }
           }
 
           MouseArea {
