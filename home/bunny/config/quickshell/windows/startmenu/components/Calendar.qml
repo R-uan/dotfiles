@@ -144,7 +144,7 @@ Item {
     Row {
       Layout.fillWidth: true
       Repeater {
-        model: ["S", "T", "Q", "Q", "S", "S", "D"]
+        model: ["D", "S", "T", "Q", "Q", "S", "S"]
         StyledText {
           width: root.cellW
           height: 18
