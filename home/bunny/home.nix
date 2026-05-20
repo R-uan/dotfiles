@@ -47,7 +47,7 @@
     yazi # file manager
     gawk # text-processing language
     btop # task manager
-    unar
+    unar # unziper
     procps # for top
     gnused # text surgery
     gnugrep # grep
@@ -56,9 +56,9 @@
     bluetuith # bluetooth interface
 
     # Desktop Modules
-    vicinae
-    rofi # App Launcher
-    mako # notification displayer
+    rofi # app Launcher
+    vicinae # better app launcher
+    mako # notification
 
     # Daemons
     libnotify # notifications
@@ -79,9 +79,8 @@
     chromium
     firefox # browser
     firefox-devedition
-    super-productivity
     telegram-desktop
-    
+
     anki-bin # Flashcards
     obsidian # Markdown Notes
     kdePackages.dolphin # file manager
@@ -100,7 +99,7 @@
   ];
 
   home.sessionVariables = {
-    EDITOR = "code";
+    EDITOR = "nvim";
     HDD = "/mnt/hdd";
     CODE = "/mnt/hdd/home/code";
     DOTFILES = "/mnt/hdd/home/dotfiles";
