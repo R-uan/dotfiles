@@ -81,7 +81,7 @@
     firefox-devedition
     super-productivity
     telegram-desktop
-
+    
     anki-bin # Flashcards
     obsidian # Markdown Notes
     kdePackages.dolphin # file manager

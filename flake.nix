@@ -31,17 +31,31 @@
       inputs.nixpkgs.follows = "nixpkgs";
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
     };
+
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = inputs @ {self, ...}: let
     system = "x86_64-linux";
-    pkgs = import inputs.nixpkgs {inherit system;};
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+
+      overlays = [
+        inputs.neovim-nightly-overlay.overlays.default
+      ];
+    };
   in {
     nixosConfigurations = {
       bunny = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit inputs; };
 
         modules = [
+          {
+            nixpkgs.overlays = [
+              inputs.neovim-nightly-overlay.overlays.default
+            ];
+          }
           ./modules/services/default.nix
           ./hosts/bunny/configuration.nix
 
