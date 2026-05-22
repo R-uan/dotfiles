@@ -76,6 +76,23 @@ return {
     'numToStr/Comment.nvim',
     opts = {
       -- add any options here
-    }
-  }
+    },
+  },
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy",
+    priority = 1000,
+    opts = {
+      preset = "minimal",
+      transparent_bg = true,
+      options = {
+        show_source = true,
+        show_all_diags_on_cursorline = true,
+        multilines = {
+          enabled = true,
+          always_show = true,
+        },
+      },
+    },
+  },
 }

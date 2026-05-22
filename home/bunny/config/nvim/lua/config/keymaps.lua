@@ -92,3 +92,7 @@ vim.keymap.set("i", "<C-s>", "<Esc><cmd>w<cr>a")
 vim.keymap.set("n", "<leader>hs", ":Gitsigns stage_hunk<CR>")
 vim.keymap.set("v", "<leader>hs", ":Gitsigns stage_hunk<CR>")
 vim.keymap.set("n", "<leader>hr", ":Gitsigns reset_hunk<CR>")
+
+vim.keymap.set("n", "<leader>gr", "<cmd>Telescope lsp_references<CR>")
+vim.keymap.set("n", "<leader>ss", "<cmd>Telescope lsp_document_symbols<CR>")
+vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, { desc = "Rename symbol" })
