@@ -45,6 +45,7 @@ rules = [
   { mime = "audio/*",                     use = "play" },
   { mime = "application/pdf",             use = ["open"] },  # xdg-open → Firefox if set as default
   { mime = "application/zip",             use = "extract" },
+  { mime = "application/rar",             use = "extract" },
   { mime = "application/x-dosexec",      use = "run_exe" },
   { mime = "application/x-ms-dos-executable", use = "run_exe" },
 ]

@@ -68,6 +68,7 @@
     # Gaming
     winetricks
     xivlauncher
+    osu-lazer-bin
     wineWowPackages.stable # windows app runner
 
     # Other Programs
@@ -83,6 +84,7 @@
 
     anki-bin # Flashcards
     obsidian # Markdown Notes
+    siyuan
     kdePackages.dolphin # file manager
     hyprshot # screenshots
     vscode-fhs # code editor

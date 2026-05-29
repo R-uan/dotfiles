@@ -16,7 +16,13 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
   programs.nix-ld.enable = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly"; # or "daily"
+    options = "--delete-older-than 7d";
+  };
 
+  boot.loader.systemd-boot.configurationLimit = 5;
   # ------ NETWORK ------
   services.resolved.enable = true;
   networking.resolvconf.useLocalResolver = false;
@@ -34,10 +40,11 @@
       "127.0.0.1" = [
         "www.apoioteste.sitemidas"
         "apoioteste.sitemidas"
-        "www.site17.sitemidas"
         "painelteste.sitemidas"
+        "www.site27.sitemidas"
         "www.site10.sitemidas"
         "site10.sitemidas"
+        "site27.sitemidas"
       ];
     };
   };
