@@ -4,33 +4,51 @@
   ...
 }: {
   imports = [
+    ./hardware-configuration.nix
     ../../modules/services/sddm.nix
     ../../modules/services/nbfc.nix
-    ./hardware-configuration.nix
   ];
+
+  users.users.bunny = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    ignoreShellProgramCheck = true;
+    extraGroups = ["networkmanager" "wheel" "docker"];
+  };
+
+  time.timeZone = "America/Bahia";
+  console.keyMap = "br-abnt2";
+
+  security.rtkit.enable = true;
+  nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "25.05"; # Did you read the comment?
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  programs.nix-ld.enable = true;
-  nix.gc = {
-    automatic = true;
-    dates = "weekly"; # or "daily"
-    options = "--delete-older-than 7d";
+  nix = {
+    settings.experimental-features = ["nix-command" "flakes"];
+    gc = {
+      automatic = true;
+      dates = "weekly"; # or "daily"
+      options = "--delete-older-than 7d";
+    };
   };
 
-  boot.loader.systemd-boot.configurationLimit = 5;
-  # ------ NETWORK ------
-  services.resolved.enable = true;
-  networking.resolvconf.useLocalResolver = false;
+  boot = {
+    loader = {
+      efi = { canTouchEfiVariables = true; };
+      
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+      };
+    };
+  };
 
   networking = {
     hostName = "ruan-nixos";
     networkmanager.enable = true;
-
+    resolvconf.useLocalResolver = false;
+    
     nameservers = [
       "1.1.1.1"
       "8.8.8.8"
@@ -49,15 +67,27 @@
     };
   };
 
-  # ------ LOCALE ------
+  services = {
+    xserver.xkb = {
+      layout = "br";
+      variant = "nodeadkeys";
+    };
 
-  time.timeZone = "America/Bahia";
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+      alsa.support32Bit = true;
+    };
 
-  console.keyMap = "br-abnt2";
+    xserver = { 
+      enable = true; 
+      videoDrivers = ["nvidia"];
+    };
 
-  services.xserver.xkb = {
-    layout = "br";
-    variant = "nodeadkeys";
+    resolved = { enable = true; };
+    pulseaudio = { enable = false; };
+    displayManager = { defaultSession = "hyprland"; };
   };
 
   i18n = {
@@ -74,7 +104,8 @@
       LC_TIME = "pt_BR.UTF-8";
     };
     inputMethod = {
-      enabled = "fcitx5";
+      enable = true;
+      type = "fcitx5";
       fcitx5.addons = with pkgs; [
         fcitx5-gtk
         qt6Packages.fcitx5-chinese-addons
@@ -84,40 +115,13 @@
     };
   };
 
-  # ------ AUDIO ------
-  security.rtkit.enable = true;
-  services.pulseaudio.enable = false;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    alsa.support32Bit = true;
-  };
-
-  # ------ VIDEO ------
-  services.xserver.enable = true;
-  services.displayManager.defaultSession = "hyprland";
-
-  users.users.bunny = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    ignoreShellProgramCheck = true;
-    extraGroups = ["networkmanager" "wheel" "docker"];
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  # Display Nvidia/Intel
-
-  services.xserver.videoDrivers = ["nvidia"];
-
   hardware = {
     nvidia = {
       open = false;
+      branch = "legacy_580";
       nvidiaSettings = true;
       modesetting.enable = true;
       powerManagement.enable = false;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
 
       prime = {
         sync.enable = true;
@@ -130,22 +134,22 @@
       enable = true;
       enable32Bit = true; # Critical for Steam
     };
+
+    enableAllFirmware = true;
+    bluetooth = { enable = true; };
+    opentabletdriver = { enable = true; };
   };
 
-  # Other Hardware
+  programs =  {
+    nix-ld = { enable = true; };
+    hyprland = { enable = true; };
 
-  hardware.bluetooth.enable = true;
-  hardware.enableAllFirmware = true;
-
-  # Programs
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+    };
   };
-
-  programs.hyprland.enable = true; # window manager
 
   environment.systemPackages = with pkgs; [
     git
