@@ -15,11 +15,16 @@ vim.lsp.config.lua_ls = {
   root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
   settings = {
     Lua = {
+      workspace = {
+        library = {
+          "/usr/share/hypr/stubs"
+        }
+      },
       format = {
         enable = true,
         defaultConfig = {
-          indent_style = "space",
           indent_size = "2",
+          indent_style = "space",
           quote_style = "double,",
           call_arg_parentheses = "remove",
           trailing_table_separator = "smart",
