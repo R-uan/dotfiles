@@ -36,6 +36,7 @@
 
   outputs = inputs @ {self, ...}: let
     system = "x86_64-linux";
+    dotfilesDir = "/home/bunny/dotfiles";
     pkgs = import inputs.nixpkgs {
       inherit system;
 
@@ -47,7 +48,7 @@
     nixosConfigurations = {
       bunny = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = {inherit inputs;};
 
         modules = [
           {
@@ -62,22 +63,15 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.bunny = import ./home/bunny/home.nix;
           }
 
-          ({pkgs, ...}: {
+          ({ pkgs, ... }: {
             environment.systemPackages = [
               (pkgs.writeShellScriptBin "rebuild" ''
-                exec nixos-rebuild switch --flake /mnt/hdd/home/dotfiles#bunny "$@"
+                exec nixos-rebuild switch --flake ${dotfilesDir}#bunny "$@"
               '')
-              # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
-              (inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww)
-              (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-                withX11 = false;
-                withWayland = true;
-                withPipewire = true;
-                withHyprland = true;
-              })
             ];
           })
         ];

@@ -20,13 +20,13 @@ Item {
   }
 
   readonly property var dirs: [
-    { label: "code",      folder: "code"      },
     { label: "downloads", folder: "downloads" },
-    { label: "images",    folder: "images"    },
-    { label: "desktop",   folder: "desktop"   },
-    { label: "dotfiles",  folder: "dotfiles"  },
-    { label: "music",     folder: "music"     },
     { label: "documents", folder: "documents" },
+    { label: "images",    folder: "images"    },
+    { label: "music",     folder: "music"     },
+    { label: "code",      folder: "code"      },
+    { label: "desktop",   folder: "desktop"   },
+    { label: "dotfiles",  folder: "/home/bunny/dotfiles/"  },
   ]
 
   // Two fixed rows: first 4, then remaining 3

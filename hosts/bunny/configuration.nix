@@ -35,8 +35,8 @@
 
   boot = {
     loader = {
-      efi = { canTouchEfiVariables = true; };
-      
+      efi = {canTouchEfiVariables = true;};
+
       systemd-boot = {
         enable = true;
         configurationLimit = 5;
@@ -46,9 +46,9 @@
 
   networking = {
     hostName = "ruan-nixos";
-    networkmanager.enable = true;
+    networkmanager = {enable = true;};
     resolvconf.useLocalResolver = false;
-    
+
     nameservers = [
       "1.1.1.1"
       "8.8.8.8"
@@ -80,14 +80,14 @@
       alsa.support32Bit = true;
     };
 
-    xserver = { 
-      enable = true; 
+    xserver = {
+      enable = true;
       videoDrivers = ["nvidia"];
     };
 
-    resolved = { enable = true; };
-    pulseaudio = { enable = false; };
-    displayManager = { defaultSession = "hyprland"; };
+    resolved = {enable = true;};
+    pulseaudio = {enable = false;};
+    displayManager = {defaultSession = "hyprland";};
   };
 
   i18n = {
@@ -136,18 +136,32 @@
     };
 
     enableAllFirmware = true;
-    bluetooth = { enable = true; };
-    opentabletdriver = { enable = true; };
+    bluetooth = {enable = true;};
+    opentabletdriver = {enable = true;};
   };
 
-  programs =  {
-    nix-ld = { enable = true; };
-    hyprland = { enable = true; };
+  programs = {
+    nix-ld = {enable = true;};
+    hyprland = {enable = true;};
 
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
+    };
+  };
+
+  # configuration.nix
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+
+    config.hyprland = {
+      default = ["gtk"];
+      "org.freedesktop.impl.portal.FileChooser" = ["gtk"];
     };
   };
 
