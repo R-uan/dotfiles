@@ -13,6 +13,7 @@ Item {
   }
 
   Component.onCompleted: {
+    Hyprland.usingLua = true;
     updateWorkspaceModel();
   }
 
@@ -153,9 +154,10 @@ Item {
           id: hover
           hoverEnabled: true
           anchors.fill: parent
-          onClicked: {
+          onClicked: function(mouse) {
             if (mouse.button === Qt.LeftButton) {
-              Hyprland.dispatch(`workspace ${model.workspaceId}`);
+              const idx = model.workspaceId;
+              Hyprland.dispatch(`hl.dsp.focus({ workspace = ${idx} })`);
             }
           }
         }
