@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -19,84 +20,63 @@
   };
 
   home.packages = with pkgs; [
-    # Development Essentials
-    ## C/C++ Essentials
-    gcc
-    lld
-    cmake
-    ninja
-    gnumake
-    binutils
-    patchelf
-    glibc.dev
-    pkg-config
-    clang-tools
+    nil # Nix Language Server
+    deadnix # Nix I don't know
+    alejandra # Nix Code Formatter
+    lua-language-server # Lua Language Server
+    (lua52Packages.lua.withPackages (
+      ps:
+        with ps; [luafilesystem]
+    )) # Lua Language
 
-    ## Nix Language
-    nil
-    deadnix
-    alejandra # Formatter
-    ## Lua
-    lua-language-server
-    (lua52Packages.lua.withPackages (ps:
-      with ps; [
-        luafilesystem
-      ]))
-    # Terminal Apps
-    fd # find replacement
-    yazi # file manager
-    gawk # text-processing language
-    btop # task manager
-    unar # unziper
-    procps # for top
-    gnused # text surgery
-    gnugrep # grep
-    ripgrep # text search tool
-    inetutils #net utils
-    bluetuith # bluetooth interface
+    fd # Find replacement
+    yazi # File Manager
+    gawk # Text Processing Language
+    btop # Task Manager
+    unar # Unziper
+    procps # For Top
+    gnused # Text Surgery
+    gnugrep # GREP
+    ripgrep # Text Search Tool
+    inetutils # Net Utils
+    bluetuith # Bluetooth Terminal User Interface
+    lazydocker # Docker Terminal User Interface
 
-    # Desktop Modules
-    rofi # app Launcher
-    vicinae # better app launcher
-    mako # notification
+    awww # Wallpaper Daemon for Wayland
+    mako # Notification
+    vicinae # App Launcher
+    libnotify # Notifications Manager ?
+    (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      withX11 = false;
+      withWayland = true;
+      withPipewire = true;
+      withHyprland = true;
+    }) # Desktop Widgets
 
-    # Daemons
-    libnotify # notifications
-    pulseaudio # audio manager
-    networkmanager # network manager
+    vivaldi # Browser (It has workspaces so it won)
 
-    # Gaming
-    winetricks
-    xivlauncher
-    osu-lazer-bin
-    wineWowPackages.stable # windows app runner
+    winetricks # Essential Extension for Wine
+    xivlauncher # XIV Dalamund (Can't play without this)
+    osu-lazer-bin # Click the Circles
+    wineWow64Packages.stable # Windows Compatibility Layer
 
-    # Other Programs
-    vlc # video player
-    dxvk
+    vlc # Media Player
+    dxvk # Not sure what this is
     krita # Image Editor
-    mplayer # media player (for anki)
 
-    chromium
-    firefox # browser
-    firefox-devedition
-    telegram-desktop
+    windsurf # VSCode but with more AI ? (Work Related)
+    vscode-fhs # Code Editor
 
-    anki-bin # Flashcards
-    obsidian # Markdown Notes
-    siyuan
-    kdePackages.dolphin # file manager
-    hyprshot # screenshots
-    vscode-fhs # code editor
-    hyprcursor # hyprland cursor
-    dbeaver-bin # database management
-    pavucontrol # pulseAudio control panel
-
-    (discord.override {withVencord = true;})
+    siyuan # Personal Notes (Obsidian Replacement)
+    vesktop # Alternative Discord Client
+    hyprshot # Screenshots
+    # hyprcursor # Hyprland Cursor (Not sure if its doing anything)
+    dbeaver-bin # Database Manager
+    pavucontrol # PulseAudio Control User Interface
 
     # Fonts
     iosevka
-    noto-fonts-cjk-serif
+    noto-fonts-cjk-serif # I think this is for chinese characters
     nerd-fonts.jetbrains-mono
   ];
 
@@ -104,10 +84,10 @@
     EDITOR = "nvim";
     HDD = "/mnt/hdd";
     CODE = "/mnt/hdd/home/code";
-    DOTFILES = "/mnt/hdd/home/dotfiles";
+    DOTFILES = "/home/bunny/dotfiles/";
   };
 
-  # home.file.".config/nvim".source = .config/nvim;
+  home.file.".config/nvim".source = ./config/nvim;
   home.file.".config/btop".source = ./config/btop;
   home.file.".config/mako".source = ./config/mako;
   home.file.".config/hypr".source = ./config/hypr;

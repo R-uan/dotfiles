@@ -38,7 +38,6 @@ run_exe = [
 
 [open]
 rules = [
-  { name = "*.exe", use = "run_exe" },
   { mime = "text/*",                      use = "edit" },
   { mime = "image/*",                     use = "open" },
   { mime = "video/*",                     use = "play" },

@@ -13,8 +13,8 @@
     src = fetchFromGitHub {
       owner = "Darkkal44";
       repo = "qylock";
-      rev = "${version}";
-      sha256 = "sha256-9A/nzv9XOx12nd9UO8dZsd6j18YtVdkZ2p984m+qJiY=";
+      rev = "6946b53626b4f3c1507ae9a78c287411df5fb36c";
+      hash = "sha256-79SHhz9ATD5ZpOjmOyoVZSrqstddJOfHrs+Drw4nvk0=";
     };
   };
 }

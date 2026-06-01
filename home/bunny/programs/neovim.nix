@@ -1,16 +1,9 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.neovim = {
     enable = true;
     vimAlias = true;
     package = pkgs.neovim;
+    withRuby = false;
+    withPython3 = false;
   };
-
-  #  home.file.".config/nvim" = {
-  #    source = ../config/nvim;
-  #    recursive = true;
-  #  };
 }
