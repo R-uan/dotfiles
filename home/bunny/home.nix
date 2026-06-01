@@ -31,7 +31,6 @@
     fd # Find replacement
     zip # Zipper
     unar # Unziper
-    yazi # File Manager
     gawk # Text Processing Language
     btop # Task Manager
     procps # For Top
@@ -39,6 +38,8 @@
     gnugrep # GREP
     ripgrep # Text Search Tool
     inetutils # Net Utils
+
+    yazi # File Manager
     bluetuith # Bluetooth Terminal User Interface
     lazydocker # Docker Terminal User Interface
 
@@ -54,21 +55,19 @@
       withHyprland = true;
     }) # Desktop Widgets
 
-    vivaldi # Browser (It has workspaces so it won)
-
     winetricks # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     osu-lazer-bin # Click the Circles
     wineWow64Packages.stable # Windows Compatibility Layer
 
-    vlc # Media Player
-    dxvk # Not sure what this is
-    krita # Image Editor
-
     windsurf # VSCode but with more AI ? (Work Related)
     vscode-fhs # Code Editor
 
+    vlc # Media Player
+    dxvk # Not sure what this is
+    krita # Image Editor
     siyuan # Personal Notes (Obsidian Replacement)
+    vivaldi # Browser (It has workspaces so it won)
     vesktop # Alternative Discord Client
     hyprshot # Screenshots
     # hyprcursor # Hyprland Cursor (Not sure if its doing anything)
