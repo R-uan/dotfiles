@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   inputs,
   ...
@@ -30,10 +29,11 @@
     )) # Lua Language
 
     fd # Find replacement
+    zip # Zipper
+    unar # Unziper
     yazi # File Manager
     gawk # Text Processing Language
     btop # Task Manager
-    unar # Unziper
     procps # For Top
     gnused # Text Surgery
     gnugrep # GREP
@@ -44,6 +44,7 @@
 
     awww # Wallpaper Daemon for Wayland
     mako # Notification
+    rofi # App Launcher
     vicinae # App Launcher
     libnotify # Notifications Manager ?
     (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {

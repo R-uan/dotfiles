@@ -1,9 +1,10 @@
 local M      = {}
 -- Programs
 M.programs   = {
-  terminal    = "kitty",
-  fileManager = "dolphin",
-  appLauncher = "vicinae toggle",
+  terminal     = "kitty",
+  fileManager  = "dolphin",
+  appLauncher  = "rofi -show run",
+  appLauncher2 = "vicinae toggle",
 }
 
 -- Appearance
