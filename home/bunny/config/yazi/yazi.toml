@@ -28,9 +28,17 @@ play = [
 ]
 edit = [
   { run = 'code "$@"', desc = "Open in VSCode" },
+  { run = 'nvim "$@"', desc = "Open in Neovim", block = true },
 ]
 open = [
   { run = 'xdg-open "$@"' },
+]
+open_browser = [
+  { run = 'xdg-open "$@"', desc = "Open in browser" },
+]
+view_image = [
+  { run = 'krita "$@"', desc = "Open in Krita" },
+  { run = 'xdg-open "$@"', desc = "Open in default viewer/browser" },
 ]
 run_exe = [
   { run = 'wine "$1"', desc = "Run with Wine" },
@@ -38,13 +46,59 @@ run_exe = [
 
 [open]
 rules = [
+  # HTML — edit or view in browser
+  { mime = "text/html",                   use = ["edit", "open_browser"] },
+  { url = "*.html",                       use = ["edit", "open_browser"] },
+  { url = "*.htm",                        use = ["edit", "open_browser"] },
+
+  # CSS, JS, and other web/text formats — editor only
+  { url = "*.css",                        use = "edit" },
+  { url = "*.scss",                       use = "edit" },
+  { url = "*.sass",                       use = "edit" },
+  { url = "*.less",                       use = "edit" },
+  { url = "*.js",                         use = "edit" },
+  { url = "*.ts",                         use = "edit" },
+  { url = "*.jsx",                        use = "edit" },
+  { url = "*.tsx",                        use = "edit" },
+  { url = "*.json",                       use = "edit" },
+  { url = "*.xml",                        use = "edit" },
+  { url = "*.yaml",                       use = "edit" },
+  { url = "*.yml",                        use = "edit" },
+  { url = "*.toml",                       use = "edit" },
+  { url = "*.md",                         use = "edit" },
+  { url = "*.svg",                        use = ["edit", "view_image"] },
+
+  # Generic text fallback
   { mime = "text/*",                      use = "edit" },
-  { mime = "image/*",                     use = "open" },
+
+  # Images — Krita or browser/viewer
+  { mime = "image/*",                     use = "view_image" },
+
+  # Media
   { mime = "video/*",                     use = "play" },
   { mime = "audio/*",                     use = "play" },
-  { mime = "application/pdf",             use = ["open"] },  # xdg-open → Firefox if set as default
+
+  # Documents & archives
+  { mime = "application/pdf",             use = ["open"] },
   { mime = "application/zip",             use = "extract" },
   { mime = "application/rar",             use = "extract" },
-  { mime = "application/x-dosexec",      use = "run_exe" },
-  { mime = "application/x-ms-dos-executable", use = "run_exe" },
+
+  # Windows executables
+  { mime = "application/x-dosexec",               use = "run_exe" },
+  { mime = "application/x-ms-dos-executable",     use = "run_exe" },
 ]
+
+[[manager.prepend_keymap]]
+on = ["o"]
+run = "open --interactive"
+desc = "Open with picker"
+
+[[manager.prepend_keymap]]
+on = ["Z"]
+run = '''shell 'read -p "Archive name: " name && zip -r "${name}.zip" -- "$@"' --confirm --interactive'''
+desc = "Zip selected to named archive"
+
+[[manager.prepend_keymap]]
+on = ["Z"]
+run = '''shell 'bash -c "read -p \"Archive name: \" name && zip -r \"${name}.zip\" -- \"$@\""' --confirm --interactive'''
+desc = "Zip selected to named archive"
