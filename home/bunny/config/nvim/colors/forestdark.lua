@@ -311,7 +311,7 @@ function M.setup()
   -- ─── Telescope ────────────────────────────────────────────────────────────
   -- Semi-transparent bg: requires a terminal with true-color + compositor support.
   -- Set vim.o.winblend / telescope's winblend opt to taste (e.g. 10-20).
-  local tele_bg = "#171919"
+  local tele_bg = "#171c1a"
   hi("TelescopeNormal", { fg = p.fg0, bg = tele_bg })
   hi("TelescopeBorder", { fg = "#2a2e2b", bg = tele_bg })
   hi("TelescopeTitle", { fg = p.primary0, bg = tele_bg, bold = true })
