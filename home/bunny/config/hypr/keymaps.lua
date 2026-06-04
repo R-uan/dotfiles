@@ -47,3 +47,4 @@ hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Lid switch
 hl.bind("switch:Lid Switch", hl.dsp.exec_cmd "", { locked = true })
+hl.bind(mainMod .. " + KP_END", hl.dsp.exec_cmd "pkill quickshell && hyprctl dispatch \"hl.dsp.exec_raw('quickshell')\"")
