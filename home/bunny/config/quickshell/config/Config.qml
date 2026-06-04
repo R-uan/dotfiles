@@ -10,7 +10,7 @@ Singleton {
   property string scriptsDir: Quickshell.shellPath("scripts")
 
   // General Configs
-  property real backgroundOpacity: 0.99
+  property real backgroundOpacity: 1 
   property bool darkMode: true
   property int thickness: 40
   property int rounding: 16
