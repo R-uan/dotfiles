@@ -1,5 +1,35 @@
 * {
-    background:     #070707;
-    primary:        #7a9b7f;
-    selected:       @primary;
+    /* Backgrounds */
+    background0:     #171c1a;
+    background1:     #1c231e;
+    background2:     #263328;
+
+    /* Foregrounds */
+    foreground0:     #D3C6AA;
+    foreground1:     #e8e0cd;
+
+    /* Accents */
+    primary:         #83977f;
+    primary-hover:   #9aad96;
+    muted:           #536655;
+    border-col:      #1c231e;
+
+    /* Semantic */
+    success:         #7a9e78;
+    warning:         #a8a87a;
+    error:           #a07a7a;
+
+    /* Shades */
+    shade0:          #1a2a1c;
+    shade1:          #263328;
+    shade2:          #374a39;
+    shade3:          #5c7060;
+    shade4:          #83977f;
+    shade5:          #8d9e82;
+    shade6:          #a3b89e;
+    shade7:          #c2d4bc;
+
+    /* Aliases used by theme */
+    background:      @background0;
+    selected:        @primary;
 }

@@ -1,9 +1,11 @@
 /* Rofi config file */
 configuration {
-    font: "Iosevka Font 14";
-    show-icons: true;
+    font:           "Iosevka Font 14";
+    show-icons:     true;
     display-window: "Window";
-    display-drun: "Search";
+    display-drun:   "Search";
+    display-run:    "Run";
+    display-ssh:    "SSH";
 }
 
 @theme "theme"
