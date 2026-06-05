@@ -1,4 +1,4 @@
-local capabilities = require("blink.cmp").get_lsp_capabilities()
+local capabilities          = require "blink.cmp".get_lsp_capabilities()
 
 -- php
 vim.lsp.config.phpantom_lsp = {
@@ -9,7 +9,7 @@ vim.lsp.config.phpantom_lsp = {
 }
 
 -- lua
-vim.lsp.config.lua_ls = {
+vim.lsp.config.lua_ls       = {
   filetypes = { "lua" },
   cmd = { "lua-language-server" },
   root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
@@ -17,8 +17,8 @@ vim.lsp.config.lua_ls = {
     Lua = {
       workspace = {
         library = {
-          "/usr/share/hypr/stubs"
-        }
+          "/usr/share/hypr/stubs",
+        },
       },
       format = {
         enable = true,
@@ -38,8 +38,7 @@ vim.lsp.config.lua_ls = {
 }
 
 -- c/cpp
-
-vim.lsp.config.clangd = {
+vim.lsp.config.clangd       = {
   on_attach = function(client, bufnr)
     local navic = require "nvim-navic"
     navic.attach(client, bufnr)
@@ -69,8 +68,7 @@ vim.lsp.config.clangd = {
 }
 
 -- csharp
-
-vim.lsp.config.omnisharp = {
+vim.lsp.config.omnisharp    = {
   enable_editorconfig_support = true,
   settings = {
     FormattingOptions = {
@@ -81,7 +79,7 @@ vim.lsp.config.omnisharp = {
 }
 
 -- Only works with .NET 10+
-vim.lsp.config.roslyn    = {
+vim.lsp.config.roslyn       = {
   on_attach = function()
     print "Roslyn Language Server Attached!"
   end,
@@ -97,10 +95,8 @@ vim.lsp.config.roslyn    = {
 }
 
 -- nix
-
-vim.lsp.config.nil_ls = {
+vim.lsp.config.nil_ls       = {
   on_attach = function()
-    print "Nil Language Server Attached!"
   end,
   settings = {
     ['nil'] = {
@@ -112,10 +108,8 @@ vim.lsp.config.nil_ls = {
 }
 
 -- python
-
-vim.lsp.config.pyright = {
+vim.lsp.config.pyright      = {
   on_attach = function(client, bufnr)
-    print "Pyright Language Server Attached!"
   end,
   filetypes = { "python" },
   settings = {
@@ -140,11 +134,8 @@ vim.lsp.config.pyright = {
 }
 
 -- typescript
-
-vim.lsp.config.tsserver = {
+vim.lsp.config.tsserver     = {
   on_attach = function(client, bufnr)
-    print "TypeScript Language Server Attached!"
-
     -- Disable formatting (use prettier or eslint instead)
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
@@ -193,10 +184,9 @@ vim.lsp.config.tsserver = {
 
 -- qml
 
-vim.lsp.config.qmlls.setup = {
+vim.lsp.config.qmlls.setup  = {
   cmd = { "qmlls" },
   on_attach = function()
-    print "Qmlls Language Server Attached!"
   end,
   filetypes = { "qml", "qmljs" },
   root_dir = function(fname)
@@ -216,9 +206,8 @@ vim.lsp.config.qmlls.setup = {
 }
 
 -- html/css
-vim.lsp.config.cssls = {
+vim.lsp.config.cssls        = {
   on_attach = function()
-    print "CSS Language Server Attached!"
   end,
   cmd = { 'vscode-css-language-server', '--stdio' },
   filetypes = { 'css', 'scss', 'less' },
@@ -231,9 +220,8 @@ vim.lsp.config.cssls = {
   },
 }
 
-vim.lsp.config.html = {
+vim.lsp.config.html         = {
   on_attach = function()
-    print "HTML Language Server Attached!"
   end,
   cmd = { 'vscode-html-language-server', '--stdio' },
   filetypes = { 'html', 'templ' },
@@ -246,6 +234,7 @@ vim.lsp.config.html = {
   },
 }
 
+vim.lsp.enable 'gleam'
 vim.lsp.enable "html"
 vim.lsp.enable "cssls"
 vim.lsp.enable "qmlls"
