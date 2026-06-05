@@ -19,6 +19,7 @@
       initial_window_width = 740;
       initial_window_height = 600;
       background_opacity = "0.91";
+      tab_title_template = "{index}: {title.split('/')[-1]}";
 
       foreground = "#c2d4bc"; # colour7
       background = "#171c1a"; # background0
