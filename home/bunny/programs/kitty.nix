@@ -20,6 +20,8 @@
       initial_window_height = 600;
       background_opacity = "0.91";
       tab_title_template = "{index}: {title.split('/')[-1]}";
+      tab_bar_style = "powerline";
+      tab_powerline_style = "slanted";
 
       foreground = "#c2d4bc"; # colour7
       background = "#171c1a"; # background0
