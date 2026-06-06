@@ -71,17 +71,17 @@ rules = [
   # Generic text fallback
   { mime = "text/*",                      use = "edit" },
 
+  # Documents & archives
+  { mime = "application/pdf",             use = ["open_browser"] },
+  { mime = "application/zip",             use = "extract" },
+  { mime = "application/rar",             use = "extract" },
+
   # Images — Krita or browser/viewer
   { mime = "image/*",                     use = "view_image" },
 
   # Media
   { mime = "video/*",                     use = "play" },
   { mime = "audio/*",                     use = "play" },
-
-  # Documents & archives
-  { mime = "application/pdf",             use = ["open"] },
-  { mime = "application/zip",             use = "extract" },
-  { mime = "application/rar",             use = "extract" },
 
   # Windows executables
   { mime = "application/x-dosexec",               use = "run_exe" },

@@ -65,7 +65,6 @@
 
     vlc # Media Player
     dxvk # Not sure what this is
-    krita # Image Editor
     siyuan # Personal Notes (Obsidian Replacement)
     vivaldi # Browser (It has workspaces so it won)
     vesktop # Alternative Discord Client
