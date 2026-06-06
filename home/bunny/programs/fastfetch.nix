@@ -7,7 +7,7 @@
     enable = true;
     settings = {
       logo = {
-        source = "${config.xdg.configHome}/fastfetch/ffimage.jpg";
+        source = "${config.xdg.configHome}/fastfetch/ffimage.png";
         type = "kitty";
         height = 15;
         padding = {
@@ -93,5 +93,5 @@
     };
   };
 
-  xdg.configFile."fastfetch/ffimage.jpg".source = ../assets/ffimage.jpg;
+  xdg.configFile."fastfetch/ffimage.png".source = ../assets/ffimage.png;
 }
