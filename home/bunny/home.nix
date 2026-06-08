@@ -73,6 +73,8 @@
     dbeaver-bin # Database Manager
     pavucontrol # PulseAudio Control User Interface
 
+    claude-code
+
     # Fonts
     iosevka
     noto-fonts-cjk-serif # I think this is for chinese characters

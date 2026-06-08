@@ -88,6 +88,7 @@
     resolved = {enable = true;};
     pulseaudio = {enable = false;};
     displayManager = {defaultSession = "hyprland";};
+    flatpak = {enable = true;};
   };
 
   i18n = {

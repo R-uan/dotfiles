@@ -1,6 +1,4 @@
 {
-  config,
-  pkgs,
   ...
 }: {
   programs.kitty = {
@@ -24,7 +22,7 @@
       tab_powerline_style = "slanted";
 
       foreground = "#c2d4bc"; # colour7
-      background = "#171c1a"; # background0
+      background = "#171919"; # background0
       selection_foreground = "#171c1a"; # background0
       selection_background = "#83977f"; # colour4 / primary0
       cursor = "#c2d4bc"; # colour7

@@ -42,6 +42,7 @@ view_image = [
 ]
 run_exe = [
   { run = 'wine "$1"', desc = "Run with Wine" },
+  { run = 'steam-run "$1"', desc = "Steamrun it" },
 ]
 
 [open]
@@ -72,9 +73,10 @@ rules = [
   { mime = "text/*",                      use = "edit" },
 
   # Documents & archives
-  { mime = "application/pdf",             use = ["open_browser"] },
-  { mime = "application/zip",             use = "extract" },
-  { mime = "application/rar",             use = "extract" },
+  { mime = "application/pdf",              use = ["open_browser"] },
+  { mime = "application/zip",              use = "extract" },
+  { mime = "application/rar",              use = "extract" },
+  { mime = "application/gzip",             use = "extract" },
 
   # Images — Krita or browser/viewer
   { mime = "image/*",                     use = "view_image" },

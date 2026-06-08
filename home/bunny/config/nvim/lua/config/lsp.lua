@@ -1,6 +1,7 @@
 local capabilities          = require "blink.cmp".get_lsp_capabilities()
 
 -- php
+
 vim.lsp.config.phpantom_lsp = {
   filetypes = { 'php' },
   capabilities = capabilities,
@@ -244,4 +245,5 @@ vim.lsp.enable "nil_ls"
 vim.lsp.enable "roslyn"
 vim.lsp.enable "clangd"
 vim.lsp.enable "lua_ls"
-vim.lsp.enable "phpantom_lsp"
+-- vim.lsp.enable "phpantom_lsp"
+vim.lsp.enable 'phpactor'
