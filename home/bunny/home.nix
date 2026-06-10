@@ -58,7 +58,9 @@
     winetricks # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     osu-lazer-bin # Click the Circles
-    wineWow64Packages.stable # Windows Compatibility Layer
+    (wineWow64Packages.staging.override {
+      vulkanSupport = true;
+    })
 
     windsurf # VSCode but with more AI ? (Work Related)
     vscode-fhs # Code Editor

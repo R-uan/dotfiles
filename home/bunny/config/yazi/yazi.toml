@@ -86,6 +86,8 @@ rules = [
   { mime = "audio/*",                     use = "play" },
 
   # Windows executables
+  { url = "*.exe", use = "run_exe" },
+  { url = "*.sh", use = "run_exe" },
   { mime = "application/x-dosexec",               use = "run_exe" },
   { mime = "application/x-ms-dos-executable",     use = "run_exe" },
 ]
