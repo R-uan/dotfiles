@@ -89,6 +89,22 @@
     pulseaudio = {enable = false;};
     displayManager = {defaultSession = "hyprland";};
     flatpak = {enable = true;};
+
+    udev.extraHwdb = ''
+      evdev:input:b0003v36B7pFD13*
+       KEYBOARD_KEY_7001e=f13
+       KEYBOARD_KEY_7001f=f14
+       KEYBOARD_KEY_70020=f15
+       KEYBOARD_KEY_70021=f16
+       KEYBOARD_KEY_70022=f17
+       KEYBOARD_KEY_70023=f18
+       KEYBOARD_KEY_70024=f19
+       KEYBOARD_KEY_70025=f20
+       KEYBOARD_KEY_70026=f21
+       KEYBOARD_KEY_70027=f22
+       KEYBOARD_KEY_70057=f23
+       KEYBOARD_KEY_70056=f24
+    '';
   };
 
   i18n = {
