@@ -55,6 +55,7 @@
       withHyprland = true;
     }) # Desktop Widgets
 
+    lutris
     winetricks # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     osu-lazer-bin # Click the Circles
@@ -70,6 +71,7 @@
     siyuan # Personal Notes (Obsidian Replacement)
     vivaldi # Browser (It has workspaces so it won)
     vesktop # Alternative Discord Client
+    chromium
     hyprshot # Screenshots
     # hyprcursor # Hyprland Cursor (Not sure if its doing anything)
     dbeaver-bin # Database Manager
