@@ -206,4 +206,21 @@
     MemoryMax = "4G";
     CPUQuota = "200%";
   };
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [
+      "cloudflare-warp"
+    ];
+
+  systemd.services.warp-svc = {
+    description = "Cloudflare WARP daemon";
+    wantedBy = ["multi-user.target"];
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.cloudflare-warp}/bin/warp-svc";
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
 }

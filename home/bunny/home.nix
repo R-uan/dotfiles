@@ -63,8 +63,6 @@
       vulkanSupport = true;
     })
 
-    windsurf # VSCode but with more AI ? (Work Related)
-    vscode-fhs # Code Editor
 
     vlc # Media Player
     dxvk # Not sure what this is
@@ -76,7 +74,13 @@
     # hyprcursor # Hyprland Cursor (Not sure if its doing anything)
     dbeaver-bin # Database Manager
     pavucontrol # PulseAudio Control User Interface
+    cloudflare-warp
 
+    bruno
+    phpactor
+    antigravity
+    zed-editor
+    vscode-fhs # Code Editor
     claude-code
 
     # Fonts

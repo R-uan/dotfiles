@@ -70,30 +70,44 @@ vim.lsp.config.clangd       = {
 
 -- csharp
 vim.lsp.config.omnisharp    = {
-  enable_editorconfig_support = true,
+  cmd = { "OmniSharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+  on_attach = function(client, bufnr)
+    print "OmniSharp Attached!"
+  end,
   settings = {
     FormattingOptions = {
       EnableEditorConfigSupport = true,
       OrganizeImports = true,
     },
+    MsBuild = {
+      UseBinaryLogger = false,
+    },
+    RoslynExtensionsOptions = {
+      EnableAnalyzersSupport = false, -- disable the broken analyzers
+      EnableImportCompletion = true,
+    },
   },
 }
-
 -- Only works with .NET 10+
-vim.lsp.config.roslyn       = {
-  on_attach = function()
-    print "Roslyn Language Server Attached!"
-  end,
-  settings = {
-    ["csharp|inlay_hints"] = {
-      csharp_enable_inlay_hints_for_implicit_object_creation = true,
-      csharp_enable_inlay_hints_for_implicit_variable_types = true,
-    },
-    ["csharp|code_lens"] = {
-      dotnet_enable_references_code_lens = true,
-    },
-  },
-}
+--vim.lsp.config.roslyn_ls    = {
+--  on_attach = function()
+--    print "Roslyn Language Server Attached!"
+--  end,
+--  cmd = {
+--    "Microsoft.CodeAnalysis.LanguageServer",
+--    "--logLevel", "Information",
+--    "--extensionLogDirectory", vim.fn.stdpath "log" .. "/roslyn",
+--  },
+--  settings = {
+--    ["csharp|inlay_hints"] = {
+--      csharp_enable_inlay_hints_for_implicit_object_creation = true,
+--      csharp_enable_inlay_hints_for_implicit_variable_types = true,
+--    },
+--    ["csharp|code_lens"] = {
+--      dotnet_enable_references_code_lens = true,
+--    },
+--  },
+--}
 
 -- nix
 vim.lsp.config.nil_ls       = {
@@ -242,7 +256,7 @@ vim.lsp.enable "qmlls"
 vim.lsp.enable "tsserver"
 vim.lsp.enable "pyright"
 vim.lsp.enable "nil_ls"
-vim.lsp.enable "roslyn"
+vim.lsp.enable "omnisharp"
 vim.lsp.enable "clangd"
 vim.lsp.enable "lua_ls"
 -- vim.lsp.enable "phpantom_lsp"
