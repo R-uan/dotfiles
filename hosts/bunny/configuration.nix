@@ -60,6 +60,8 @@
         "apoioteste.sitemidas"
         "painelteste.sitemidas"
         "www.site27.sitemidas"
+        "www.site26.sitemidas"
+        "www.site26-teste.sitemidas"
         "www.site10.sitemidas"
         "site10.sitemidas"
         "site27.sitemidas"

@@ -13,10 +13,10 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(globals.appLauncher2))
 
 -- Window management
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + J", hl.dsp.layout "togglesplit")
 hl.bind(mainMod .. " + V", hl.dsp.window.float { action = "toggle" })
+hl.bind(mainMod .. " + P", hl.dsp.window.pin { action = "set" })
 
 -- Move focus (WASD)
 hl.bind(mainMod .. " + A", hl.dsp.focus { direction = "left" })

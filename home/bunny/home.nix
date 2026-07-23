@@ -46,7 +46,6 @@
     awww # Wallpaper Daemon for Wayland
     mako # Notification
     rofi # App Launcher
-    vicinae # App Launcher
     libnotify # Notifications Manager ?
     (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
       withX11 = false;
@@ -55,10 +54,9 @@
       withHyprland = true;
     }) # Desktop Widgets
 
-    lutris
+    archon-lite
     winetricks # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
-    osu-lazer-bin # Click the Circles
     (wineWow64Packages.staging.override {
       vulkanSupport = true;
     })
@@ -78,10 +76,10 @@
 
     bruno
     phpactor
-    antigravity
     zed-editor
     vscode-fhs # Code Editor
     claude-code
+    opencode
 
     # Fonts
     iosevka
