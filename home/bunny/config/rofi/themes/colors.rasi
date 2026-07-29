@@ -1,35 +1,29 @@
 * {
-    /* Backgrounds */
-    background0:     #171c1a;
-    background1:     #1c231e;
-    background2:     #263328;
+    background0:     #151515;
+    background1:     #1c1c1c;
+    background2:     #242424;
 
-    /* Foregrounds */
-    foreground0:     #D3C6AA;
-    foreground1:     #e8e0cd;
+    foreground0:     #c8c8c8;
+    foreground1:     #e0e0e0;
 
-    /* Accents */
-    primary:         #83977f;
-    primary-hover:   #9aad96;
-    muted:           #536655;
-    border-col:      #1c231e;
+    primary:         #6e6e6e;
+    primary-hover:   #8a8a8a;
+    muted:           #505050;
+    border-col:      #2e2e2e;
 
-    /* Semantic */
-    success:         #7a9e78;
-    warning:         #a8a87a;
-    error:           #a07a7a;
+    success:         #8e8e8e;
+    warning:         #a4a4a4;
+    error:           #c4c4c4;
 
-    /* Shades */
-    shade0:          #1a2a1c;
-    shade1:          #263328;
-    shade2:          #374a39;
-    shade3:          #5c7060;
-    shade4:          #83977f;
-    shade5:          #8d9e82;
-    shade6:          #a3b89e;
-    shade7:          #c2d4bc;
+    shade0:          #1a1a1a;
+    shade1:          #252525;
+    shade2:          #303030;
+    shade3:          #4a4a4a;
+    shade4:          #6e6e6e;
+    shade5:          #8a8a8a;
+    shade6:          #a6a6a6;
+    shade7:          #c4c4c4;
 
-    /* Aliases used by theme */
     background:      @background0;
     selected:        @primary;
 }

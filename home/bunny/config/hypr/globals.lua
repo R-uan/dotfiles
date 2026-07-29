@@ -12,8 +12,8 @@ M.appearance = {
   active_opacity   = "0.95",
   inactive_opacity = M.active_opacity,
 
-  active_border    = "8d9e82",
-  inactive_border  = "1c231e",
+  active_border    = "6e6e6e",
+  inactive_border  = "2e2e2e",
 
   gap_in           = 2,
   gap_out          = 2,

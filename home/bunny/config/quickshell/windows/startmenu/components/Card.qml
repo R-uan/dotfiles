@@ -58,7 +58,7 @@ Item {
           width: img.width
           height: img.height
           border.width: 2
-          border.color: ThemeDark.border
+          border.color: Config.darkMode ? ThemeDark.border : ThemeLight.border
         }
       }
     }

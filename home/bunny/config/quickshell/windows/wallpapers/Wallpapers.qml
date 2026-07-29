@@ -29,7 +29,7 @@ PanelWindow {
   readonly property color colBorder: Config.darkMode ? ThemeDark.border : ThemeLight.border
   readonly property color colColour5: Config.darkMode ? ThemeDark.colour5 : ThemeLight.colour4
   readonly property color colColour3: Config.darkMode ? ThemeDark.colour3 : ThemeLight.colour2
-  readonly property color colOverlay: Config.darkMode ? "#0a120b" : "#1a2a1c"
+  readonly property color colOverlay: Config.darkMode ? "#1a1a1a" : "#2a2a2a"
 
   property var wallpaperPaths: []
   property bool isHovered: false

@@ -1,4 +1,6 @@
-{ config, inputs, pkgs, ... }: {
+{ config, pkgs, ... }: {
   imports = [
+    ./sddm.nix
+    ./nbfc.nix
   ];
 }

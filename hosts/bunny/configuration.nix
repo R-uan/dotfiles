@@ -5,8 +5,8 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/services/sddm.nix
-    ../../modules/services/nbfc.nix
+    ../../modules/system/default.nix
+    ../../modules/services/default.nix
   ];
 
   users.users.bunny = {
@@ -65,6 +65,8 @@
         "www.site10.sitemidas"
         "site10.sitemidas"
         "site27.sitemidas"
+        "site28.sitemidas"
+        "www.site28.sitemidas"
       ];
     };
   };

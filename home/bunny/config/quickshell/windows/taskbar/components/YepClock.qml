@@ -30,7 +30,7 @@ Item {
       Background {
         radius: 36
         Layout.fillWidth: true
-        color: ThemeDark.background2
+        color: Config.darkMode ? ThemeDark.background2 : ThemeLight.background2
         implicitHeight: innerLayout.implicitHeight + 20
 
         ColumnLayout {

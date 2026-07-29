@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  sddmThemes = pkgs.callPackage ../../pkgs/sddm-themes.nix { };
+  sddmThemes = pkgs.callPackage ../../packages/sddm-themes.nix { };
   theme = sddmThemes.sddm-themes.r1999_1;
 in
 {

@@ -36,7 +36,6 @@
 
   outputs = inputs @ {self, ...}: let
     system = "x86_64-linux";
-    dotfilesDir = "/home/bunny/dotfiles";
     pkgs = import inputs.nixpkgs {
       inherit system;
 
@@ -44,11 +43,12 @@
         inputs.neovim-nightly-overlay.overlays.default
       ];
     };
+    helpers = import ./lib { inherit pkgs; lib = inputs.nixpkgs.lib; };
   in {
     nixosConfigurations = {
       bunny = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {inherit inputs;};
+        specialArgs = {inherit inputs helpers;};
 
         modules = [
           {
@@ -56,22 +56,19 @@
               inputs.neovim-nightly-overlay.overlays.default
             ];
           }
-          ./modules/services/default.nix
           ./hosts/bunny/configuration.nix
 
           inputs.home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
+            home-manager.extraSpecialArgs = { inherit inputs helpers; };
             home-manager.users.bunny = import ./home/bunny/home.nix;
           }
 
-          ({ pkgs, ... }: {
+          ({ pkgs, helpers, ... }: {
             environment.systemPackages = [
-              (pkgs.writeShellScriptBin "rebuild" ''
-                exec nixos-rebuild switch --flake ${dotfilesDir}#bunny "$@"
-              '')
+              helpers.mkRebuildScript
             ];
           })
         ];

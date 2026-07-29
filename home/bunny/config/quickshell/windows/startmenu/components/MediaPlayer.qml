@@ -55,7 +55,7 @@ Item {
         width: parent.width * 0.9
         height: parent.height * 0.9
         radius: width / 2
-        color: Qt.rgba(0.3, 0.5, 1.0, 0.10)
+        color: Qt.rgba(1, 1, 1, 0.10)
         layer.enabled: true
         layer.effect: MultiEffect {
           blurEnabled: true

@@ -31,31 +31,31 @@
       };
 
       conda = {
-        style_user = "fg:pink bold";
-        format = " [$symbol$environment](dimmed green) ";
+        style_user = "fg:#a6a6a6 bold";
+        format = " [$symbol$environment](dimmed #6e6e6e) ";
       };
 
       character = {
-        success_symbol = "[🐇](green bold)";
-        error_symbol = "[🐇](rose)";
-        vicmd_symbol = "[🐇](accent)";
+        success_symbol = "[🐇](#8e8e8e bold)";
+        error_symbol = "[🐇](#c4c4c4)";
+        vicmd_symbol = "[🐇](#a6a6a6)";
       };
 
       directory = {
-        format = "[  ](fg:primary)[$path](fg:primary bold)";
-        style = "fg:lprimary";
+        format = "[  ](fg:#6e6e6e)[$path](fg:#6e6e6e bold)";
+        style = "fg:#c4c4c4";
         truncation_length = 3;
         truncate_to_repo = false;
       };
 
       git_branch = {
-        format = "[[  ](fg:primary bold)$branch](fg:primary bold)";
-        style = "fg:dprimary";
+        format = "[[  ](fg:#6e6e6e bold)$branch](fg:#6e6e6e bold)";
+        style = "fg:#303030";
       };
 
       git_status = {
-        format = "[$all_status$ahead_behind](fg:dprimary) ";
-        style = "fg:complementary";
+        format = "[$all_status$ahead_behind](fg:#303030) ";
+        style = "fg:#7e7e7e";
         conflicted = "=";
         ahead = "⇡\${count}";
         behind = "⇣\${count}";
@@ -71,15 +71,15 @@
 
       palettes = {
         Bunny = {
-          background    = "#171c1a"; # background0
-          primary       = "#83977f"; # colour4 / primary0
-          dprimary      = "#374a39"; # colour2
-          lprimary      = "#c2d4bc"; # colour7
-          green         = "#7a9e78"; # success
-          complementary = "#8d9e82"; # colour5 / primary1
-          accent        = "#a3b89e"; # colour6
-          rose          = "#a07a7a"; # error
-          pink          = "#a8a87a"; # warning
+          background    = "#151515";
+          primary       = "#6e6e6e";
+          dprimary      = "#303030";
+          lprimary      = "#c4c4c4";
+          green         = "#8e8e8e";
+          complementary = "#7e7e7e";
+          accent        = "#a6a6a6";
+          rose          = "#c4c4c4";
+          pink          = "#a4a4a4";
         };
       };
     };

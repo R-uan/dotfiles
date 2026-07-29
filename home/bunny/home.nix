@@ -54,7 +54,7 @@
       withHyprland = true;
     }) # Desktop Widgets
 
-    archon-lite
+    fflogs
     winetricks # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     (wineWow64Packages.staging.override {

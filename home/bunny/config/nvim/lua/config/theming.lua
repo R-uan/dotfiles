@@ -6,10 +6,10 @@ vim.opt.fillchars = "eob: "      -- idk
 
 -- diagnostic
 vim.cmd [[
-  highlight DiagnosticVirtualTextError guifg=#D46A8C guibg=NONE gui=italic
-  highlight DiagnosticVirtualTextWarn  guifg=#D46A8C guibg=NONE gui=italic
-  highlight DiagnosticVirtualTextInfo  guifg=#A4CE70 guibg=NONE gui=italic
-  highlight DiagnosticVirtualTextHint  guifg=#A4CE70 guibg=NONE gui=italic
+  highlight DiagnosticVirtualTextError guifg=#d0d0d0 guibg=NONE gui=italic
+  highlight DiagnosticVirtualTextWarn  guifg=#aaaaaa guibg=NONE gui=italic
+  highlight DiagnosticVirtualTextInfo  guifg=#8a8a8a guibg=NONE gui=italic
+  highlight DiagnosticVirtualTextHint  guifg=#6e6e6e guibg=NONE gui=italic
 ]]
 
 -- block folding

@@ -1,83 +1,83 @@
-# Main background, empty for terminal default, need to be empty if you want transparent background
-theme[main_bg]="#070707" # Background
+# Main background
+theme[main_bg]="#151515"
 
 # Main text color
-theme[main_fg]="#a8c69f" # Light Sage Foreground
+theme[main_fg]="#c4c4c4"
 
 # Title color for boxes
-theme[title]="#7fb069" # Sage Green Accent
+theme[title]="#6e6e6e"
 
 # Highlight color for keyboard shortcuts
-theme[hi_fg]="#b692d4" # Soft Purple
+theme[hi_fg]="#8a8a8a"
 
 # Background color of selected item in processes box
-theme[selected_bg]="#202020" # Background Soft
+theme[selected_bg]="#242424"
 
 # Foreground color of selected item in processes box
-theme[selected_fg]="#8fc277" # Bright Green Foreground
+theme[selected_fg]="#a6a6a6"
 
 # Color of inactive/disabled text
-theme[inactive_fg]="#888888" # Grey Foreground
+theme[inactive_fg]="#505050"
 
-# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
-theme[graph_text]="#a8c69f" # Light Sage
+# Color of text appearing on top of graphs
+theme[graph_text]="#c4c4c4"
 
 # Background color of the percentage meters
-theme[meter_bg]="#2a2a2a" # Lighter Background
+theme[meter_bg]="#2a2a2a"
 
-# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
-theme[proc_misc]="#b692d4" # Soft Purple
+# Misc colors for processes box
+theme[proc_misc]="#8a8a8a"
 
-# CPU, Memory, Network, Proc box outline colors
-theme[cpu_box]="#7fb069" # Sage Green
-theme[mem_box]="#b692d4" # Soft Purple
-theme[net_box]="#8fc277" # Bright Green
-theme[proc_box]="#6b4d82" # Deep Purple
+# Box outline colors
+theme[cpu_box]="#6e6e6e"
+theme[mem_box]="#8a8a8a"
+theme[net_box]="#a6a6a6"
+theme[proc_box]="#505050"
 
-# Box divider line and small boxes line color
-theme[div_line]="#2a2a2a" # Border Grey
+# Box divider line
+theme[div_line]="#2a2a2a"
 
-# Temperature graph color (Green -> Dark -> Purple)
-theme[temp_start]="#7fb069" # Sage Green
-theme[temp_mid]="#556b47" # Forest Green
-theme[temp_end]="#b692d4" # Soft Purple
+# Temperature graph
+theme[temp_start]="#6e6e6e"
+theme[temp_mid]="#505050"
+theme[temp_end]="#8a8a8a"
 
-# CPU graph colors (Green -> Light Green -> Bright Green)
-theme[cpu_start]="#7fb069" # Sage Green
-theme[cpu_mid]="#a8c69f" # Light Sage
-theme[cpu_end]="#8fc277" # Bright Green
+# CPU graph
+theme[cpu_start]="#6e6e6e"
+theme[cpu_mid]="#8a8a8a"
+theme[cpu_end]="#a6a6a6"
 
-# Mem/Disk free meter (Green -> Light Sage -> Bright)
-theme[free_start]="#7fb069" # Sage Green
-theme[free_mid]="#a8c69f" # Light Sage
-theme[free_end]="#b8d6af" # Very Light Sage
+# Mem/Disk free meter
+theme[free_start]="#6e6e6e"
+theme[free_mid]="#8a8a8a"
+theme[free_end]="#a6a6a6"
 
-# Mem/Disk cached meter (Purple -> Light Purple -> Lavender)
-theme[cached_start]="#6b4d82" # Deep Purple
-theme[cached_mid]="#b692d4" # Soft Purple
-theme[cached_end]="#d4b5e8" # Lavender
+# Mem/Disk cached meter
+theme[cached_start]="#505050"
+theme[cached_mid]="#8a8a8a"
+theme[cached_end]="#a4a4a4"
 
-# Mem/Disk available meter (Bright Green -> Light Sage -> Very Light)
-theme[available_start]="#8fc277" # Bright Green
-theme[available_mid]="#a8c69f" # Light Sage
-theme[available_end]="#b8d6af" # Very Light Sage
+# Mem/Disk available meter
+theme[available_start]="#a6a6a6"
+theme[available_mid]="#8a8a8a"
+theme[available_end]="#6e6e6e"
 
-# Mem/Disk used meter (Deep Purple -> Mid Purple -> Soft Purple)
-theme[used_start]="#4a3358" # Dark Purple
-theme[used_mid]="#6b4d82" # Deep Purple
-theme[used_end]="#b692d4" # Soft Purple
+# Mem/Disk used meter
+theme[used_start]="#303030"
+theme[used_mid]="#505050"
+theme[used_end]="#8a8a8a"
 
-# Download graph colors (Green -> Light Sage -> Purple)
-theme[download_start]="#7fb069" # Sage Green
-theme[download_mid]="#a8c69f" # Light Sage
-theme[download_end]="#b692d4" # Soft Purple
+# Download graph
+theme[download_start]="#6e6e6e"
+theme[download_mid]="#8a8a8a"
+theme[download_end]="#a4a4a4"
 
-# Upload graph colors (Bright Green -> Light -> Sage)
-theme[upload_start]="#8fc277" # Bright Green
-theme[upload_mid]="#a8c69f" # Light Sage
-theme[upload_end]="#7fb069" # Sage Green
+# Upload graph
+theme[upload_start]="#a6a6a6"
+theme[upload_mid]="#8a8a8a"
+theme[upload_end]="#6e6e6e"
 
-# Process box color gradient for threads, mem and cpu usage (Green -> Purple -> Light Purple)
-theme[process_start]="#7fb069" # Sage Green
-theme[process_mid]="#b692d4" # Soft Purple
-theme[process_end]="#d4b5e8" # Lavender
+# Process box color gradient
+theme[process_start]="#6e6e6e"
+theme[process_mid]="#8a8a8a"
+theme[process_end]="#a4a4a4"

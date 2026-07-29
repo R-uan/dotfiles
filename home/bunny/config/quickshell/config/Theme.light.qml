@@ -2,37 +2,32 @@ pragma Singleton
 import QtQuick
 
 QtObject {
-  // Ramp — 0 = deepest, 7 = lightest
-  readonly property string colour0: "#1a2a1c"   // near-black forest
-  readonly property string colour1: "#2e4a30"   // deep forest
-  readonly property string colour2: "#4a6e4d"   // strong mid-green
-  readonly property string colour3: "#6a9470"   // readable accent
-  readonly property string colour4: "#8daa88"   // soft accent
-  readonly property string colour5: "#b0c8aa"   // muted tint
-  readonly property string colour6: "#c8d8c2"   // surface tint
-  readonly property string colour7: "#d8e5d2"   // lightest — warm sage, not white
+  readonly property string colour0: "#f2f2f2"
+  readonly property string colour1: "#e4e4e4"
+  readonly property string colour2: "#d0d0d0"
+  readonly property string colour3: "#b0b0b0"
+  readonly property string colour4: "#8a8a8a"
+  readonly property string colour5: "#727272"
+  readonly property string colour6: "#5a5a5a"
+  readonly property string colour7: "#424242"
 
-  // Semantic
-  readonly property string success: "#3a7a3a"
-  readonly property string warning: "#7a7a20"
-  readonly property string error:   "#8a3a3a"
-  readonly property string muted:   "#6a8a6a"
+  readonly property string success: "#6e6e6e"
+  readonly property string warning: "#848484"
+  readonly property string error:   "#949494"
+  readonly property string muted:   "#9a9a9a"
 
-  // Colour scheme
-  readonly property string primary0:      colour3
-  readonly property string primary1:      colour4
-  readonly property string primary2:      colour6
-  readonly property string primary3:      colour2
-  readonly property string primary0Hover: colour2
-  readonly property string primary2Hover: colour5
+  readonly property string primary0:      "#6a6a6a"
+  readonly property string primary1:      "#787878"
+  readonly property string primary2:      "#d4d4d4"
+  readonly property string primary3:      "#8e8e8e"
+  readonly property string primary0Hover: "#5a5a5a"
+  readonly property string primary2Hover: "#e4e4e4"
 
-  // Backgrounds (lightest → darkest surface)
-  readonly property string background0: "#d8e5d2"   // page bg  — muted sage
-  readonly property string background1: "#c8d8c2"   // surface
-  readonly property string background2: "#b8ccb0"   // raised
-  readonly property string border:      "#90aa88"   // clearly visible on all bg levels
+  readonly property string background0: "#e8e8e8"
+  readonly property string background1: "#dedede"
+  readonly property string background2: "#d4d4d4"
+  readonly property string border:      "#c0c0c0"
 
-  // Foreground
-  readonly property string foreground0: "#1a2a1c"   // primary text
-  readonly property string foreground1: "#3a5a3c"   // secondary text
+  readonly property string foreground0: "#2a2a2a"
+  readonly property string foreground1: "#444444"
 }

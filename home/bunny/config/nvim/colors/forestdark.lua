@@ -1,6 +1,5 @@
 -- forest_dark.nvim
--- A muted forest-green theme with transparent background
--- Generated from the forest-dark design palette
+-- A monochromatic greyscale theme with transparent background
 
 local M = {}
 
@@ -8,38 +7,38 @@ vim.g.colors_name = "forestdark"
 
 local palette = {
   -- Base scale
-  colour0   = "#1a2a1c",
-  colour1   = "#263328",
-  colour2   = "#374a39",
-  colour3   = "#5c7060",
-  colour4   = "#83977f",
-  colour5   = "#8d9e82",
-  colour6   = "#a3b89e",
-  colour7   = "#c2d4bc",
+  colour0   = "#1a1a1a",
+  colour1   = "#252525",
+  colour2   = "#303030",
+  colour3   = "#4a4a4a",
+  colour4   = "#6e6e6e",
+  colour5   = "#8a8a8a",
+  colour6   = "#a6a6a6",
+  colour7   = "#c4c4c4",
 
   -- Semantic
-  success   = "#7a9e78",
-  warning   = "#a8a87a",
-  error     = "#a07a7a",
-  muted     = "#536655",
+  success   = "#8e8e8e",
+  warning   = "#a4a4a4",
+  error     = "#c4c4c4",
+  muted     = "#505050",
 
   -- Primary
-  primary0  = "#83977f",
-  primary1  = "#8d9e82",
-  primary2  = "#263328",
-  primary3  = "#5c7060",
-  primary0h = "#9aad96", -- hover
-  primary2h = "#374a39", -- hover
+  primary0  = "#6e6e6e",
+  primary1  = "#7e7e7e",
+  primary2  = "#2a2a2a",
+  primary3  = "#4a4a4a",
+  primary0h = "#8a8a8a", -- hover
+  primary2h = "#363636", -- hover
 
   -- Backgrounds
   bg0       = "NONE", -- transparent
-  bg1       = "#1c231e",
-  bg2       = "#263328",
-  border    = "#1c231e",
+  bg1       = "#1c1c1c",
+  bg2       = "#242424",
+  border    = "#2e2e2e",
 
   -- Foregrounds
-  fg0       = "#D3C6AA",
-  fg1       = "#e8e0cd",
+  fg0       = "#c8c8c8",
+  fg1       = "#e0e0e0",
 
   -- Extras
   none      = "NONE",
@@ -174,10 +173,10 @@ function M.setup()
   hi("Todo", { fg = p.colour0, bg = p.warning, bold = true })
 
   -- ─── Diff ─────────────────────────────────────────────────────────────────
-  hi("DiffAdd", { fg = p.success, bg = "#1e2e1e" })
-  hi("DiffChange", { fg = p.warning, bg = "#2a2a1a" })
-  hi("DiffDelete", { fg = p.error, bg = "#2a1a1a" })
-  hi("DiffText", { fg = p.fg1, bg = "#2a2a1a", bold = true })
+  hi("DiffAdd", { fg = p.success, bg = "#282828" })
+  hi("DiffChange", { fg = p.warning, bg = "#282828" })
+  hi("DiffDelete", { fg = p.error, bg = "#282828" })
+  hi("DiffText", { fg = p.fg1, bg = "#282828", bold = true })
   hi("Added", { fg = p.success })
   hi("Changed", { fg = p.warning })
   hi("Removed", { fg = p.error })
@@ -194,8 +193,8 @@ function M.setup()
   hi("DiagnosticUnderlineInfo", { sp = p.primary0, undercurl = true })
   hi("DiagnosticUnderlineHint", { sp = p.colour5, undercurl = true })
 
-  hi("DiagnosticVirtualTextError", { fg = p.error, bg = "#2a1a1a", italic = true })
-  hi("DiagnosticVirtualTextWarn", { fg = p.warning, bg = "#2a2a1a", italic = true })
+  hi("DiagnosticVirtualTextError", { fg = p.error, bg = "#282828", italic = true })
+  hi("DiagnosticVirtualTextWarn", { fg = p.warning, bg = "#282828", italic = true })
   hi("DiagnosticVirtualTextInfo", { fg = p.primary0, bg = p.bg1, italic = true })
   hi("DiagnosticVirtualTextHint", { fg = p.colour5, bg = p.bg1, italic = true })
 
@@ -311,20 +310,20 @@ function M.setup()
   -- ─── Telescope ────────────────────────────────────────────────────────────
   -- Semi-transparent bg: requires a terminal with true-color + compositor support.
   -- Set vim.o.winblend / telescope's winblend opt to taste (e.g. 10-20).
-  local tele_bg = "#171c1a"
+  local tele_bg = "#151515"
   hi("TelescopeNormal", { fg = p.fg0, bg = tele_bg })
-  hi("TelescopeBorder", { fg = "#2a2e2b", bg = tele_bg })
+  hi("TelescopeBorder", { fg = "#2e2e2e", bg = tele_bg })
   hi("TelescopeTitle", { fg = p.primary0, bg = tele_bg, bold = true })
-  hi("TelescopePromptNormal", { fg = p.fg1, bg = "#1e2420" })
-  hi("TelescopePromptBorder", { fg = "#2a2e2b", bg = "#1e2420" })
-  hi("TelescopePromptTitle", { fg = p.fg1, bg = "#1e2420", bold = true })
-  hi("TelescopePromptPrefix", { fg = p.primary0, bg = "#1e2420" })
-  hi("TelescopePromptCounter", { fg = p.muted, bg = "#1e2420" })
+  hi("TelescopePromptNormal", { fg = p.fg1, bg = "#1c1c1c" })
+  hi("TelescopePromptBorder", { fg = "#2e2e2e", bg = "#1c1c1c" })
+  hi("TelescopePromptTitle", { fg = p.fg1, bg = "#1c1c1c", bold = true })
+  hi("TelescopePromptPrefix", { fg = p.primary0, bg = "#1c1c1c" })
+  hi("TelescopePromptCounter", { fg = p.muted, bg = "#1c1c1c" })
   hi("TelescopeResultsNormal", { fg = p.fg0, bg = tele_bg })
-  hi("TelescopeResultsBorder", { fg = "#2a2e2b", bg = tele_bg })
+  hi("TelescopeResultsBorder", { fg = "#2e2e2e", bg = tele_bg })
   hi("TelescopeResultsTitle", { fg = p.muted, bg = tele_bg })
   hi("TelescopePreviewNormal", { fg = p.fg0, bg = tele_bg })
-  hi("TelescopePreviewBorder", { fg = "#2a2e2b", bg = tele_bg })
+  hi("TelescopePreviewBorder", { fg = "#2e2e2e", bg = tele_bg })
   hi("TelescopePreviewTitle", { fg = p.colour6, bg = tele_bg, bold = true })
   hi("TelescopeSelection", { fg = p.fg1, bg = p.colour2 })
   hi("TelescopeSelectionCaret", { fg = p.primary0, bg = p.colour2 })
@@ -370,10 +369,10 @@ function M.setup()
   hi("GitSignsAddNr", { fg = p.success })
   hi("GitSignsChangeNr", { fg = p.warning })
   hi("GitSignsDeleteNr", { fg = p.error })
-  hi("GitSignsAddLn", { bg = "#1e2e1e" })
-  hi("GitSignsChangeLn", { bg = "#2a2a1a" })
-  hi("GitSignsAddPreview", { fg = p.success, bg = "#1e2e1e" })
-  hi("GitSignsDeletePreview", { fg = p.error, bg = "#2a1a1a" })
+  hi("GitSignsAddLn", { bg = "#282828" })
+  hi("GitSignsChangeLn", { bg = "#282828" })
+  hi("GitSignsAddPreview", { fg = p.success, bg = "#282828" })
+  hi("GitSignsDeletePreview", { fg = p.error, bg = "#282828" })
 
   -- ─── Indent-blankline ─────────────────────────────────────────────────────
   hi("IblIndent", { fg = p.colour2 })
@@ -753,13 +752,13 @@ function M.setup()
   hi("FzfLuaScrollBorderFull", { fg = p.primary0 })
 
   -- ─── mini.icons ───────────────────────────────────────────────────────────
-  hi("MiniIconsAzure", { fg = "#7aacb8" })
-  hi("MiniIconsBlue", { fg = "#7a92b8" })
-  hi("MiniIconsCyan", { fg = "#7ab8b8" })
+  hi("MiniIconsAzure", { fg = "#a6a6a6" })
+  hi("MiniIconsBlue", { fg = "#9a9a9a" })
+  hi("MiniIconsCyan", { fg = "#8e8e8e" })
   hi("MiniIconsGreen", { fg = p.success })
   hi("MiniIconsGrey", { fg = p.colour5 })
-  hi("MiniIconsOrange", { fg = "#b89a7a" })
-  hi("MiniIconsPurple", { fg = "#9a7ab8" })
+  hi("MiniIconsOrange", { fg = "#a4a4a4" })
+  hi("MiniIconsPurple", { fg = "#8a8a8a" })
   hi("MiniIconsRed", { fg = p.error })
   hi("MiniIconsYellow", { fg = p.warning })
   hi("MiniIconsWhite", { fg = p.fg1 })
