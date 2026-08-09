@@ -54,37 +54,37 @@
       withHyprland = true;
     }) # Desktop Widgets
 
-    fflogs
     winetricks # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     (wineWow64Packages.staging.override {
       vulkanSupport = true;
     })
 
-
     vlc # Media Player
     dxvk # Not sure what this is
-    siyuan # Personal Notes (Obsidian Replacement)
     vivaldi # Browser (It has workspaces so it won)
     vesktop # Alternative Discord Client
     chromium
     hyprshot # Screenshots
-    # hyprcursor # Hyprland Cursor (Not sure if its doing anything)
-    dbeaver-bin # Database Manager
     pavucontrol # PulseAudio Control User Interface
     cloudflare-warp
-
-    bruno
-    phpactor
-    zed-editor
-    vscode-fhs # Code Editor
-    claude-code
+    # AI agents
     opencode
-
+    claude-code
+    # Development Tools
+    bruno       # API Client
+    phpactor    # PHP Language Server
+    dbeaver-bin # Database Manager
+    # Code Editor
+    zed-editor
+    vscode-fhs
     # Fonts
     iosevka
     noto-fonts-cjk-serif # I think this is for chinese characters
     nerd-fonts.jetbrains-mono
+
+    # Packages on unstable channel for separate updating
+    inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.siyuan # Personal Notes (Obsidian Replacement)
   ];
 
   home.sessionVariables = {
