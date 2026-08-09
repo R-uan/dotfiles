@@ -56,15 +56,19 @@
 
     hosts = {
       "127.0.0.1" = [
-        "www.apoioteste.sitemidas"
-        "apoioteste.sitemidas"
+        "finance.local"
+        
         "painelteste.sitemidas"
-        "www.site27.sitemidas"
+        
         "www.site26.sitemidas"
         "www.site26-teste.sitemidas"
-        "www.site10.sitemidas"
+        
         "site10.sitemidas"
+        "www.site10.sitemidas"
+        
         "site27.sitemidas"
+        "www.site27.sitemidas"
+
         "site28.sitemidas"
         "www.site28.sitemidas"
       ];
@@ -190,6 +194,7 @@
     git
     wget
     curl
+    appimage-run
   ];
 
   virtualisation.docker = {
