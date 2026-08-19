@@ -45,6 +45,9 @@
     # Command Line Interface Tools
 
     fd        # Find replacement
+    fzf       # Fuzzy Finder
+    zoxide    # Smarter CD
+    eza       # Smarter LS
     zip       # Zipper
     unar      # Unziper
     gawk      # Text Processing Language
@@ -78,6 +81,8 @@
     })              # Desktop Widgets
 
     # Gaming Related Packages
+    mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU
+    gamemode    # Optimise Linux performance
     winetricks  # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     (wineWow64Packages.staging.override {
@@ -107,10 +112,19 @@
     DOTFILES = "/home/bunny/dotfiles/";
   };
 
-  home.file.".config/nvim".source = ./config/nvim;
+  xdg.configFile = {
+    nvim = {
+      source = ./config/nvim;
+      recursive = true;
+    };
+    hypr = {
+      source = ./config/hypr;
+      recursive = true;
+    };
+  };
+
   home.file.".config/btop".source = ./config/btop;
   home.file.".config/mako".source = ./config/mako;
-  home.file.".config/hypr".source = ./config/hypr;
   home.file.".config/yazi".source = ./config/yazi;
   home.file.".config/quickshell".source = ./config/quickshell;
 
