@@ -135,7 +135,7 @@ Scope {
         color: "transparent"
         implicitWidth: Config.rounding
         implicitHeight: Config.rounding
-        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "quickshell:barCorners"
 
         mask: Region {}
@@ -158,7 +158,7 @@ Scope {
         color: "transparent"
         implicitWidth: Config.rounding
         implicitHeight: Config.rounding
-        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "quickshell:barCorners"
 
         mask: Region {}
@@ -181,7 +181,7 @@ Scope {
         color: "transparent"
         implicitWidth: Config.rounding
         implicitHeight: Config.rounding
-        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "quickshell:barCorners"
 
         mask: Region {}
@@ -209,7 +209,7 @@ Scope {
         color: "transparent"
         implicitWidth: Config.rounding
         implicitHeight: Config.rounding
-        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.layer: WlrLayer.Top
         WlrLayershell.namespace: "quickshell:barCorners"
 
         mask: Region {}
