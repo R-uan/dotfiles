@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
-    ./sddm.nix
+    ./greetd.nix
     ./nbfc.nix
   ];
 }
