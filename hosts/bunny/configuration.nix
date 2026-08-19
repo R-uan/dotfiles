@@ -236,6 +236,16 @@
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
     };
+
+    gamemode = {
+      enable = true;
+      enableRenice = true;
+      settings = {
+        general = {
+          renice = 10; # how aggressively it boosts process priority
+        };
+      };
+    };
   };
 
   # configuration.nix

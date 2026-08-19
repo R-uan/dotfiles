@@ -82,7 +82,6 @@
 
     # Gaming Related Packages
     mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU
-    gamemode    # Optimise Linux performance
     winetricks  # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     (wineWow64Packages.staging.override {
