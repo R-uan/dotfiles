@@ -19,65 +19,78 @@
   };
 
   home.packages = with pkgs; [
-    nil # Nix Language Server
-    deadnix # Nix I don't know
-    alejandra # Nix Code Formatter
-    lua-language-server # Lua Language Server
-    (lua52Packages.lua.withPackages (
-      ps:
-        with ps; [luafilesystem]
-    )) # Lua Language
+    # Programming Related Packages
+    ## Nix
+    nil       # Language Server
+    deadnix   # I don't know, I think it's a linter
+    alejandra # Code Formatter
 
-    fd # Find replacement
-    zip # Zipper
-    unar # Unziper
-    gawk # Text Processing Language
-    btop # Task Manager
-    procps # For Top
-    gnused # Text Surgery
-    gnugrep # GREP
-    ripgrep # Text Search Tool
+    ## Lua Language
+    lua-language-server # Language Server
+    (lua52Packages.lua.withPackages ( ps: with ps; [luafilesystem] ))                  
+
+    ## AI agents
+    opencode
+    claude-code
+
+    ## Development Tools
+    bruno       # API Client
+    phpactor    # PHP Language Server
+    dbeaver-bin # Database Manager
+
+    ## Code Editors
+    zed-editor
+    vscode-fhs
+
+    # Command Line Interface Tools
+
+    fd        # Find replacement
+    zip       # Zipper
+    unar      # Unziper
+    gawk      # Text Processing Language
+    btop      # Task Manager
+    procps    # For Top
+    gnused    # Text Surgery
+    gnugrep   # GREP
+    ripgrep   # Text Search Tool
     inetutils # Net Utils
 
-    yazi # File Manager
-    bluetuith # Bluetooth Terminal User Interface
-    lazydocker # Docker Terminal User Interface
+    # Terminal User Interface
 
-    awww # Wallpaper Daemon for Wayland
-    mako # Notification
-    rofi # App Launcher
-    libnotify # Notifications Manager ?
+    yazi        # File Manager
+    bluetuith   # Bluetooth Terminal User Interface
+    lazydocker  # Docker Terminal User Interface
+
+    # System Utilities
+    awww            # Wallpaper Daemon for Wayland
+    mako            # Notification
+    rofi            # App Launcher
+    dxvk            # Not sure what this is
+    libnotify       # Notifications Manager ?
+    hyprshot        # Screenshots
+    pavucontrol     # PulseAudio Control User Interface
+    cloudflare-warp # Cloudflare VPN (Not really a VPN, used to get better routes for FFXIV)
     (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
       withX11 = false;
       withWayland = true;
       withPipewire = true;
       withHyprland = true;
-    }) # Desktop Widgets
+    })              # Desktop Widgets
 
-    winetricks # Essential Extension for Wine
+    # Gaming Related Packages
+    winetricks  # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
     (wineWow64Packages.staging.override {
       vulkanSupport = true;
-    })
+    })          # Windows Compatibility Layer
 
-    vlc # Media Player
-    dxvk # Not sure what this is
-    vivaldi # Browser (It has workspaces so it won)
-    vesktop # Alternative Discord Client
     chromium
-    hyprshot # Screenshots
-    pavucontrol # PulseAudio Control User Interface
-    cloudflare-warp
-    # AI agents
-    opencode
-    claude-code
-    # Development Tools
-    bruno       # API Client
-    phpactor    # PHP Language Server
-    dbeaver-bin # Database Manager
-    # Code Editor
-    zed-editor
-    vscode-fhs
+    vivaldi # Browser (It has workspaces so it won)
+
+    vlc     # Media Player
+    spotify # It's spotify
+    vesktop # Alternative Discord Client
+
     # Fonts
     iosevka
     noto-fonts-cjk-serif # I think this is for chinese characters
