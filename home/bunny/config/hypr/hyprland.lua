@@ -10,6 +10,7 @@ local statusbar = "quickshell -p ~/.config/quickshell"
 
 -- Startup
 hl.on("hyprland.start", function()
+  hl.exec_cmd "sh -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh); dbus-update-activation-environment --systemd GNOME_KEYRING_CONTROL SSH_AUTH_SOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP'"
   hl.exec_cmd "mako"
   hl.exec_cmd "fcitx5 -d"
   hl.exec_cmd "otd-daemon"
