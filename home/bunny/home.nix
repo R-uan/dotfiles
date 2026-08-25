@@ -59,7 +59,6 @@
     inetutils # Net Utils
 
     # Terminal User Interface
-
     yazi        # File Manager
     bluetuith   # Bluetooth Terminal User Interface
     lazydocker  # Docker Terminal User Interface
@@ -89,12 +88,12 @@
     })          # Windows Compatibility Layer
 
     chromium
-    vivaldi # Browser (It has workspaces so it won)
+    thunderbird
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     vlc     # Media Player
     spotify # It's spotify
     vesktop # Alternative Discord Client
-
     # Fonts
     iosevka
     noto-fonts-cjk-serif # I think this is for chinese characters
