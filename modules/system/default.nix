@@ -1,6 +1,14 @@
-{ config, pkgs, ... }: {
+{...}: {
   imports = [
-    # System-level modules (boot, hardware, networking, etc.)
-    # Add new system modules here as the config grows.
+    ./boot.nix
+    ./locale.nix
+    ./networking.nix
+    ./hardware.nix
+    ./audio.nix
+    ./display.nix
+    ./gaming.nix
+    ./security.nix
+    ./virtualisation.nix
+    ./programs.nix
   ];
 }

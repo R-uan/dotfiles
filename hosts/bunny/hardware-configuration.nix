@@ -27,7 +27,7 @@
   fileSystems."/mnt/hdd" = {
     device = "/dev/disk/by-uuid/5af9c46f-3e7b-4f9a-a7bb-c4864b82f781";
     fsType = "ext4";
-    options = ["defaults"];
+    options = ["defaults" "nofail"];
   };
 
   fileSystems."/mnt/exssd" = {
