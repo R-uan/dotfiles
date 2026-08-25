@@ -1,171 +1,179 @@
+/* ─────────────────────────────────────────────────────────
+   Rofi theme — grayscale, matches the quickshell aesthetic
+   ───────────────────────────────────────────────────────── */
+
 * {
-    width: 600;
     font: "Iosevka 14";
 }
 
 @import "./colors.rasi"
 
-element-text, element-icon, mode-switcher {
-    font:             @font;
-    border-radius:    12px;
-    text-color:       inherit;
-    background-color: inherit;
-}
-
+/* ── Window ────────────────────────────────────────────── */
 window {
-    font:             @font;
-    width:            780px;
+    width:            620px;
+    location:         center;
+    anchor:           center;
+    y-offset:         -80px;
 
-    border:           1px;
+    border:           1px solid;
     border-color:     @shade2;
-    border-radius:    12px;
+    border-radius:    14px;
 
     padding:          0px;
     background-color: @background0;
 }
 
 mainbox {
-    font:             @font;
-    padding:          16px 20px 20px 20px;
-    spacing:          12px;
+    padding:          14px 16px 16px 16px;
+    spacing:          10px;
     background-color: @background0;
+    children:         [ inputbar, message, listview, mode-switcher ];
 }
 
+/* ── Input bar ─────────────────────────────────────────── */
 inputbar {
-    font:             @font;
-    padding:          10px 14px;
-    border-radius:    8px;
-    spacing:          8px;
-    children:         [prompt, entry];
+    padding:          10px 12px;
+    border-radius:    10px;
+    spacing:          10px;
+    children:         [ prompt, entry ];
     background-color: @background1;
-    border:           1px;
-    border-color:     @shade2;
+    border:           1px solid;
+    border-color:     @shade1;
 }
 
 prompt {
-    font:             @font;
-    padding:          2px 10px;
+    padding:          0 4px 0 2px;
     enabled:          true;
-    text-align:       center;
-    text-color:       @background0;
-    background-color: @primary;
-    border-radius:    6px;
+    text-color:       @foreground-dim;
+    background-color: transparent;
     vertical-align:   0.5;
 }
 
-textbox-prompt-colon {
-    str:  ":";
-    font: @font;
-    expand: false;
-}
-
 entry {
-    font:              @font;
-    line-height:       1.4;
-    text-align:        0.0;
-    text-color:        @foreground0;
-    padding:           2px 0px;
-    placeholder:       "Search...";
+    text-color:        @foreground1;
+    padding:           0px;
+    placeholder:       "Type to search…";
     placeholder-color: @muted;
     background-color:  transparent;
     vertical-align:    0.5;
+    cursor:            text;
 }
 
-/* Separator line between input and list */
+textbox-prompt-colon {
+    str:    "";
+    expand: false;
+}
+
+/* ── Optional message row ──────────────────────────────── */
 message {
-    padding:          6px 12px;
-    border-radius:    6px;
+    padding:          8px 12px;
+    border-radius:    8px;
     background-color: @background1;
-    border:           0px;
+    border:           1px solid;
+    border-color:     @shade1;
 }
 
 textbox {
-    font:       @font;
-    text-color: @muted;
+    text-color: @foreground-dim;
 }
 
+/* ── List of results ───────────────────────────────────── */
 listview {
-    lines:            7;
+    lines:            8;
     columns:          1;
-    border:           0px;
-    font:             @font;
-    border-radius:    0px;
     fixed-height:     true;
-    padding:          4px 0px 0px;
-    spacing:          2px;
-    background-color: @background0;
+    dynamic:          true;
+    scrollbar:        true;
+    cycle:            true;
+    padding:          6px 0px 0px 0px;
+    spacing:          3px;
+    background-color: transparent;
+    border:           0px;
 }
 
 element {
-    font:             @font;
-    padding:          8px 12px;
-    border-radius:    7px;
-    text-color:       @shade6;
+    padding:          9px 12px;
+    border-radius:    8px;
+    spacing:          10px;
+    text-color:       @foreground0;
     background-color: transparent;
-    spacing:          8px;
+    cursor:           pointer;
 }
 
 element-icon {
-    size:   24px;
-    font:   @font;
-    margin: 0 2px 0 0;
+    size:             22px;
+    margin:           0 6px 0 0;
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+}
+
+element-text {
+    text-color:       inherit;
+    background-color: transparent;
+    vertical-align:   0.5;
+    highlight:        bold #e0e0e0;
 }
 
 element normal active {
-    text-color:       @primary;
-    background-color: transparent;
+    text-color:       @primary-hover;
 }
 
 element normal urgent {
     text-color:       @error;
-    background-color: transparent;
 }
 
+/* Selection — subtle card, not a heavy inversion */
 element selected {
-    font:             @font;
-    border-radius:    7px;
-    text-color:       @background0;
-    background-color: @primary;
+    text-color:       @foreground1;
+    background-color: @selected-bg;
+    border:           1px solid;
+    border-color:     @selected-border;
 }
 
 element selected active {
-    text-color:       @background0;
-    background-color: @primary-hover;
+    text-color:       @foreground1;
+    background-color: @selected-bg;
+    border-color:     @primary-hover;
 }
 
 element selected urgent {
-    text-color:       @background0;
-    background-color: @error;
+    text-color:       @foreground1;
+    background-color: @selected-bg;
+    border-color:     @error;
 }
 
+/* ── Scrollbar ─────────────────────────────────────────── */
 scrollbar {
-    width:        4px;
-    border:       0px;
-    handle-width: 4px;
-    padding:      0px 2px;
-    background-color:    @background1;
-    handle-color:        @shade3;
+    width:            4px;
+    padding:          0px 0px 0px 6px;
+    handle-width:     4px;
+    border:           0px;
+    background-color: transparent;
+    handle-color:     @shade2;
+    border-radius:    2px;
 }
 
+/* ── Mode switcher (bottom tabs) ───────────────────────── */
 mode-switcher {
-    border:           0px;
-    padding:          6px 0px 0px;
-    background-color: @background0;
+    padding:          8px 0px 0px 0px;
     spacing:          6px;
+    background-color: transparent;
+    border:           0px;
 }
 
 button {
-    font:             @font;
-    padding:          6px 14px;
-    border-radius:    6px;
-    text-color:       @muted;
+    padding:          6px 12px;
+    border-radius:    8px;
+    text-color:       @foreground-dim;
     background-color: @background1;
-    border:           1px;
-    border-color:     @shade2;
+    border:           1px solid;
+    border-color:     @shade1;
+    cursor:           pointer;
 }
 
 button selected {
-    text-color:       @background0;
-    background-color: @primary;
-    border-color:     @primary;
+    text-color:       @foreground1;
+    background-color: @background2;
+    border-color:     @shade3;
 }

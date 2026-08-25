@@ -1,15 +1,19 @@
 /* Rofi config file */
 configuration {
-    font:           "Iosevka Font 14";
-    show-icons:     true;
-    display-window: "Window";
-    display-drun:   "Search";
-    display-run:    "Run";
-    display-ssh:    "SSH";
+    font:               "Iosevka 14";
+    show-icons:         true;
+    display-drun:       "";
+    display-run:        "";
+    display-window:     "";
+    display-ssh:        "";
+    display-filebrowser:" ";
+    drun-display-format:"{name}";
+    hide-scrollbar:     false;
+    click-to-exit:      true;
+    show-match:         true;
+    matching:           "fuzzy";
+    sort:               true;
+    sorting-method:     "fzf";
 }
 
 @theme "theme"
-
-listview {
-    lines: 7;
-}

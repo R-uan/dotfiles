@@ -15,7 +15,9 @@ Item {
     { name: "XIVLauncher", icon: "󰊴", command: ["XIVLauncher.Core"] },
     { name: "Steam",       icon: "󰓓", command: ["steam"] },
     { name: "Vesktop",     icon: "󰙯", command: ["vesktop"] },
-    { name: "Terminal",    icon: "", command: ["kitty"] }
+    { name: "Terminal",    icon: "", command: ["kitty"] },
+    { name: "Siyuan",      icon: "", command: ["siyuan"] },
+    { name: "All apps",    icon: "", launcher: true }
   ]
 
   function launch(cmd) {
@@ -67,7 +69,13 @@ Item {
           anchors.fill: parent
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
-          onClicked: root.launch(modelData.command)
+          onClicked: {
+            if (modelData.launcher) {
+              launcher.visible = true;
+            } else {
+              root.launch(modelData.command);
+            }
+          }
         }
       }
     }

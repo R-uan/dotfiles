@@ -5,6 +5,7 @@
 
     foreground0:     #c8c8c8;
     foreground1:     #e0e0e0;
+    foreground-dim:  #8a8a8a;
 
     primary:         #6e6e6e;
     primary-hover:   #8a8a8a;
@@ -26,4 +27,6 @@
 
     background:      @background0;
     selected:        @primary;
+    selected-bg:     @background2;
+    selected-border: @shade3;
 }

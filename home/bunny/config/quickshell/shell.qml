@@ -8,6 +8,7 @@ import "windows/notificationcenter"
 import "windows/networkmenu"
 import "windows/resourcesmenu"
 import "windows/bluetoothmenu"
+import "windows/launcher"
 import "windows/wallpapers"
 
 import QtQuick
@@ -19,7 +20,7 @@ ShellRoot {
   function hideOthers(except) {
     const panels = [
       startmenu, powermenu, notificationcenter, networkmenu,
-      resourcesmenu, bluetoothmenu, wallpapers
+      resourcesmenu, bluetoothmenu, wallpapers, launcher
     ];
     for (let p of panels) {
       if (!p || p === except) continue;
@@ -67,5 +68,10 @@ ShellRoot {
   Wallpapers {
     id: wallpapers
     onVisibleChanged: if (visible) shellRoot.hideOthers(wallpapers)
+  }
+
+  Launcher {
+    id: launcher
+    onVisibleChanged: if (visible) shellRoot.hideOthers(launcher)
   }
 }

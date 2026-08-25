@@ -34,7 +34,9 @@
     claude-code
 
     ## Development Tools
+    php
     bruno       # API Client
+    nodejs
     phpactor    # PHP Language Server
     dbeaver-bin # Database Manager
 

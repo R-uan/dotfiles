@@ -1,0 +1,4 @@
+module qs.launcher
+
+Launcher 1.0 Launcher.qml
+LauncherRow 1.0 LauncherRow.qml
