@@ -11,17 +11,19 @@ Item {
   id: root
   implicitWidth: parent.width
   implicitHeight: layout.implicitHeight
-  
+
   ColumnLayout {
     id: layout
     anchors.margins: 0
     width: parent.width
-    spacing: Config.spacing
+    spacing: Config.spacing + 4
 
     Startup {
-      Layout.topMargin: 10 
-    } 
+      Layout.topMargin: 10
+    }
 
-    Workspaces {}
+    Resources {
+      Layout.topMargin: 6
+    }
   }
 }

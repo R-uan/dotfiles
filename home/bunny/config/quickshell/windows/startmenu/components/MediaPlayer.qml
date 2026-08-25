@@ -11,17 +11,38 @@ Item {
   id: root
   property MprisPlayer player: Mpris.players.values[0] ?? null
 
-  readonly property real unit: width / 20
-  readonly property real artSize: height * 0.7
+  readonly property bool _hasPlayer: player !== null
+  readonly property real _pos: player?.position ?? 0
+  readonly property real _rawLen: player?.length ?? 0
+  // Some MPRIS players report absurd length values when metadata is missing.
+  readonly property bool _lenValid: _rawLen > 0 && _rawLen < 86400
+  readonly property real _len: _lenValid ? _rawLen : 0
+  readonly property real _pct: _lenValid ? Math.min(1, _pos / _len) : 0
 
-  // ── Blurred album art glow backdrop ──
+  function _fmtTime(sec) {
+    if (!sec || sec <= 0) return "0:00";
+    const s = Math.floor(sec) % 60;
+    const m = Math.floor(sec / 60) % 60;
+    const h = Math.floor(sec / 3600);
+    const pad = (n) => (n < 10 ? "0" + n : String(n));
+    return (h > 0 ? h + ":" + pad(m) : m) + ":" + pad(s);
+  }
+
+  Timer {
+    interval: 500
+    running: root.player?.isPlaying ?? false
+    repeat: true
+    onTriggered: if (root.player) root.player.positionChanged()
+  }
+
+  // Blurred art backdrop
   Image {
     id: bgBlur
     anchors.centerIn: parent
-    width: parent.width * 1.2
-    height: parent.height * 1.2
+    width: parent.width * 1.15
+    height: parent.height * 1.15
     fillMode: Image.PreserveAspectCrop
-    source: img.source
+    source: art.source
     visible: false
     cache: true
   }
@@ -32,215 +53,264 @@ Item {
     blur: 1.0
     blurMax: 64
     blurMultiplier: 2.0
-    opacity: 0.15
-    saturation: 0.5
+    opacity: 0.18
+    saturation: 0.4
   }
 
-  // ── Main horizontal layout ──
-  RowLayout {
-    anchors.centerIn: parent
-    width: parent.width * 0.90
-    height: parent.height * 0.80
-    spacing: root.unit * 0.9
+  ColumnLayout {
+    anchors.fill: parent
+    anchors.margins: 12
+    spacing: 8
 
-    // ── Album art ──
-    Item {
-      Layout.alignment: Qt.AlignVCenter
-      Layout.preferredWidth: root.artSize
-      Layout.preferredHeight: root.artSize
+    // ── Top row: art + title/artist/controls ────────────────
+    RowLayout {
+      Layout.fillWidth: true
+      spacing: 12
 
-      // Soft glow behind art
-      Rectangle {
-        anchors.centerIn: parent
-        width: parent.width * 0.9
-        height: parent.height * 0.9
-        radius: width / 2
-        color: Qt.rgba(1, 1, 1, 0.10)
-        layer.enabled: true
-        layer.effect: MultiEffect {
-          blurEnabled: true
-          blur: 1.0
-          blurMax: 28
-        }
-      }
-
-      Image {
-        id: img
-        visible: false
-        anchors.fill: parent
-        fillMode: Image.PreserveAspectCrop
-        source: Quickshell.shellPath("assets/img/media-placeholder.jpg")
-        Connections {
-          target: player
-          function onTrackArtUrlChanged() {
-            if (player.trackArtUrl && player.trackArtUrl !== "")
-              img.source = player.trackArtUrl;
-          }
-          function onTrackTitleChanged() {
-            img.source = Quickshell.shellPath("assets/img/media-placeholder.jpg");
-          }
-        }
-      }
-
-      MultiEffect {
-        source: img
-        anchors.fill: img
-        maskEnabled: true
-        maskSource: artMask
-        visible: img.status === Image.Ready
-      }
-
+      // Album art
       Item {
-        id: artMask
-        width: img.width
-        height: img.height
-        layer.enabled: true
-        visible: false
+        Layout.preferredWidth: 64
+        Layout.preferredHeight: 64
+        Layout.alignment: Qt.AlignVCenter
+
+        Image {
+          id: art
+          visible: false
+          anchors.fill: parent
+          fillMode: Image.PreserveAspectCrop
+          source: Quickshell.shellPath("assets/img/media-placeholder.jpg")
+          Connections {
+            target: root.player
+            function onTrackArtUrlChanged() {
+              if (root.player.trackArtUrl && root.player.trackArtUrl !== "")
+                art.source = root.player.trackArtUrl;
+            }
+            function onTrackTitleChanged() {
+              art.source = Quickshell.shellPath("assets/img/media-placeholder.jpg");
+            }
+          }
+        }
+
+        MultiEffect {
+          source: art
+          anchors.fill: art
+          maskEnabled: true
+          maskSource: artMask
+          visible: art.status === Image.Ready
+        }
+
+        Item {
+          id: artMask
+          width: art.width
+          height: art.height
+          layer.enabled: true
+          visible: false
+          Rectangle {
+            anchors.fill: parent
+            radius: 10
+            color: "black"
+          }
+        }
+
         Rectangle {
           anchors.fill: parent
-          radius: parent.width * 0.18
-          color: "black"
+          radius: 10
+          color: "transparent"
+          border.color: Qt.rgba(1, 1, 1, 0.08)
+          border.width: 1
         }
       }
 
-      // Subtle inner border
-      Rectangle {
-        anchors.fill: parent
-        radius: parent.width * 0.18
-        color: "transparent"
-        border.color: Qt.rgba(1, 1, 1, 0.10)
-        border.width: 1
+      // Title / artist
+      ColumnLayout {
+        Layout.fillWidth: true
+        Layout.alignment: Qt.AlignVCenter
+        spacing: 2
+
+        StyledText {
+          Layout.fillWidth: true
+          font.pixelSize: Config.fontSize + 1
+          font.weight: Font.Medium
+          color: Qt.rgba(1, 1, 1, 0.95)
+          elide: Text.ElideRight
+          maximumLineCount: 1
+          text: root.player?.trackTitle && root.player.trackTitle.length > 0
+                  ? root.player.trackTitle
+                  : "Nothing playing"
+        }
+
+        StyledText {
+          Layout.fillWidth: true
+          font.pixelSize: Config.fontSize - 3
+          font.letterSpacing: 1.4
+          color: Qt.rgba(1, 1, 1, 0.55)
+          elide: Text.ElideRight
+          maximumLineCount: 1
+          text: root.player?.trackArtist && root.player.trackArtist.length > 0
+                  ? root.player.trackArtist.toUpperCase()
+                  : "—"
+        }
+      }
+
+      // Play / Pause (main)
+      Item {
+        Layout.preferredWidth: 40
+        Layout.preferredHeight: 40
+        Layout.alignment: Qt.AlignVCenter
+        visible: root.player?.canPlay ?? false
+
+        Rectangle {
+          anchors.fill: parent
+          radius: width / 2
+          color: playArea.containsMouse ? Qt.rgba(1,1,1,0.22) : Qt.rgba(1,1,1,0.14)
+          border.color: Qt.rgba(1,1,1,0.14)
+          border.width: 1
+          Behavior on color { ColorAnimation { duration: 120 } }
+        }
+        StyledText {
+          anchors.centerIn: parent
+          text: root.player?.isPlaying ? "" : ""
+          font.pixelSize: 16
+          color: Qt.rgba(1, 1, 1, 0.95)
+        }
+        MouseArea {
+          id: playArea
+          anchors.fill: parent
+          hoverEnabled: true
+          onClicked: root.player?.togglePlaying()
+          cursorShape: Qt.PointingHandCursor
+        }
       }
     }
 
-    // ── Info + controls ──
-    ColumnLayout {
+    // ── Seek bar + times ─────────────────────────────────────
+    Item {
       Layout.fillWidth: true
-      Layout.alignment: Qt.AlignVCenter
-      spacing: root.unit * 0.3
+      Layout.topMargin: 4
+      Layout.preferredHeight: seekTrack.height + timeRow.implicitHeight + 4
+      visible: root._hasPlayer
 
-      // Track title
-      StyledText {
-        Layout.fillWidth: true
-        font.pixelSize: root.unit * 0.85
-        font.weight: Font.Medium
-        font.letterSpacing: 0.3
-        color: Qt.rgba(1, 1, 1, 0.92)
-        elide: Text.ElideRight
-        text: player?.trackTitle
-                ? (player.trackTitle.length >= 28
-                    ? player.trackTitle.slice(0, 24).trim() + "…"
-                    : player.trackTitle)
-                : "Thoughts"
-      }
+      Rectangle {
+        id: seekTrack
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: parent.top
+        height: 3
+        radius: 2
+        color: Qt.rgba(1, 1, 1, 0.10)
 
-      // Artist name
-      StyledText {
-        Layout.fillWidth: true
-        font.pixelSize: root.unit * 0.65
-        font.letterSpacing: 1.6
-        color: Qt.rgba(1, 1, 1, 0.40)
-        elide: Text.ElideRight
-        text: {
-          if (!player?.trackArtist) return "YOUR MIND."
-          let a = player.trackArtist
-          return (a.length > 22 ? a.slice(0, 18).trim() + "…" : a).toUpperCase()
+        Rectangle {
+          anchors.left: parent.left
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
+          width: Math.max(2, parent.width * root._pct)
+          radius: 2
+          color: Qt.rgba(1, 1, 1, 0.80)
+          Behavior on width { NumberAnimation { duration: 200 } }
+        }
+
+        MouseArea {
+          anchors.fill: parent
+          hoverEnabled: true
+          enabled: root._lenValid && (root.player?.canSeek ?? false)
+          cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+          onClicked: (mouse) => {
+            const p = mouse.x / width;
+            if (root.player) root.player.position = p * root._len;
+          }
         }
       }
 
-      // Controls
       RowLayout {
-        spacing: root.unit * 0.45
-        visible: player?.canControl ?? false
-        Layout.topMargin: root.unit * 0.25
+        id: timeRow
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: seekTrack.bottom
+        anchors.topMargin: 4
+        spacing: 4
 
-        // Prev
-        Item {
-          implicitWidth: root.unit * 1.9
-          implicitHeight: root.unit * 1.9
-          visible: player?.canGoPrevious ?? false
-
-          Rectangle {
-            anchors.fill: parent
-            radius: parent.width / 2
-            color: prevArea.containsMouse ? Qt.rgba(1,1,1,0.10) : Qt.rgba(1,1,1,0.05)
-            border.color: Qt.rgba(1,1,1,0.09)
-            border.width: 1
-            Behavior on color { ColorAnimation { duration: 120 } }
-          }
-          StyledText {
-            anchors.centerIn: parent
-            text: ""
-            font.pixelSize: root.unit * 0.75
-            color: Qt.rgba(1, 1, 1, 0.70)
-          }
-          MouseArea {
-            id: prevArea
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: player?.previous()
-            cursorShape: Qt.PointingHandCursor
-          }
+        StyledText {
+          text: root._fmtTime(root._pos)
+          font.pixelSize: Config.fontSize - 4
+          color: Qt.rgba(1, 1, 1, 0.55)
         }
-
-        // Play / Pause
-        Item {
-          implicitWidth: root.unit * 2.4
-          implicitHeight: root.unit * 2.4
-          visible: player?.canPlay ?? false
-
-          Rectangle {
-            anchors.fill: parent
-            radius: parent.width / 2
-            color: playArea.containsMouse ? Qt.rgba(1,1,1,0.22) : Qt.rgba(1,1,1,0.12)
-            border.color: Qt.rgba(1,1,1,0.16)
-            border.width: 1
-            Behavior on color { ColorAnimation { duration: 120 } }
-          }
-          StyledText {
-            anchors.centerIn: parent
-            text: player?.isPlaying ? "" : ""
-            font.pixelSize: root.unit * 0.92
-            color: Qt.rgba(1, 1, 1, 0.95)
-          }
-          MouseArea {
-            id: playArea
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: player?.togglePlaying()
-            cursorShape: Qt.PointingHandCursor
-          }
-        }
-
-        // Next
-        Item {
-          implicitWidth: root.unit * 1.9
-          implicitHeight: root.unit * 1.9
-          visible: player?.canGoNext ?? false
-
-          Rectangle {
-            anchors.fill: parent
-            radius: parent.width / 2
-            color: nextArea.containsMouse ? Qt.rgba(1,1,1,0.10) : Qt.rgba(1,1,1,0.05)
-            border.color: Qt.rgba(1,1,1,0.09)
-            border.width: 1
-            Behavior on color { ColorAnimation { duration: 120 } }
-          }
-          StyledText {
-            anchors.centerIn: parent
-            text: ""
-            font.pixelSize: root.unit * 0.75
-            color: Qt.rgba(1, 1, 1, 0.70)
-          }
-          MouseArea {
-            id: nextArea
-            anchors.fill: parent
-            hoverEnabled: true
-            onClicked: player?.next()
-            cursorShape: Qt.PointingHandCursor
-          }
+        Item { Layout.fillWidth: true }
+        StyledText {
+          text: root._lenValid ? root._fmtTime(root._len) : "--:--"
+          font.pixelSize: Config.fontSize - 4
+          color: Qt.rgba(1, 1, 1, 0.55)
         }
       }
+    }
+
+    // ── Prev / Next row ──────────────────────────────────────
+    RowLayout {
+      Layout.fillWidth: true
+      Layout.topMargin: 2
+      spacing: 6
+      visible: root.player?.canControl ?? false
+
+      Item { Layout.fillWidth: true }
+
+      // Prev
+      Item {
+        Layout.preferredWidth: 30
+        Layout.preferredHeight: 30
+        visible: root.player?.canGoPrevious ?? false
+
+        Rectangle {
+          anchors.fill: parent
+          radius: width / 2
+          color: prevArea.containsMouse ? Qt.rgba(1,1,1,0.10) : Qt.rgba(1,1,1,0.04)
+          border.color: Qt.rgba(1,1,1,0.08)
+          border.width: 1
+          Behavior on color { ColorAnimation { duration: 120 } }
+        }
+        StyledText {
+          anchors.centerIn: parent
+          text: ""
+          font.pixelSize: 12
+          color: Qt.rgba(1, 1, 1, 0.70)
+        }
+        MouseArea {
+          id: prevArea
+          anchors.fill: parent
+          hoverEnabled: true
+          onClicked: root.player?.previous()
+          cursorShape: Qt.PointingHandCursor
+        }
+      }
+
+      // Next
+      Item {
+        Layout.preferredWidth: 30
+        Layout.preferredHeight: 30
+        visible: root.player?.canGoNext ?? false
+
+        Rectangle {
+          anchors.fill: parent
+          radius: width / 2
+          color: nextArea.containsMouse ? Qt.rgba(1,1,1,0.10) : Qt.rgba(1,1,1,0.04)
+          border.color: Qt.rgba(1,1,1,0.08)
+          border.width: 1
+          Behavior on color { ColorAnimation { duration: 120 } }
+        }
+        StyledText {
+          anchors.centerIn: parent
+          text: ""
+          font.pixelSize: 12
+          color: Qt.rgba(1, 1, 1, 0.70)
+        }
+        MouseArea {
+          id: nextArea
+          anchors.fill: parent
+          hoverEnabled: true
+          onClicked: root.player?.next()
+          cursorShape: Qt.PointingHandCursor
+        }
+      }
+
+      Item { Layout.fillWidth: true }
     }
   }
 }

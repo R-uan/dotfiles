@@ -12,3 +12,7 @@ Startup 1.0 Startup.qml
 Workspaces 1.0 Workspaces.qml
 Resources 1.0 Resources.qml
 SystemServices 1.0 SystemServices.qml
+PowerButton 1.0 PowerButton.qml
+NotificationButton 1.0 NotificationButton.qml
+StatCell 1.0 StatCell.qml
+BluetoothButton 1.0 BluetoothButton.qml

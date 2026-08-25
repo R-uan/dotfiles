@@ -1,55 +1,74 @@
 import qs.shared
 import qs.config
 import qs.services
+
 import QtQuick
 import QtQuick.Layouts
 
 Item {
   id: root
   implicitWidth: parent.width
-  height: layout.implicitHeight
+  implicitHeight: layout.implicitHeight + 6
 
-  readonly property string accentColor: Config.darkMode ? ThemeDark.colour6 : ThemeLight.primary3
-  readonly property string textColor:   Config.darkMode ? ThemeDark.foreground0 : ThemeLight.background0
-  
-  Background {
-    anchors.fill: layout
-    color: root.accentColor
-    visible: Config.darkMode === false
+  function _pctColor(pct) {
+    if (pct >= 90) return Config.darkMode ? ThemeDark.error   : ThemeLight.error;
+    if (pct >= 75) return Config.darkMode ? ThemeDark.warning : ThemeLight.warning;
+    return Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1;
+  }
+  function _tempColor(t) {
+    if (t >= 85) return Config.darkMode ? ThemeDark.error   : ThemeLight.error;
+    if (t >= 70) return Config.darkMode ? ThemeDark.warning : ThemeLight.warning;
+    return Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1;
   }
 
   ColumnLayout {
     id: layout
-    spacing: Config.spacing
     anchors.centerIn: parent
-    implicitWidth: parent.width - 8
+    spacing: 8
+    width: parent.width
 
+    // Hover container that toggles the details menu.
+    MouseArea {
+      id: hoverArea
+      Layout.alignment: Qt.AlignHCenter
+      Layout.preferredWidth: parent.width
+      Layout.preferredHeight: statsCol.implicitHeight
+      hoverEnabled: true
+      cursorShape: Qt.PointingHandCursor
+      onClicked: {
+        if (resourcesmenu.visible) {
+          resourcesmenu.visible = false;
+          resourcesmenu.timer.running = false;
+        } else {
+          resourcesmenu.visible = true;
+        }
+      }
 
-    Repeater {
-      model: ResourcesService.stats
-      delegate: Item {
-        implicitWidth: parent.width
-        implicitHeight: ll.implicitHeight + 10
-        Layout.alignment: Qt.AlignHCenter
+      ColumnLayout {
+        id: statsCol
+        anchors.centerIn: parent
+        spacing: 10
 
-        ColumnLayout {
-          id: ll
-          spacing: 0
-          anchors.centerIn: parent
+        // ── CPU ─────────────────────────────────────────
+        StatCell {
+          label: "CPU"
+          percent: ResourcesService.cpu
+          fillColor: root._pctColor(ResourcesService.cpu)
+        }
 
-          StyledText {
-            color: root.textColor
-            Layout.alignment: Qt.AlignHCenter
-            font.pixelSize: Config.fontSize - 2
-            text: modelData.label.toUpperCase()
-          }
+        // ── RAM ─────────────────────────────────────────
+        StatCell {
+          label: "RAM"
+          percent: ResourcesService.ramPct
+          fillColor: root._pctColor(ResourcesService.ramPct)
+        }
 
-          StyledText {
-            color: root.textColor
-            text: modelData.value
-            font.pixelSize: Config.fontSize - 1
-            Layout.alignment: Qt.AlignHCenter
-          }
+        // ── TEMP ────────────────────────────────────────
+        StatCell {
+          label: ResourcesService.cpuTemp + "°C"
+          percent: Math.min(100, ResourcesService.cpuTemp)
+          icon: "󰔏"
+          fillColor: root._tempColor(ResourcesService.cpuTemp)
         }
       }
     }

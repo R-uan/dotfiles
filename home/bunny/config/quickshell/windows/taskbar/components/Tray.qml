@@ -13,48 +13,38 @@ Item {
   clip: true
   visible: items.count > 0
   implicitWidth: parent.width
-  implicitHeight: layout.height + 10
-  readonly property string accentColor: Config.darkMode ? ThemeDark.colour6 : ThemeLight.primary3
-
+  implicitHeight: layout.implicitHeight + 8
 
   ColumnLayout {
     id: layout
-    spacing: 5
+    spacing: 4
     anchors.centerIn: parent
-    implicitWidth: parent.width - 8
-
-    Background {
-      anchors.fill: parent
-      color: root.accentColor
-      visible: Config.darkMode === false
-    }
+    implicitWidth: parent.width
 
     Repeater {
       id: items
       model: SystemTray.items
-      delegate: MouseArea {
+      delegate: Item {
         id: trayItem
         Layout.alignment: Qt.AlignHCenter
-        implicitWidth: Config.fontSize * 1.09
-        implicitHeight: Config.fontSize * 1.09
-        acceptedButtons: Qt.LeftButton | Qt.RightButton
-        Layout.bottomMargin: 5
+        implicitWidth: 22
+        implicitHeight: 22
         required property SystemTrayItem modelData
 
-        onClicked: event => {
-          if (event.button === Qt.LeftButton) {
-            modelData.activate();
-          } else {
-            if (modelData.hasMenu) {
-              const pos = mapToItem(mainWindow.contentItem, 0, height + 10);
-              modelData.display(mainWindow, pos.x, pos.y);
-            }
-          }
+        Rectangle {
+          anchors.fill: parent
+          radius: 5
+          color: ma.containsMouse
+            ? (Config.darkMode ? Qt.rgba(1,1,1,0.10) : Qt.rgba(0,0,0,0.08))
+            : "transparent"
+          Behavior on color { ColorAnimation { duration: 110 } }
         }
 
         IconImage {
           asynchronous: true
-          anchors.fill: parent
+          anchors.centerIn: parent
+          width: 13
+          height: 13
           source: {
             let icon = trayItem.modelData.icon;
             if (icon.includes("?path=")) {
@@ -64,23 +54,27 @@ Item {
             return icon;
           }
         }
+
+        MouseArea {
+          id: ma
+          anchors.fill: parent
+          hoverEnabled: true
+          cursorShape: Qt.PointingHandCursor
+          acceptedButtons: Qt.LeftButton | Qt.RightButton
+          onClicked: event => {
+            if (event.button === Qt.LeftButton) {
+              trayItem.modelData.activate();
+            } else if (trayItem.modelData.hasMenu) {
+              const pos = mapToItem(mainWindow.contentItem, trayItem.width + 8, 0);
+              trayItem.modelData.display(mainWindow, pos.x, pos.y);
+            }
+          }
+        }
       }
     }
   }
 
-  Behavior on implicitWidth {
-    NumberAnimation {
-      duration: 1
-      easing.bezierCurve: 2
-      easing.type: Easing.BezierSpline
-    }
-  }
-
   Behavior on implicitHeight {
-    NumberAnimation {
-      duration: 1
-      easing.bezierCurve: 2
-      easing.type: Easing.BezierSpline
-    }
+    NumberAnimation { duration: 120; easing.type: Easing.OutCubic }
   }
 }

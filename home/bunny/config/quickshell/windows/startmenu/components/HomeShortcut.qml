@@ -98,6 +98,9 @@ Item {
         cursorShape: Qt.PointingHandCursor
         onClicked: root.openYazi(modelData.folder)
       }
+
+      scale: ma.pressed ? 0.96 : 1.0
+      Behavior on scale { NumberAnimation { duration: 90; easing.type: Easing.OutCubic } }
     }
   }
 }

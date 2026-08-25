@@ -1,0 +1,5 @@
+module qs.notificationcenter
+
+NotificationCenter 1.0 NotificationCenter.qml
+NotifCard 1.0 NotifCard.qml
+NotifActionButton 1.0 NotifActionButton.qml

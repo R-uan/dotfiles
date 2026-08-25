@@ -1,0 +1,5 @@
+module qs.bluetoothmenu
+
+BluetoothMenu 1.0 BluetoothMenu.qml
+BtRow 1.0 BtRow.qml
+BtPill 1.0 BtPill.qml

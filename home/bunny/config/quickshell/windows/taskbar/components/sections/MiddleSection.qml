@@ -9,19 +9,16 @@ import QtQuick.Layouts
 // Middle Section
 Item {
   id: root
-  width: layout.width
-  height: parent.height
+  implicitWidth: parent.width
+  implicitHeight: layout.implicitHeight
 
-  RowLayout {
+  ColumnLayout {
     id: layout
-    anchors.margins: 0
-    height: parent.height
+    width: parent.width
+    spacing: Config.spacing
 
     Workspaces {
-      Background {
-        z: -1
-        anchors.fill: parent
-      }
+      Layout.alignment: Qt.AlignHCenter
     }
   }
 }

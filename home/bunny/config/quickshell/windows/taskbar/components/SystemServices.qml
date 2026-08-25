@@ -9,14 +9,16 @@ import QtQuick.Layouts
 Item {
   id: root
   implicitWidth: parent.width
-  height: layout.implicitHeight + 10
+  height: layout.implicitHeight + 6
 
   ColumnLayout {
     id: layout
     anchors.centerIn: parent
-    spacing: Config.spacing + 5
+    spacing: 2
     implicitWidth: parent.width
 
     Network {}
+    BluetoothButton {}
+    NotificationButton {}
   }
 }

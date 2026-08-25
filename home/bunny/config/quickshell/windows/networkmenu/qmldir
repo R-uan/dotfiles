@@ -1,0 +1,5 @@
+module qs.networkmenu
+
+NetworkMenu 1.0 NetworkMenu.qml
+WifiRow 1.0 WifiRow.qml
+NetPill 1.0 NetPill.qml

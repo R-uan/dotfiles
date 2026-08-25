@@ -1,0 +1,4 @@
+module qs.resourcesmenu
+
+ResourcesMenu 1.0 ResourcesMenu.qml
+ResBar 1.0 ResBar.qml

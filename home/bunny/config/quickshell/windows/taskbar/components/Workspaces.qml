@@ -154,6 +154,7 @@ Item {
           id: hover
           hoverEnabled: true
           anchors.fill: parent
+          cursorShape: Qt.PointingHandCursor
           onClicked: function(mouse) {
             if (mouse.button === Qt.LeftButton) {
               const idx = model.workspaceId;

@@ -47,6 +47,15 @@ Scope {
           }
         }
 
+        MiddleSection {
+          id: middle
+          width: parent.width
+          anchors {
+            verticalCenter: parent.verticalCenter
+            horizontalCenter: parent.horizontalCenter
+          }
+        }
+
         RightSection {
           id: right
           width: parent.width

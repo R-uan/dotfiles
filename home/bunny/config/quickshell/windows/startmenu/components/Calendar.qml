@@ -26,6 +26,9 @@ Item {
 
   readonly property int cellH: 24
   readonly property int cellW: Math.floor((root.width - 24) / 7)
+  readonly property color colWeekend: Config.darkMode ? ThemeDark.warning : ThemeLight.warning
+  readonly property bool viewingCurrent: displayMonth === today.getMonth() &&
+                                         displayYear === today.getFullYear()
 
   function daysInMonth(year, month) {
     return new Date(year, month + 1, 0).getDate();
@@ -52,11 +55,23 @@ Item {
     }
   }
 
+  function goToday() {
+    displayYear = today.getFullYear();
+    displayMonth = today.getMonth();
+  }
+
   Timer {
     interval: 60000
     running: true
     repeat: true
     onTriggered: today = new Date()
+  }
+
+  WheelHandler {
+    onWheel: (event) => {
+      if (event.angleDelta.y > 0)      root.prevMonth();
+      else if (event.angleDelta.y < 0) root.nextMonth();
+    }
   }
 
   ColumnLayout {
@@ -95,17 +110,39 @@ Item {
           id: prevHover
           anchors.fill: parent
           hoverEnabled: true
+          cursorShape: Qt.PointingHandCursor
           onClicked: root.prevMonth()
         }
       }
 
-      StyledText {
+      Item {
         Layout.fillWidth: true
-        horizontalAlignment: Text.AlignHCenter
-        text: root.monthNames[root.displayMonth] + "  " + root.displayYear
-        color: root.colForeground0
-        font.pixelSize: Config.fontSize
-        font.weight: Font.Medium
+        implicitHeight: 24
+
+        StyledText {
+          anchors.centerIn: parent
+          text: root.monthNames[root.displayMonth] + "  " + root.displayYear
+          color: root.colForeground0
+          font.pixelSize: Config.fontSize
+          font.weight: Font.Medium
+        }
+
+        MouseArea {
+          anchors.fill: parent
+          hoverEnabled: !root.viewingCurrent
+          enabled: !root.viewingCurrent
+          cursorShape: Qt.PointingHandCursor
+          onClicked: root.goToday()
+
+          Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width * 0.55
+            height: 1
+            color: root.colPrimary3
+            visible: !root.viewingCurrent && parent.containsMouse
+          }
+        }
       }
 
       Rectangle {
@@ -135,6 +172,7 @@ Item {
           id: nextHover
           anchors.fill: parent
           hoverEnabled: true
+          cursorShape: Qt.PointingHandCursor
           onClicked: root.nextMonth()
         }
       }
@@ -151,7 +189,8 @@ Item {
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter
           text: modelData
-          color: root.colPrimary3
+          color: (index === 0 || index === 6) ? root.colWeekend : root.colPrimary3
+          opacity: (index === 0 || index === 6) ? 0.6 : 1.0
           font.pixelSize: Config.fontSize - 3
           font.weight: Font.Medium
         }
@@ -178,6 +217,8 @@ Item {
                                                                            root.displayMonth)
           property bool isToday: inMonth && dayNum === root.today.getDate() && root.displayMonth
                                  === root.today.getMonth() && root.displayYear === root.today.getFullYear()
+          readonly property int colIdx: index % 7
+          readonly property bool isWeekend: colIdx === 0 || colIdx === 6
 
           width: root.cellW
           height: root.cellH
@@ -200,9 +241,14 @@ Item {
             anchors.centerIn: parent
             text: dayCell.inMonth ? dayCell.dayNum : ""
             font.pixelSize: Config.fontSize - 2
-            color: dayCell.isToday ? root.colText : dayCell.inMonth ? (cellHover.containsMouse
-                                                                       ? root.colForeground0 :
-                                                                         root.colPrimary3) : "transparent"
+            color: {
+              if (!dayCell.inMonth) return "transparent";
+              if (dayCell.isToday) return root.colText;
+              if (cellHover.containsMouse) return root.colForeground0;
+              if (dayCell.isWeekend) return root.colWeekend;
+              return root.colPrimary3;
+            }
+            opacity: (!dayCell.isToday && dayCell.isWeekend && !cellHover.containsMouse) ? 0.55 : 1.0
             Behavior on color {
               ColorAnimation {
                 duration: 100

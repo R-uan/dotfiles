@@ -17,30 +17,15 @@ Item {
     implicitWidth: parent.width
     spacing: Config.spacing * 1.50
 
-    // Debug {}
     Tray {}
 
-    // Debug {}
-    Resources {}
-
-    // Debug {}
     SystemServices {}
 
-    // Debug {}
     YepClock {}
 
-    Item {
+    PowerButton {
       Layout.topMargin: -5
       Layout.bottomMargin: 10
-      implicitWidth: parent.width
-      implicitHeight: pb.height
-
-      StyledText {
-        id: pb
-        font.pixelSize: 20
-        anchors.centerIn: parent
-        text: "󰐥"
-      }
     }
   }
 }

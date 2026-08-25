@@ -11,7 +11,7 @@ import QtQuick.Layouts
 PanelWindow {
   id: quickMenu
   visible: false
-  implicitWidth: 420
+  implicitWidth: 480
   color: "transparent"
   objectName: "Start Menu"
   height: mainLayout.implicitHeight
@@ -123,6 +123,24 @@ PanelWindow {
       color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
     }
 
+    // ── Storage ──────────────────────────────────────────────────────────
+    Storage {
+      Layout.topMargin: 8
+      Layout.leftMargin: 14
+      Layout.rightMargin: 14
+      Layout.fillWidth: true
+    }
+
+    // ── Divider ──────────────────────────────────────────────────────────
+    Rectangle {
+      Layout.fillWidth: true
+      Layout.leftMargin: 14
+      Layout.rightMargin: 14
+      Layout.topMargin: 8
+      height: 1
+      color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
+    }
+
     // ── Media player ─────────────────────────────────────────────────────
     MediaPlayer {
       Layout.topMargin: 8
@@ -142,24 +160,32 @@ PanelWindow {
       color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
     }
 
-    // ── Calendar + Weather ───────────────────────────────────────────────
-    RowLayout {
-      spacing: 10
+    // ── Calendar ─────────────────────────────────────────────────────────
+    Calendar {
       Layout.topMargin: 10
       Layout.leftMargin: 12
       Layout.rightMargin: 12
-      Layout.bottomMargin: 14
       Layout.fillWidth: true
+      Layout.preferredHeight: 280
+    }
 
-      Calendar {
-        Layout.fillWidth: true
-        Layout.preferredHeight: 280
-      }
+    // ── Divider ──────────────────────────────────────────────────────────
+    Rectangle {
+      Layout.fillWidth: true
+      Layout.leftMargin: 14
+      Layout.rightMargin: 14
+      Layout.topMargin: 8
+      height: 1
+      color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
+    }
 
-      Weather {
-        Layout.preferredWidth: 105
-        Layout.preferredHeight: 280
-      }
+    // ── App shortcuts ────────────────────────────────────────────────────
+    AppLauncher {
+      Layout.topMargin: 6
+      Layout.bottomMargin: 12
+      Layout.leftMargin: 12
+      Layout.rightMargin: 12
+      Layout.fillWidth: true
     }
   }
 

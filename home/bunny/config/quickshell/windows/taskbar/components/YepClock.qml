@@ -7,52 +7,88 @@ import QtQuick.Layouts
 Item {
   id: root
   width: parent.width
-  height: layout.implicitHeight + 10
+  height: pill.implicitHeight + 8
 
   SystemClock {
     id: sysclock
-    precision: SystemClock.Seconds
+    precision: SystemClock.Minutes
   }
 
-  readonly property string accentColor: Config.darkMode ? ThemeDark.colour6 : ThemeLight.primary3
-  readonly property string textColor: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.background0
-
-  Item {
-    width: parent.width
-    height: parent.height
+  Rectangle {
+    id: pill
+    anchors.centerIn: parent
+    width: parent.width - 8
+    implicitHeight: innerLayout.implicitHeight + 14
+    radius: 12
+    color: mouseArea.containsMouse
+      ? (Config.darkMode ? Qt.rgba(1, 1, 1, 0.12) : Qt.rgba(0, 0, 0, 0.10))
+      : (Config.darkMode ? Qt.rgba(1, 1, 1, 0.04) : Qt.rgba(0, 0, 0, 0.04))
+    border.color: mouseArea.containsMouse
+      ? (Config.darkMode ? Qt.rgba(1, 1, 1, 0.15) : Qt.rgba(0, 0, 0, 0.15))
+      : (Config.darkMode ? Qt.rgba(1, 1, 1, 0.06) : Qt.rgba(0, 0, 0, 0.06))
+    border.width: 1
+    Behavior on color { ColorAnimation { duration: 120 } }
 
     ColumnLayout {
-      id: layout
-      spacing: Config.spacing
+      id: innerLayout
       anchors.centerIn: parent
-      width: parent.width - 10
+      spacing: -2
 
-      Background {
-        radius: 36
-        Layout.fillWidth: true
-        color: Config.darkMode ? ThemeDark.background2 : ThemeLight.background2
-        implicitHeight: innerLayout.implicitHeight + 20
+      StyledText {
+        Layout.alignment: Qt.AlignHCenter
+        text: Qt.formatDateTime(sysclock.date, "hh")
+        font.pixelSize: Config.fontSize + 4
+        font.weight: Font.Medium
+        color: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
+      }
 
-        ColumnLayout {
-          id: innerLayout
-          width: parent.width
-          anchors.centerIn: parent
+      StyledText {
+        Layout.alignment: Qt.AlignHCenter
+        text: Qt.formatDateTime(sysclock.date, "mm")
+        font.pixelSize: Config.fontSize + 4
+        font.weight: Font.Medium
+        color: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
+      }
 
-          StyledText {
-            color: root.textColor
-            Layout.bottomMargin: -10
-            Layout.alignment: Qt.AlignHCenter
-            font.pixelSize: Config.fontSize + 5
-            text: Qt.formatDateTime(sysclock.date, "hh")
-          }
+      Rectangle {
+        Layout.topMargin: 4
+        Layout.alignment: Qt.AlignHCenter
+        width: 14
+        height: 1
+        color: Config.darkMode ? Qt.rgba(1, 1, 1, 0.15) : Qt.rgba(0, 0, 0, 0.15)
+      }
 
-          StyledText {
-            color: root.textColor
-            Layout.alignment: Qt.AlignHCenter
-            font.pixelSize: Config.fontSize + 5
-            text: Qt.formatDateTime(sysclock.date, "mm")
-          }
-        }
+      StyledText {
+        Layout.topMargin: 2
+        Layout.alignment: Qt.AlignHCenter
+        text: Qt.formatDateTime(sysclock.date, "ddd").toUpperCase()
+        font.pixelSize: Config.fontSize - 2
+        font.letterSpacing: 1.2
+        color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+      }
+
+      StyledText {
+        Layout.alignment: Qt.AlignHCenter
+        text: Qt.formatDateTime(sysclock.date, "dd")
+        font.pixelSize: Config.fontSize
+        font.weight: Font.Medium
+        color: Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1
+      }
+    }
+  }
+
+  MouseArea {
+    id: mouseArea
+    anchors.fill: parent
+    hoverEnabled: true
+    propagateComposedEvents: true
+    cursorShape: Qt.PointingHandCursor
+    onClicked: {
+      if (startmenu.visible) {
+        startmenu.visible = false;
+        startmenu.timer.running = false;
+      } else {
+        startmenu.visible = true;
       }
     }
   }

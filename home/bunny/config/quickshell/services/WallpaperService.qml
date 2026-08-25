@@ -1,4 +1,4 @@
-// WeatherService.qml
+// WallpaperService.qml
 pragma Singleton
 import QtQuick
 import Quickshell
@@ -8,6 +8,8 @@ Singleton {
   id: root
 
   property string wallpaperPath: ""
+
+  function refresh() { fetcher.running = true; }
 
   Process {
     id: fetcher
@@ -24,7 +26,6 @@ Singleton {
     }
   }
 
-  // — Refresh every minute —
   Timer {
     repeat: true
     running: true
