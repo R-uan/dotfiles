@@ -9,7 +9,7 @@ import QtQuick.Layouts
 Item {
   id: root
   implicitWidth: parent.width
-  height: layout.implicitHeight + 6
+  implicitHeight: layout.implicitHeight + 6
 
   ColumnLayout {
     id: layout
@@ -17,6 +17,7 @@ Item {
     spacing: 2
     implicitWidth: parent.width
 
+    AudioButton {}
     Network {}
     BluetoothButton {}
     NotificationButton {}

@@ -12,18 +12,18 @@ PanelWindow {
   implicitWidth: 340
   color: "transparent"
   objectName: "Bluetooth Menu"
-  height: mainLayout.implicitHeight + 28
+  implicitHeight: mainLayout.implicitHeight + 28
   exclusionMode: ExclusionMode.Normal
 
   anchors {
-    top: true
+    bottom: true
     left: true
     right: false
-    bottom: false
+    top: false
   }
 
   margins {
-    top: 6
+    bottom: 6
     left: 6
   }
 

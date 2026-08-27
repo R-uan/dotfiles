@@ -1,0 +1,5 @@
+module qs.audiomenu
+
+AudioMenu 1.0 AudioMenu.qml
+VolumeSlider 1.0 VolumeSlider.qml
+AudioDeviceRow 1.0 AudioDeviceRow.qml

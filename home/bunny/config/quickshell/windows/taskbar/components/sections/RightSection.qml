@@ -19,9 +19,9 @@ Item {
 
     Tray {}
 
+    Resources {}
+    
     SystemServices {}
-
-    YepClock {}
 
     PowerButton {
       Layout.topMargin: -5

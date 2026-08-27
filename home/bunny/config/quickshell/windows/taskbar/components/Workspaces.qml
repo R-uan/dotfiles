@@ -6,14 +6,17 @@ import Quickshell.Hyprland
 
 Item {
   id: root
-  width: parent.width
-  height: layout.implicitHeight + 10
+  // Must be implicit: this sits inside a ColumnLayout, and an explicit height
+  // leaves the layout stuck at whatever it first measured while the Column
+  // keeps growing. Dots spilling past the section's bounds render but stop
+  // receiving pointer events, so anything past the 6th became unclickable.
+  implicitWidth: parent ? parent.width : 0
+  implicitHeight: layout.implicitHeight + 10
   ListModel {
     id: workspaceModel
   }
 
   Component.onCompleted: {
-    Hyprland.usingLua = true;
     updateWorkspaceModel();
   }
 

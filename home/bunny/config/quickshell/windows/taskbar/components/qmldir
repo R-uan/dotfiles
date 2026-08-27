@@ -16,3 +16,4 @@ PowerButton 1.0 PowerButton.qml
 NotificationButton 1.0 NotificationButton.qml
 StatCell 1.0 StatCell.qml
 BluetoothButton 1.0 BluetoothButton.qml
+AudioButton 1.0 AudioButton.qml

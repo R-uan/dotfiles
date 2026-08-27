@@ -22,7 +22,8 @@ Item {
       Layout.topMargin: 10
     }
 
-    Resources {
+    Workspaces {
+      Layout.alignment: Qt.AlignHCenter
       Layout.topMargin: 6
     }
   }

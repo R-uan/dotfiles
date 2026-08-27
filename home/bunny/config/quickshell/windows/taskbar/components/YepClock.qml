@@ -6,8 +6,8 @@ import QtQuick.Layouts
 
 Item {
   id: root
-  width: parent.width
-  height: pill.implicitHeight + 8
+  implicitWidth: parent ? parent.width : 0
+  implicitHeight: pill.implicitHeight + 8
 
   SystemClock {
     id: sysclock

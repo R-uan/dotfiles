@@ -17,7 +17,7 @@ Item {
     width: parent.width
     spacing: Config.spacing
 
-    Workspaces {
+    YepClock {
       Layout.alignment: Qt.AlignHCenter
     }
   }

@@ -40,6 +40,8 @@ Item {
           resourcesmenu.visible = false;
           resourcesmenu.timer.running = false;
         } else {
+          // Line the card up with this button, in screen coordinates.
+          resourcesmenu.anchorCenterY = root.mapToItem(null, 0, root.height / 2).y;
           resourcesmenu.visible = true;
         }
       }

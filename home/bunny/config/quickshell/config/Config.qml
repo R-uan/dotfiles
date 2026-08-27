@@ -9,6 +9,10 @@ Singleton {
   property string assetsDir: Quickshell.shellPath("assets")
   property string scriptsDir: Quickshell.shellPath("scripts")
 
+  // Programs
+  // Prefix used to run desktop entries that declare Terminal=true.
+  property var terminalCommand: ["kitty", "-e"]
+
   // General Configs
   property real backgroundOpacity: 1 
   property bool darkMode: true
