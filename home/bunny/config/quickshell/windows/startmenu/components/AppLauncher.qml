@@ -3,7 +3,7 @@ import qs.config
 
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io
+import Quickshell
 
 Item {
   id: root
@@ -20,12 +20,14 @@ Item {
     { name: "All apps",    icon: "", launcher: true }
   ]
 
+  // Must be detached. A Quickshell Process is a child of quickshell and gets
+  // killed when quickshell exits or reloads its config. Apps that fork and
+  // detach on their own (zen, code, vesktop) survive that regardless, but
+  // Steam's NixOS wrapper execs into bwrap and stays in the foreground for the
+  // whole session, so it died with the Process object instead of ever opening.
+  // Launcher.qml already launches this way.
   function launch(cmd) {
-    Qt.createQmlObject(
-      'import Quickshell.Io; Process { running: true; command: ' +
-      JSON.stringify(cmd) + ' }',
-      root
-    );
+    Quickshell.execDetached(cmd);
   }
 
   RowLayout {

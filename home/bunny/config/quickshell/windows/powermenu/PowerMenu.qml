@@ -4,7 +4,6 @@ import qs.services
 
 import QtQuick
 import Quickshell
-import Quickshell.Io
 import QtQuick.Layouts
 
 PanelWindow {
@@ -36,12 +35,11 @@ PanelWindow {
   // Which action is armed for confirmation ("", "poweroff", "reboot", "lock")
   property string armed: ""
 
+  // Detached: a Quickshell Process is killed when quickshell exits or reloads
+  // its config. That would tear down hyprlock along with it and drop the
+  // session straight back to an unlocked desktop.
   function runCommand(cmd) {
-    Qt.createQmlObject(
-      'import Quickshell.Io; Process { running: true; command: ' +
-      JSON.stringify(cmd) + ' }',
-      powerMenu
-    );
+    Quickshell.execDetached(cmd);
   }
 
   function trigger(action) {

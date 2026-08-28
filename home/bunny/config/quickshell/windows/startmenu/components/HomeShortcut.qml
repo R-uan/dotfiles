@@ -3,20 +3,21 @@ import qs.shared
 
 import QtQuick
 import QtQuick.Layouts
-import Quickshell.Io
+import Quickshell
 
 Item {
   id: root
   implicitHeight: grid.implicitHeight + 20
 
+  // Detached: a Quickshell Process is killed when quickshell exits or reloads
+  // its config, and openfilemanager.sh holds kitty in the foreground, so the
+  // file manager window went with it. Passing the path as an argument also
+  // avoids interpolating it into QML source.
   function openYazi(folder) {
-    Qt.createQmlObject(`
-      import Quickshell.Io
-      Process {
-        running: true
-        command: ["${Config.scriptsDir}/openfilemanager.sh", "${Config.homeShortcutDir}/${folder}"]
-      }
-    `, root)
+    Quickshell.execDetached([
+      Config.scriptsDir + "/openfilemanager.sh",
+      Config.homeShortcutDir + "/" + folder
+    ]);
   }
 
   readonly property var dirs: [

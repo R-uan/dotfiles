@@ -18,7 +18,8 @@
         "finance.local"
 
         "painelteste.sitemidas"
-
+        "www.site2504.sitemidas"
+        "site2504.sitemidas"
         "site26-teste.sitemidas"
         "www.site26-teste.sitemidas"
         "www.novo2504.sitemidas"
