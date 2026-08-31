@@ -68,6 +68,7 @@
     # System Utilities
     awww            # Wallpaper Daemon for Wayland
     mako            # Notification
+    vicinae         # App Launcher 
     rofi            # App Launcher
     dxvk            # Not sure what this is
     libnotify       # Notifications Manager ?

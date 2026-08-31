@@ -9,8 +9,8 @@ hl.bind("Print", hl.dsp.exec_cmd "hyprshot -m window --clipboard-only", { locked
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(globals.fileManager))
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(globals.terminal))
 -- hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(globals.appLauncher))
-hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("qs -p ~/.config/quickshell ipc call launcher toggle"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(globals.appLauncher2))
+-- hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("qs -p ~/.config/quickshell ipc call launcher toggle"))
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(globals.appLauncher2))
 
 -- Window management
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
