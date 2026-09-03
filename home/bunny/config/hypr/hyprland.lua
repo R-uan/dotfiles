@@ -15,8 +15,8 @@ hl.on("hyprland.start", function()
   hl.exec_cmd "fcitx5 -d"
   hl.exec_cmd "otd-daemon"
   hl.exec_cmd "awww-daemon"
-  hl.exec_cmd "vicinae server"
   hl.exec_cmd "quickshell -p ~/.config/quickshell"
+  hl.exec_cmd "setxkbmap -layout br -variant nodeadkeys"
   hl.exec_cmd "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
 end)
 

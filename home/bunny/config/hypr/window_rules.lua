@@ -25,3 +25,12 @@ hl.window_rule {
   },
   no_focus = true,
 }
+
+-- Rofi is a layer surface, not a window: blur what shows through its
+-- translucent background (themes/theme.rasi uses #151515e6).
+hl.layer_rule {
+  name         = "rofi-blur",
+  match        = { namespace = "^(rofi)$" },
+  blur         = true,
+  ignore_alpha = 0.2,
+}

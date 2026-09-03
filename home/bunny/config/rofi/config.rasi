@@ -1,19 +1,55 @@
-/* Rofi config file */
+/* ─────────────────────────────────────────────────────────
+   Rofi behaviour — the look lives in themes/theme.rasi
+   ───────────────────────────────────────────────────────── */
 configuration {
-    font:               "Iosevka 14";
-    show-icons:         true;
-    display-drun:       "";
-    display-run:        "";
-    display-window:     "";
-    display-ssh:        "";
-    display-filebrowser:" ";
-    drun-display-format:"{name}";
-    hide-scrollbar:     false;
-    click-to-exit:      true;
-    show-match:         true;
-    matching:           "fuzzy";
-    sort:               true;
-    sorting-method:     "fzf";
+    /* Modes reachable with Ctrl+Tab / Shift+Right.
+       The tab bar is hidden by the theme; switching is keyboard-only. */
+    modes:                  "drun,run,window";
+    font:                   "Iosevka 14";
+
+    /* Icons — needs an icon theme installed, otherwise most
+       app entries render a blank square. */
+    show-icons:             true;
+    icon-theme:             "Papirus-Dark";
+
+    /* Prompt shown in the input bar */
+    display-drun:           " ";
+    display-run:            " ";
+    display-window:         " ";
+    display-filebrowser:    " ";
+    display-ssh:            " ";
+
+    /* Two-line rows: name on top, description underneath.
+       Pango markup is allowed here. {comment} only resolves if
+       "comment" is also listed in drun-match-fields, below. */
+    drun-display-format:    "{name}\n<span size='small' alpha='60%'>[{comment}]</span>";
+    drun-match-fields:      "name,generic,exec,categories,keywords,comment";
+
+    /* window mode: class then title, workspace is noise here */
+    window-format:          "{c}\n<span size='small' alpha='60%'>{t}</span>";
+
+    /* Used by run mode (Shift+Return) and ssh mode.
+       Default is rofi-sensible-terminal, which isn't installed. */
+    terminal:               "kitty";
+
+    /* Matching */
+    matching:               "fuzzy";
+    show-match:             true;
+    sort:                   true;
+    sorting-method:         "fzf";
+
+    /* Rows are two lines tall (name + description) */
+    eh:                     2;
+
+    hide-scrollbar:         true;
+    click-to-exit:          true;
+
+    /* Vim-style row navigation. Ctrl+j/k are taken by
+       accept-entry / remove-to-eol by default, so free them first. */
+    kb-accept-entry:        "Control+m,Return,KP_Enter";
+    kb-remove-to-eol:       "";
+    kb-row-down:            "Down,Control+j,Control+n";
+    kb-row-up:              "Up,Control+k,Control+p";
 }
 
 @theme "theme"

@@ -66,21 +66,22 @@
     lazydocker  # Docker Terminal User Interface
 
     # System Utilities
-    awww            # Wallpaper Daemon for Wayland
-    mako            # Notification
-    vicinae         # App Launcher 
-    rofi            # App Launcher
-    dxvk            # Not sure what this is
-    libnotify       # Notifications Manager ?
-    hyprshot        # Screenshots
-    pavucontrol     # PulseAudio Control User Interface
-    cloudflare-warp # Cloudflare VPN (Not really a VPN, used to get better routes for FFXIV)
+    awww                # Wallpaper Daemon for Wayland
+    mako                # Notification
+    vicinae             # App Launcher
+    rofi                # App Launcher
+    papirus-icon-theme  # Icon theme (rofi/GTK app icons)
+    dxvk                # Not sure what this is
+    libnotify           # Notifications Manager ?
+    hyprshot            # Screenshots
+    pavucontrol         # PulseAudio Control User Interface
+    cloudflare-warp     # Cloudflare VPN (Not really a VPN, used to get better routes for FFXIV)
     (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
       withX11 = false;
       withWayland = true;
       withPipewire = true;
       withHyprland = true;
-    })              # Desktop Widgets
+    })                  # Desktop Widgets
 
     # Gaming Related Packages
     mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU

@@ -25,6 +25,10 @@
     shade6:          #a6a6a6;
     shade7:          #c4c4c4;
 
+    /* Translucent variants - hyprland blurs behind these (see hypr/window_rules.lua) */
+    background0-alpha: #151515e6;
+    background1-alpha: #1c1c1cbf;
+
     background:      @background0;
     selected:        @primary;
     selected-bg:     @background2;

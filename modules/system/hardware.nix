@@ -44,6 +44,16 @@
       KEYBOARD_KEY_70056=kpminus
   '';
 
+  services.keyd = {
+    enable = true;
+    keyboards.arm_mouse_kp = {
+      ids = ["36b7:fd13"];
+      settings = {
+        main = {}; # sem remaps — só queremos que o keyd absorva e unifique o device
+      };
+    };
+  };
+
   services.udev.extraRules = ''
     KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
   '';

@@ -3,7 +3,7 @@ local M      = {}
 M.programs   = {
   terminal     = "kitty",
   fileManager  = "dolphin",
-  appLauncher  = "rofi -show run",
+  appLauncher  = "rofi -show drun",
   appLauncher2 = "vicinae toggle",
 }
 
