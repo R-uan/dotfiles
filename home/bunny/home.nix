@@ -39,7 +39,6 @@
     nodejs
     phpactor    # PHP Language Server
     dbeaver-bin # Database Manager
-
     ## Code Editors
     zed-editor
     vscode-fhs
@@ -47,6 +46,7 @@
     # Command Line Interface Tools
 
     fd        # Find replacement
+    mtr       # Internet Test
     fzf       # Fuzzy Finder
     zoxide    # Smarter CD
     eza       # Smarter LS
@@ -82,7 +82,6 @@
       withPipewire = true;
       withHyprland = true;
     })                  # Desktop Widgets
-
     # Gaming Related Packages
     mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU
     winetricks  # Essential Extension for Wine
@@ -92,12 +91,16 @@
     })          # Windows Compatibility Layer
 
     chromium
+    obs-studio
     thunderbird
     inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     vlc     # Media Player
+    dorion  # Tiny discord client alternative
     spotify # It's spotify
     vesktop # Alternative Discord Client
+    telegram-desktop
+    proton-vpn
     # Fonts
     iosevka
     noto-fonts-cjk-serif # I think this is for chinese characters

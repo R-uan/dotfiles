@@ -4,6 +4,7 @@ import qs.services
 
 import QtQuick
 import Quickshell
+import QtQuick.Controls
 import QtQuick.Layouts
 
 PanelWindow {
@@ -14,6 +15,9 @@ PanelWindow {
   objectName: "Notification Center"
   implicitHeight: mainLayout.implicitHeight + 28
   exclusionMode: ExclusionMode.Normal
+
+  // Never grow past ~60% of the screen; the list scrolls beyond that
+  readonly property int maxListHeight: Math.max(200, Math.round((screen ? screen.height : 1000) * 0.6))
 
   anchors {
     bottom: true
@@ -34,7 +38,10 @@ PanelWindow {
   property alias timer: timer
 
   onVisibleChanged: {
-    if (visible) NotificationService.refresh();
+    if (visible) {
+      NotificationService.refresh();
+      listFlick.contentY = 0;
+    }
   }
 
   Timer {
@@ -94,80 +101,120 @@ PanelWindow {
       color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
     }
 
-    // Empty state
-    StyledText {
+    // ── Scrollable list ────────────────────────────────────────────
+    Item {
       Layout.fillWidth: true
-      Layout.topMargin: 20
-      Layout.bottomMargin: 20
-      horizontalAlignment: Text.AlignHCenter
-      visible: NotificationService.activeCount === 0 && NotificationService.historyCount === 0
-      text: "All caught up."
-      font.pixelSize: Config.fontSize - 1
-      color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
-    }
+      Layout.preferredHeight: Math.min(notifCenter.maxListHeight, listCol.implicitHeight)
+      clip: true
 
-    // ── Active section ─────────────────────────────────────────────
-    ColumnLayout {
-      Layout.fillWidth: true
-      spacing: 6
-      visible: NotificationService.activeCount > 0
+      Flickable {
+        id: listFlick
+        anchors.fill: parent
+        contentHeight: listCol.implicitHeight
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
 
-      RowLayout {
-        Layout.fillWidth: true
-        StyledText {
-          text: "ACTIVE"
-          font.pixelSize: Config.fontSize - 4
-          font.letterSpacing: 1.6
-          color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+        ScrollBar.vertical: ScrollBar {
+          id: listScrollBar
+          policy: ScrollBar.AsNeeded
+          interactive: true
+          width: 6
+
+          contentItem: Rectangle {
+            radius: 3
+            color: listScrollBar.pressed
+                 ? (Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1)
+                 : (Config.darkMode ? Qt.rgba(1,1,1,0.25) : Qt.rgba(0,0,0,0.25))
+            Behavior on color { ColorAnimation { duration: 120 } }
+          }
+          background: Rectangle {
+            radius: 3
+            color: Config.darkMode ? Qt.rgba(1,1,1,0.05) : Qt.rgba(0,0,0,0.05)
+          }
         }
-        Item { Layout.fillWidth: true }
-        NotifActionButton {
-          label: "Dismiss all"
-          onClicked: NotificationService.dismissAll()
-        }
-      }
 
-      Repeater {
-        model: NotificationService.active
-        delegate: NotifCard {
-          Layout.fillWidth: true
-          notif: modelData
-          isActive: true
-          onDismiss: NotificationService.dismiss(modelData.id)
-        }
-      }
-    }
+        ColumnLayout {
+          id: listCol
+          width: listFlick.width
+          spacing: 10
 
-    // ── History section ────────────────────────────────────────────
-    ColumnLayout {
-      Layout.fillWidth: true
-      spacing: 6
-      visible: NotificationService.historyCount > 0
+          // Empty state
+          StyledText {
+            Layout.fillWidth: true
+            Layout.topMargin: 20
+            Layout.bottomMargin: 20
+            horizontalAlignment: Text.AlignHCenter
+            visible: NotificationService.activeCount === 0 && NotificationService.historyCount === 0
+            text: "All caught up."
+            font.pixelSize: Config.fontSize - 1
+            color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+          }
 
-      RowLayout {
-        Layout.fillWidth: true
-        Layout.topMargin: NotificationService.activeCount > 0 ? 6 : 0
+          // ── Active section ─────────────────────────────────────────
+          ColumnLayout {
+            Layout.fillWidth: true
+            spacing: 6
+            visible: NotificationService.activeCount > 0
 
-        StyledText {
-          text: "HISTORY"
-          font.pixelSize: Config.fontSize - 4
-          font.letterSpacing: 1.6
-          color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
-        }
-        Item { Layout.fillWidth: true }
-        NotifActionButton {
-          label: "Clear"
-          onClicked: NotificationService.clearHistory()
-        }
-      }
+            RowLayout {
+              Layout.fillWidth: true
+              StyledText {
+                text: "ACTIVE"
+                font.pixelSize: Config.fontSize - 4
+                font.letterSpacing: 1.6
+                color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+              }
+              Item { Layout.fillWidth: true }
+              NotifActionButton {
+                label: "Dismiss all"
+                onClicked: NotificationService.dismissAll()
+              }
+            }
 
-      Repeater {
-        // cap to 25 to keep the panel bounded
-        model: NotificationService.history.slice(0, 25)
-        delegate: NotifCard {
-          Layout.fillWidth: true
-          notif: modelData
-          isActive: false
+            Repeater {
+              model: NotificationService.active
+              delegate: NotifCard {
+                Layout.fillWidth: true
+                notif: modelData
+                isActive: true
+                onDismiss: NotificationService.dismiss(modelData.id)
+              }
+            }
+          }
+
+          // ── History section ────────────────────────────────────────
+          ColumnLayout {
+            Layout.fillWidth: true
+            spacing: 6
+            visible: NotificationService.historyCount > 0
+
+            RowLayout {
+              Layout.fillWidth: true
+              Layout.topMargin: NotificationService.activeCount > 0 ? 6 : 0
+
+              StyledText {
+                text: "HISTORY"
+                font.pixelSize: Config.fontSize - 4
+                font.letterSpacing: 1.6
+                color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+              }
+              Item { Layout.fillWidth: true }
+              NotifActionButton {
+                label: "Clear"
+                onClicked: NotificationService.clearHistory()
+              }
+            }
+
+            Repeater {
+              // cap to 25 to keep the panel bounded
+              model: NotificationService.history.slice(0, 25)
+              delegate: NotifCard {
+                Layout.fillWidth: true
+                notif: modelData
+                isActive: false
+              }
+            }
+          }
         }
       }
     }

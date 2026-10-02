@@ -16,7 +16,8 @@
     hosts = {
       "127.0.0.1" = [
         "finance.local"
-
+        "www.mostruario.sitemidas"
+        "mostruario.sitemidas"
         "painelteste.sitemidas"
         "www.site2504.sitemidas"
         "site2504.sitemidas"
