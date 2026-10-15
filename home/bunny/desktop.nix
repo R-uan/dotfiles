@@ -4,11 +4,12 @@
   ...
 }: {
   imports = [
-    ./programs/default.nix
+    ./common.nix
+    ./programs/rofi.nix
+    ./programs/kitty.nix
+    ./programs/hyprlock.nix
+    ./programs/hypridle.nix
   ];
-
-  home.username = "bunny";
-  home.homeDirectory = "/home/bunny";
 
   home.pointerCursor = {
     size = 24;
@@ -43,27 +44,8 @@
     zed-editor
     vscode-fhs
 
-    # Command Line Interface Tools
-
-    fd        # Find replacement
-    mtr       # Internet Test
-    fzf       # Fuzzy Finder
-    zoxide    # Smarter CD
-    eza       # Smarter LS
-    zip       # Zipper
-    unar      # Unziper
-    gawk      # Text Processing Language
-    btop      # Task Manager
-    procps    # For Top
-    gnused    # Text Surgery
-    gnugrep   # GREP
-    ripgrep   # Text Search Tool
-    inetutils # Net Utils
-
     # Terminal User Interface
-    yazi        # File Manager
     bluetuith   # Bluetooth Terminal User Interface
-    lazydocker  # Docker Terminal User Interface
 
     # System Utilities
     awww                # Wallpaper Daemon for Wayland
@@ -111,28 +93,15 @@
   ];
 
   home.sessionVariables = {
-    EDITOR = "nvim";
     HDD = "/mnt/hdd";
     CODE = "/mnt/hdd/home/code";
-    DOTFILES = "/home/bunny/dotfiles/";
   };
 
-  xdg.configFile = {
-    nvim = {
-      source = ./config/nvim;
-      recursive = true;
-    };
-    hypr = {
-      source = ./config/hypr;
-      recursive = true;
-    };
+  xdg.configFile.hypr = {
+    source = ./config/hypr;
+    recursive = true;
   };
 
-  home.file.".config/btop".source = ./config/btop;
   home.file.".config/mako".source = ./config/mako;
-  home.file.".config/yazi".source = ./config/yazi;
   home.file.".config/quickshell".source = ./config/quickshell;
-
-  # Don't change this unless you're rebuilding the system cleanly
-  home.stateVersion = "25.05";
 }

@@ -1,18 +1,6 @@
 {pkgs, ...}: {
-  services.resolved.enable = true;
-
+  # Sites locais de desenvolvimento
   networking = {
-    hostName = "ruan-nixos";
-    networkmanager = {
-      enable = true;
-    };
-    resolvconf.useLocalResolver = false;
-
-    nameservers = [
-      "1.1.1.1"
-      "8.8.8.8"
-    ];
-
     hosts = {
       "127.0.0.1" = [
         "finance.local"
@@ -87,6 +75,19 @@
       ];
     };
   };
+
+  # Resolve <host>.local na rede (encontra o servidor sem IP fixo)
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+  };
+
+  # `ssh server` conecta no notebook home-server
+  programs.ssh.extraConfig = ''
+    Host server
+      HostName bunny-home-server.local
+      User bunny
+  '';
 
   # Cloudflare Warp (For FFXIV Better Routing)
   systemd.services.warp-svc = {

@@ -15,7 +15,7 @@ rec {
   paletteDark = palette.dark;
   paletteLight = palette.light;
 
-  mkRebuildScript = pkgs.writeShellScriptBin "rebuild" ''
-    exec nixos-rebuild switch --flake ${dotfilesDir}#bunny "$@"
+  mkRebuildScript = host: pkgs.writeShellScriptBin "rebuild" ''
+    exec nixos-rebuild switch --flake ${dotfilesDir}#${host} "$@"
   '';
 }

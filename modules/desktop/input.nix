@@ -1,0 +1,17 @@
+{pkgs, ...}: {
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk
+      qt6Packages.fcitx5-chinese-addons
+      libsForQt5.fcitx5-qt
+      kdePackages.fcitx5-configtool
+    ];
+  };
+
+  services.xserver.xkb = {
+    layout = "br";
+    variant = "nodeadkeys";
+  };
+}

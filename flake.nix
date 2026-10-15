@@ -44,35 +44,39 @@
       ];
     };
     helpers = import ./lib { inherit pkgs; lib = inputs.nixpkgs.lib; };
+
+    # Cada host vive em ./hosts/<name> e escolhe seu perfil do home-manager
+    mkHost = name: home: inputs.nixpkgs.lib.nixosSystem {
+      inherit system;
+      specialArgs = {inherit inputs helpers;};
+
+      modules = [
+        {
+          nixpkgs.overlays = [
+            inputs.neovim-nightly-overlay.overlays.default
+          ];
+        }
+        ./hosts/${name}/configuration.nix
+
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs helpers; };
+          home-manager.users.bunny = import home;
+        }
+
+        ({ pkgs, helpers, ... }: {
+          environment.systemPackages = [
+            (helpers.mkRebuildScript name)
+          ];
+        })
+      ];
+    };
   in {
     nixosConfigurations = {
-      bunny = inputs.nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs helpers;};
-
-        modules = [
-          {
-            nixpkgs.overlays = [
-              inputs.neovim-nightly-overlay.overlays.default
-            ];
-          }
-          ./hosts/bunny/configuration.nix
-
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs helpers; };
-            home-manager.users.bunny = import ./home/bunny/home.nix;
-          }
-
-          ({ pkgs, helpers, ... }: {
-            environment.systemPackages = [
-              helpers.mkRebuildScript
-            ];
-          })
-        ];
-      };
+      bunny = mkHost "bunny" ./home/bunny/desktop.nix;   # Desktop Ryzen 5 7600 + Radeon
+      server = mkHost "server" ./home/bunny/server.nix;  # Notebook Acer Nitro (home-server)
     };
   };
 }

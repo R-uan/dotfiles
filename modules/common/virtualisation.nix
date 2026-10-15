@@ -1,7 +1,6 @@
 {...}: {
   virtualisation.docker = {
     enable = true;
-    extraOptions = "--data-root=/mnt/hdd/docker";
     rootless = {
       enable = true;
       setSocketVariable = true;
@@ -16,10 +15,5 @@
         ];
       };
     };
-  };
-
-  systemd.services.docker.serviceConfig = {
-    MemoryMax = "4G";
-    CPUQuota = "200%";
   };
 }

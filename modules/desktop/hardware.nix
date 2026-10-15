@@ -1,19 +1,5 @@
 {...}: {
   hardware = {
-    nvidia = {
-      open = false;
-      branch = "legacy_580";
-      nvidiaSettings = true;
-      modesetting.enable = true;
-      powerManagement.enable = false;
-
-      prime = {
-        sync.enable = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
-
     graphics = {
       enable = true;
       enable32Bit = true; # Critical for Steam
@@ -23,10 +9,12 @@
       enable = true;
     };
 
-    enableAllFirmware = true;
     bluetooth = {enable = true;};
     opentabletdriver = {enable = true;};
   };
+
+  # ddcutil (brilho do monitor via DDC/CI)
+  users.users.bunny.extraGroups = ["i2c"];
 
   services.udev.extraHwdb = ''
     evdev:input:b0003v36B7pFD13*
