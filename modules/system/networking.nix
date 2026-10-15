@@ -84,6 +84,10 @@
         "www.site29.sitemidas"
         "site30.sitemidas"
         "www.site30.sitemidas"
+        "site31.sitemidas"
+        "www.site31.sitemidas"
+        "site32.sitemidas"
+        "www.site32.sitemidas"
       ];
     };
   };
