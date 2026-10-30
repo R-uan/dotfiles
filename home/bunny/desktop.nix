@@ -58,12 +58,13 @@
     hyprshot            # Screenshots
     pavucontrol         # PulseAudio Control User Interface
     cloudflare-warp     # Cloudflare VPN (Not really a VPN, used to get better routes for FFXIV)
-    (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-      withX11 = false;
-      withWayland = true;
-      withPipewire = true;
-      withHyprland = true;
-    })                  # Desktop Widgets
+    quickshell
+    #(inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+    #  withX11 = false;
+    #  withWayland = true;
+    #  withPipewire = true;
+    #  withHyprland = true;
+    #})                  # Desktop Widgets
     # Gaming Related Packages
     mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU
     winetricks  # Essential Extension for Wine
