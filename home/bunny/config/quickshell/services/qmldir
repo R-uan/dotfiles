@@ -9,3 +9,4 @@ singleton StorageService 1.0 StorageService.qml
 singleton UptimeService 1.0 UptimeService.qml
 singleton NotificationService 1.0 NotificationService.qml
 singleton BluetoothService 1.0 BluetoothService.qml
+singleton SunsetService 1.0 SunsetService.qml

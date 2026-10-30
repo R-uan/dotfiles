@@ -1,0 +1,4 @@
+module qs.calendarmenu
+
+CalendarMenu 1.0 CalendarMenu.qml
+Calendar 1.0 Calendar.qml

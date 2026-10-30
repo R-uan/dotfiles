@@ -18,6 +18,7 @@ Item {
     implicitWidth: parent.width
 
     AudioButton {}
+    SunsetButton {}
     Network {}
     BluetoothButton {}
     NotificationButton {}

@@ -160,25 +160,6 @@ PanelWindow {
       color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
     }
 
-    // ── Calendar ─────────────────────────────────────────────────────────
-    Calendar {
-      Layout.topMargin: 10
-      Layout.leftMargin: 12
-      Layout.rightMargin: 12
-      Layout.fillWidth: true
-      Layout.preferredHeight: 280
-    }
-
-    // ── Divider ──────────────────────────────────────────────────────────
-    Rectangle {
-      Layout.fillWidth: true
-      Layout.leftMargin: 14
-      Layout.rightMargin: 14
-      Layout.topMargin: 8
-      height: 1
-      color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
-    }
-
     // ── App shortcuts ────────────────────────────────────────────────────
     AppLauncher {
       Layout.topMargin: 6

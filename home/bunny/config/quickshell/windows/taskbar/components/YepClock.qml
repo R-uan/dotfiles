@@ -84,11 +84,11 @@ Item {
     propagateComposedEvents: true
     cursorShape: Qt.PointingHandCursor
     onClicked: {
-      if (startmenu.visible) {
-        startmenu.visible = false;
-        startmenu.timer.running = false;
+      if (calendarmenu.visible) {
+        calendarmenu.visible = false;
+        calendarmenu.timer.running = false;
       } else {
-        startmenu.visible = true;
+        calendarmenu.visible = true;
       }
     }
   }
