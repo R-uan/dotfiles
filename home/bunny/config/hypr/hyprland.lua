@@ -6,18 +6,17 @@ require "keymaps"
 hl.monitor { output = "eDP-1", disabled = true }
 hl.monitor { output = "HDMI-A-1", mode = "1920x1080@60.00Hz", position = "0x0", scale = 1 }
 
-local statusbar = "quickshell -p ~/.config/quickshell"
-
 -- Startup
 hl.on("hyprland.start", function()
-  hl.exec_cmd "sh -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh); dbus-update-activation-environment --systemd GNOME_KEYRING_CONTROL SSH_AUTH_SOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP'"
   hl.exec_cmd "mako"
   hl.exec_cmd "fcitx5 -d"
+  hl.exec_cmd "hyprsunset"
   hl.exec_cmd "otd-daemon"
   hl.exec_cmd "awww-daemon"
   hl.exec_cmd "quickshell -p ~/.config/quickshell"
   hl.exec_cmd "setxkbmap -layout br -variant nodeadkeys"
   hl.exec_cmd "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+  hl.exec_cmd "sh -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh); dbus-update-activation-environment --systemd GNOME_KEYRING_CONTROL SSH_AUTH_SOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP'"
 end)
 
 hl.env("HYPRCURSOR_THEME", "Bibata-Modern-Classic")

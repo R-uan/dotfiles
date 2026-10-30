@@ -109,7 +109,7 @@
     # Packages on unstable channel for separate updating
     inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.siyuan # Personal Notes (Obsidian Replacement)
   ];
-
+  services.hyprsunset.enable = true;
   home.sessionVariables = {
     EDITOR = "nvim";
     HDD = "/mnt/hdd";
