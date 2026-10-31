@@ -13,6 +13,11 @@ Singleton {
   // Prefix used to run desktop entries that declare Terminal=true.
   property var terminalCommand: ["kitty", "-e"]
 
+  // Weather (wttr.in). Empty location = guess from IP; otherwise a city name
+  // such as "Sao Paulo", an airport code, or "lat,lon".
+  property bool weatherEnabled: true
+  property string weatherLocation: ""
+
   // General Configs
   property real backgroundOpacity: 1 
   property bool darkMode: true

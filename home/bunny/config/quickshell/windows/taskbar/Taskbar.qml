@@ -1,5 +1,6 @@
 import qs.config
 import qs.shared
+import qs.services
 import qs.windows.startmenu
 import qs.windows.taskbar.components
 import qs.windows.taskbar.components.sections
@@ -47,6 +48,18 @@ Scope {
           }
         }
 
+        // Fills the gap between the workspaces and the clock.
+        ActiveWindow {
+          anchors {
+            top: left.bottom
+            bottom: middle.top
+            left: parent.left
+            right: parent.right
+            topMargin: 4
+            bottomMargin: 4
+          }
+        }
+
         MiddleSection {
           id: middle
           width: parent.width
@@ -54,6 +67,12 @@ Scope {
             verticalCenter: parent.verticalCenter
             horizontalCenter: parent.horizontalCenter
           }
+        }
+
+        // Caffeine. Attached to the bar because it is always mapped.
+        IdleInhibitor {
+          window: mainWindow
+          enabled: IdleService.inhibited
         }
 
         RightSection {

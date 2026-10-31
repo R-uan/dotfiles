@@ -13,6 +13,7 @@ import "windows/sunsetmenu"
 import "windows/calendarmenu"
 import "windows/launcher"
 import "windows/wallpapers"
+import "windows/osd"
 
 import QtQuick
 import Quickshell
@@ -91,5 +92,10 @@ ShellRoot {
   Launcher {
     id: launcher
     onVisibleChanged: if (visible) shellRoot.hideOthers(launcher)
+  }
+
+  // Not in hideOthers: it is a transient overlay, not a panel.
+  Osd {
+    suppress: audiomenu.visible || sunsetmenu.visible
   }
 }

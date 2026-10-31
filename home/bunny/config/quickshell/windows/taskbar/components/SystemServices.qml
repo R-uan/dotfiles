@@ -17,6 +17,7 @@ Item {
     spacing: 2
     implicitWidth: parent.width
 
+    CaffeineButton {}
     AudioButton {}
     SunsetButton {}
     Network {}

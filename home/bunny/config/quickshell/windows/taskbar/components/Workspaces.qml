@@ -106,6 +106,22 @@ Item {
     }
   }
 
+  // Scroll over the strip to step through workspaces, same as SUPER+wheel.
+  // Accumulated so a touchpad swipe moves one workspace, not several.
+  property real _wheelAcc: 0
+  WheelHandler {
+    onWheel: (event) => {
+      root._wheelAcc += event.angleDelta.y;
+      if (root._wheelAcc >= 120) {
+        Hyprland.dispatch(`hl.dsp.focus({ workspace = "e-1" })`);
+        root._wheelAcc = 0;
+      } else if (root._wheelAcc <= -120) {
+        Hyprland.dispatch(`hl.dsp.focus({ workspace = "e+1" })`);
+        root._wheelAcc = 0;
+      }
+    }
+  }
+
   Column {
     id: layout
     spacing: Config.spacing + 5

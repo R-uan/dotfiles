@@ -1,5 +1,6 @@
 import qs.shared
 import qs.config
+import qs.services
 import QtQuick
 import Quickshell
 import QtQuick.Effects
@@ -9,7 +10,7 @@ import Quickshell.Services.Mpris
 
 Item {
   id: root
-  property MprisPlayer player: Mpris.players.values[0] ?? null
+  property MprisPlayer player: MediaService.player
 
   readonly property bool _hasPlayer: player !== null
   readonly property real _pos: player?.position ?? 0

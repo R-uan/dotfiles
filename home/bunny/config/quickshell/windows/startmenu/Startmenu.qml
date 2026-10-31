@@ -14,7 +14,7 @@ PanelWindow {
   implicitWidth: 480
   color: "transparent"
   objectName: "Start Menu"
-  height: mainLayout.implicitHeight
+  implicitHeight: mainLayout.implicitHeight
   exclusionMode: ExclusionMode.Normal
 
   anchors {
@@ -105,6 +105,14 @@ PanelWindow {
           }
         }
       }
+    }
+
+    // ── Quick toggles ────────────────────────────────────────────────────
+    QuickToggles {
+      Layout.topMargin: 4
+      Layout.leftMargin: 14
+      Layout.rightMargin: 14
+      Layout.fillWidth: true
     }
 
     // ── Folder shortcuts ─────────────────────────────────────────────────

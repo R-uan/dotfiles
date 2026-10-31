@@ -26,16 +26,39 @@ Singleton {
   property int  gpuTemp: 0
   property bool hasGpu: false
 
+  // Rolling percentages for the sparklines, oldest first (~2 minutes).
+  readonly property int historyLength: 40
+  property var cpuHistory: []
+  property var ramHistory: []
+  property var gpuHistory: []
+
+  // Top processes by CPU: list of { name, cpu, mem }. Only sampled while
+  // something asks for it (the resources card), since it costs a top run.
+  property var topProcs: []
+  property bool watchProcs: false
+
   // Legacy fields used by any existing consumer (kept as strings)
   property string sysTemp: "??"
   property string ramUsage: "??"
   property string cpuUsage: "??"
   property var stats: []
 
+  property real _prevTotal: 0
+  property real _prevIdle: 0
+
   function _gib(bytes) { return bytes / (1024 * 1024 * 1024); }
   function _fmtGiB(bytes) {
     const g = _gib(bytes);
     return (g >= 10 ? g.toFixed(1) : g.toFixed(2)) + " GiB";
+  }
+  function _push(list, value) {
+    const out = list.slice(Math.max(0, list.length - root.historyLength + 1));
+    out.push(value);
+    return out;
+  }
+  // Nix wraps binaries as ".name-wrapped", which top truncates further.
+  function _procName(cmd) {
+    return cmd.replace(/^\./, "").replace(/-w(r(a(p\w*)?)?)?$/, "");
   }
 
   Process {
@@ -51,7 +74,14 @@ Singleton {
           kv[line.slice(0, idx)] = line.slice(idx + 1);
         }
 
-        root.cpu           = parseInt(kv.CPU) || 0;
+        const total = parseFloat(kv.CPU_TOTAL) || 0;
+        const idle  = parseFloat(kv.CPU_IDLE)  || 0;
+        const dt = total - root._prevTotal;
+        if (root._prevTotal > 0 && dt > 0)
+          root.cpu = Math.max(0, Math.min(100, Math.round(100 * (1 - (idle - root._prevIdle) / dt))));
+        root._prevTotal = total;
+        root._prevIdle  = idle;
+
         root.cpuTemp       = parseInt(kv.TEMP) || 0;
 
         root.ramUsedBytes  = parseFloat(kv.RAM_USED)  || 0;
@@ -69,6 +99,10 @@ Singleton {
         root.gpuMemPct      = Math.round(100 * root.gpuMemUsedMiB / root.gpuMemTotalMiB);
         root.gpuTemp        = parseInt(kv.GTEMP) || 0;
 
+        root.cpuHistory = root._push(root.cpuHistory, root.cpu);
+        root.ramHistory = root._push(root.ramHistory, root.ramPct);
+        if (root.hasGpu) root.gpuHistory = root._push(root.gpuHistory, root.gpu);
+
         // Legacy strings
         root.cpuUsage = root.cpu + "%";
         root.ramUsage = _fmtGiB(root.ramUsedBytes);
@@ -82,10 +116,36 @@ Singleton {
     }
   }
 
+  Process {
+    id: procsProc
+    running: false
+    command: [Config.scriptsDir + "/gettopprocs.sh"]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        const out = [];
+        for (let line of text.trim().split("\n")) {
+          const parts = line.split("|");
+          if (parts.length < 3) continue;
+          out.push({
+            name: root._procName(parts[0]),
+            cpu:  parseFloat(parts[1]) || 0,
+            mem:  parseFloat(parts[2]) || 0
+          });
+        }
+        root.topProcs = out;
+      }
+    }
+  }
+
+  onWatchProcsChanged: if (watchProcs) procsProc.running = true
+
   Timer {
     interval: 3000
     running: true
     repeat: true
-    onTriggered: statsProc.running = true
+    onTriggered: {
+      statsProc.running = true;
+      if (root.watchProcs) procsProc.running = true;
+    }
   }
 }

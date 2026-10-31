@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
+export LC_ALL=C
 
-# CPU %
-cpu=$(top -bn1 2>/dev/null | awk '/Cpu\(s\)/{printf "%.0f", 100 - $8; exit}')
+# CPU jiffies from /proc/stat. ResourcesService diffs consecutive samples;
+# `top -bn1` only ever reported the average since boot.
+read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+cpu_idle=$((idle + iowait))
+cpu_total=$((user + nice + system + idle + iowait + irq + softirq + steal))
 
 # RAM / Swap (bytes)
 read ram_used ram_total swap_used swap_total <<< $(free -b 2>/dev/null | awk '
@@ -22,7 +26,8 @@ if command -v nvidia-smi >/dev/null 2>&1; then
   )
 fi
 
-echo "CPU=${cpu:-0}"
+echo "CPU_TOTAL=${cpu_total:-0}"
+echo "CPU_IDLE=${cpu_idle:-0}"
 echo "RAM_USED=${ram_used:-0}"
 echo "RAM_TOTAL=${ram_total:-1}"
 echo "SWAP_USED=${swap_used:-0}"

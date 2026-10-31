@@ -12,7 +12,7 @@ PanelWindow {
   implicitWidth: 260
   color: "transparent"
   objectName: "Power Menu"
-  height: mainLayout.implicitHeight + 28
+  implicitHeight: mainLayout.implicitHeight + 28
   exclusionMode: ExclusionMode.Normal
 
   anchors {

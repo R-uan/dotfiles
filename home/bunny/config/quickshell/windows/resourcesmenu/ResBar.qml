@@ -1,5 +1,6 @@
 import qs.shared
 import qs.config
+import qs.services
 
 import QtQuick
 import QtQuick.Layouts
@@ -12,6 +13,8 @@ ColumnLayout {
   property string hint: ""
   property color hintColor: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
   property color fillColor: Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1
+  // Optional rolling history (0-100, oldest first); drawn above the bar.
+  property var history: null
 
   spacing: 4
 
@@ -40,6 +43,15 @@ ColumnLayout {
       Layout.preferredWidth: 40
       horizontalAlignment: Text.AlignRight
     }
+  }
+
+  Sparkline {
+    Layout.fillWidth: true
+    Layout.preferredHeight: 26
+    visible: root.history !== null
+    values: root.history || []
+    capacity: ResourcesService.historyLength
+    lineColor: root.fillColor
   }
 
   Rectangle {

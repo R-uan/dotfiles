@@ -10,3 +10,7 @@ singleton UptimeService 1.0 UptimeService.qml
 singleton NotificationService 1.0 NotificationService.qml
 singleton BluetoothService 1.0 BluetoothService.qml
 singleton SunsetService 1.0 SunsetService.qml
+singleton IdleService 1.0 IdleService.qml
+singleton MediaService 1.0 MediaService.qml
+singleton OsdService 1.0 OsdService.qml
+singleton WeatherService 1.0 WeatherService.qml

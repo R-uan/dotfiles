@@ -5,3 +5,4 @@ StyledText 1.0 StyledText.qml
 Background 1.0 Background.qml
 RoundCorner 1.0 RoundCorner.qml
 Ring 1.0 Ring.qml
+Sparkline 1.0 Sparkline.qml

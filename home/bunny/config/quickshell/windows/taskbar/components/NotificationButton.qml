@@ -26,20 +26,22 @@ Item {
 
   StyledText {
     id: bell
-    text: root._hasActive ? "󱅫" : "󰂚"
+    text: NotificationService.dnd ? "󰂛" : (root._hasActive ? "󱅫" : "󰂚")
     anchors.centerIn: parent
     font.pixelSize: 14
     color: mouseArea.containsMouse
       ? (Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0)
-      : (root._hasActive
-          ? (Config.darkMode ? ThemeDark.warning : ThemeLight.warning)
-          : (Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1))
+      : (NotificationService.dnd
+          ? (Config.darkMode ? ThemeDark.muted : ThemeLight.muted)
+          : (root._hasActive
+              ? (Config.darkMode ? ThemeDark.warning : ThemeLight.warning)
+              : (Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1)))
     Behavior on color { ColorAnimation { duration: 110 } }
   }
 
-  // Badge count when active
+  // Badge count when active (hidden while silenced, mako hides them too)
   Rectangle {
-    visible: root._count > 0
+    visible: root._count > 0 && !NotificationService.dnd
     anchors.top: parent.top
     anchors.right: parent.right
     anchors.topMargin: 1
@@ -64,7 +66,16 @@ Item {
     anchors.fill: parent
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
-    onClicked: {
+    acceptedButtons: Qt.LeftButton | Qt.MiddleButton
+    onClicked: function (mouse) {
+      // Middle click: toggle do-not-disturb.
+      if (mouse.button === Qt.MiddleButton) {
+        NotificationService.toggleDnd();
+        OsdService.show(NotificationService.dnd ? "󰂛" : "󰂚",
+                        NotificationService.dnd ? "Do not disturb" : "Notifications on",
+                        0, "", NotificationService.dnd, false);
+        return;
+      }
       if (notificationcenter.visible) {
         notificationcenter.visible = false;
         notificationcenter.timer.running = false;

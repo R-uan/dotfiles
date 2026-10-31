@@ -38,7 +38,10 @@ PanelWindow {
     Math.min(anchorCenterY - _cardHeight / 2,
              height - _edgeBar - _cornerRadius - _cardHeight))
 
-  onVisibleChanged: _presented = visible
+  onVisibleChanged: {
+    _presented = visible;
+    ResourcesService.watchProcs = visible;
+  }
 
   property alias timer: closeTimer
 
@@ -143,6 +146,7 @@ PanelWindow {
         label: "CPU"
         percent: ResourcesService.cpu
         rightText:ResourcesService.cpu + "%"
+        history: ResourcesService.cpuHistory
         hint: ResourcesService.cpuTemp > 0 ? (ResourcesService.cpuTemp + "°C") : ""
         hintColor: resMenu._tempColor(ResourcesService.cpuTemp)
         fillColor: resMenu._pctColor(ResourcesService.cpu)
@@ -153,6 +157,7 @@ PanelWindow {
         label: "RAM"
         percent: ResourcesService.ramPct
         rightText:ResourcesService.ramPct + "%"
+        history: ResourcesService.ramHistory
         hint: resMenu._fmtGiB(ResourcesService.ramUsedBytes) + " / "
               + resMenu._fmtGiB(ResourcesService.ramTotalBytes) + " GiB"
         fillColor: resMenu._pctColor(ResourcesService.ramPct)
@@ -175,6 +180,7 @@ PanelWindow {
         label: "GPU"
         percent: ResourcesService.gpu
         rightText:ResourcesService.gpu + "%"
+        history: ResourcesService.gpuHistory
         hint: ResourcesService.gpuTemp > 0 ? (ResourcesService.gpuTemp + "°C") : ""
         hintColor: resMenu._tempColor(ResourcesService.gpuTemp)
         fillColor: resMenu._pctColor(ResourcesService.gpu)
@@ -189,6 +195,85 @@ PanelWindow {
         hint: ResourcesService.gpuMemUsedMiB + " / "
               + ResourcesService.gpuMemTotalMiB + " MiB"
         fillColor: resMenu._pctColor(ResourcesService.gpuMemPct)
+      }
+
+      // ── Top processes ─────────────────────────────────
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.topMargin: 2
+        height: 1
+        color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
+      }
+
+      RowLayout {
+        Layout.fillWidth: true
+        spacing: 6
+
+        StyledText {
+          Layout.fillWidth: true
+          text: "TOP PROCESSES"
+          font.pixelSize: Config.fontSize - 5
+          font.letterSpacing: 1.4
+          color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+        }
+        StyledText {
+          text: "CPU"
+          Layout.preferredWidth: 44
+          horizontalAlignment: Text.AlignRight
+          font.pixelSize: Config.fontSize - 5
+          font.letterSpacing: 1.4
+          color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+        }
+        StyledText {
+          text: "MEM"
+          Layout.preferredWidth: 40
+          horizontalAlignment: Text.AlignRight
+          font.pixelSize: Config.fontSize - 5
+          font.letterSpacing: 1.4
+          color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+        }
+      }
+
+      Repeater {
+        model: ResourcesService.topProcs
+
+        RowLayout {
+          required property var modelData
+          required property int index
+          Layout.fillWidth: true
+          spacing: 6
+
+          StyledText {
+            Layout.fillWidth: true
+            text: modelData.name
+            elide: Text.ElideRight
+            font.pixelSize: Config.fontSize - 3
+            // Fade down the list so the heaviest process reads first.
+            opacity: 1 - index * 0.12
+            color: Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
+          }
+          StyledText {
+            Layout.preferredWidth: 44
+            horizontalAlignment: Text.AlignRight
+            text: modelData.cpu.toFixed(1) + "%"
+            font.pixelSize: Config.fontSize - 3
+            color: resMenu._pctColor(modelData.cpu)
+          }
+          StyledText {
+            Layout.preferredWidth: 40
+            horizontalAlignment: Text.AlignRight
+            text: modelData.mem.toFixed(1) + "%"
+            font.pixelSize: Config.fontSize - 3
+            color: Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1
+          }
+        }
+      }
+
+      StyledText {
+        visible: ResourcesService.topProcs.length === 0
+        text: "sampling…"
+        font.pixelSize: Config.fontSize - 4
+        color: Config.darkMode ? ThemeDark.muted : ThemeLight.muted
       }
     }
   }
