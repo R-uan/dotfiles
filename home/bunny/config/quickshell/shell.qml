@@ -15,6 +15,7 @@ import "windows/launcher"
 import "windows/wallpapers"
 import "windows/osd"
 import "windows/clipboard"
+import "windows/settings"
 
 import QtQuick
 import Quickshell
@@ -26,7 +27,7 @@ ShellRoot {
     const panels = [
       startmenu, powermenu, notificationcenter, networkmenu,
       resourcesmenu, bluetoothmenu, audiomenu, sunsetmenu, calendarmenu, wallpapers, launcher,
-      clipboard
+      clipboard, settingsmenu
     ];
     for (let p of panels) {
       if (!p || p === except) continue;
@@ -99,6 +100,11 @@ ShellRoot {
   ClipboardMenu {
     id: clipboard
     onVisibleChanged: if (visible) shellRoot.hideOthers(clipboard)
+  }
+
+  SettingsMenu {
+    id: settingsmenu
+    onVisibleChanged: if (visible) shellRoot.hideOthers(settingsmenu)
   }
 
   // Not in hideOthers: it is a transient overlay, not a panel.

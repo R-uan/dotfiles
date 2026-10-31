@@ -5,6 +5,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 
+// Quick access to the folders of the base home (Config.homeFolders), whose
+// paths can be changed from the settings window.
 Item {
   id: root
   implicitHeight: grid.implicitHeight + 20
@@ -13,45 +15,25 @@ Item {
   // its config, and openfilemanager.sh holds kitty in the foreground, so the
   // file manager window went with it. Passing the path as an argument also
   // avoids interpolating it into QML source.
-  function openYazi(folder) {
-    Quickshell.execDetached([
-      Config.scriptsDir + "/openfilemanager.sh",
-      folder.startsWith("/") ? folder : Config.homeShortcutDir + "/" + folder
-    ]);
+  function openYazi(key) {
+    Quickshell.execDetached([Config.scriptsDir + "/openfilemanager.sh", Config.folderPath(key)]);
   }
 
-  readonly property var dirs: Config.startMenuFolders
-
-  // Two fixed rows: first 4, then remaining 3
-  ColumnLayout {
+  // Four equal columns; the folder list is sized to fill whole rows.
+  GridLayout {
     id: grid
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.top: parent.top
     anchors.margins: 10
-    anchors.topMargin: 10
-    spacing: 6
+    columns: 4
+    rowSpacing: 6
+    columnSpacing: 6
+    uniformCellWidths: true
 
-    // Row 1 — 4 items
-    RowLayout {
-      Layout.fillWidth: true
-      spacing: 6
-      Repeater {
-        model: root.dirs.slice(0, 4)
-        delegate: shortcutPill
-      }
-    }
-
-    // Row 2 — 3 items (left-aligned, same pill width as above)
-    RowLayout {
-      Layout.fillWidth: true
-      spacing: 6
-      Repeater {
-        model: root.dirs.slice(4)
-        delegate: shortcutPill
-      }
-      // Spacer so pills don't stretch to fill row
-      Item { Layout.fillWidth: true }
+    Repeater {
+      model: Config.homeFolders
+      delegate: shortcutPill
     }
   }
 
@@ -59,9 +41,8 @@ Item {
     id: shortcutPill
 
     Item {
+      Layout.fillWidth: true
       Layout.preferredHeight: 32
-      // Each pill takes an equal share of available width in its row
-      Layout.preferredWidth: (root.width - 20 - 18) / 4   // 20=margins, 18=3×spacing
 
       Rectangle {
         anchors.fill: parent
@@ -89,7 +70,7 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.openYazi(modelData.folder)
+        onClicked: root.openYazi(modelData.key)
       }
 
       scale: ma.pressed ? 0.96 : 1.0

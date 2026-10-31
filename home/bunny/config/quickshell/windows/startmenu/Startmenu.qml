@@ -93,6 +93,39 @@ DockedPanel {
         }
       }
 
+      // Settings button — top-right of card
+      Item {
+        anchors.top: cardClip.top
+        anchors.right: cardClip.right
+        anchors.topMargin: 8
+        anchors.rightMargin: 8
+        width: 30
+        height: 30
+        z: 10
+
+        Rectangle {
+          anchors.fill: parent
+          radius: 7
+          color: settingsBtn.containsMouse ? Qt.rgba(0,0,0,0.60) : Qt.rgba(0,0,0,0.38)
+          Behavior on color { ColorAnimation { duration: 120 } }
+        }
+
+        StyledText {
+          text: "󰒓"
+          font.pixelSize: 15
+          anchors.centerIn: parent
+          color: Qt.rgba(1, 1, 1, 0.88)
+        }
+
+        MouseArea {
+          id: settingsBtn
+          anchors.fill: parent
+          hoverEnabled: true
+          cursorShape: Qt.PointingHandCursor
+          onClicked: settingsmenu.visible = true
+        }
+      }
+
       // Wallpaper picker button — outside clip, bottom-right of card
       Item {
         anchors.bottom: cardClip.bottom
