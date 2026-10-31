@@ -11,11 +11,32 @@
 
     settings = {
       enable_audio_bell = "no";
-      window_padding_width = 2;
+      window_padding_width = 6;
       remember_window_size = "yes";
       initial_window_width = 740;
       initial_window_height = 600;
       background_opacity = "0.91";
+      dynamic_background_opacity = "yes";
+      confirm_os_window_close = 0;
+      update_check_interval = 0; # nix updates it
+
+      # Cursor: a short trail when it jumps (nvim, tmux-like hops)
+      cursor_shape = "beam";
+      cursor_trail = 3;
+      cursor_trail_decay = "0.1 0.3";
+
+      # Scrollback and copying
+      scrollback_lines = 10000;
+      strip_trailing_spaces = "smart";
+      url_style = "curly";
+
+      # Desktop notification (mako) when a command over 15s finishes
+      # while the window isn't focused. Needs shell integration (on by default).
+      notify_on_cmd_finish = "unfocused 15";
+
+      # Splits instead of the default tiling layouts
+      enabled_layouts = "splits,stack";
+
       tab_title_template = "{index}: {title.split('/')[-1]}";
       tab_bar_style = "powerline";
       tab_powerline_style = "slanted";
@@ -64,6 +85,20 @@
       color13 = "#a6a6a6";
       color14 = "#c4c4c4";
       color15 = "#e0e0e0";
+    };
+
+    keybindings = {
+      # New windows/tabs open in the current directory
+      "ctrl+shift+enter" = "launch --cwd=current --location=vsplit";
+      "ctrl+shift+minus" = "launch --cwd=current --location=hsplit";
+      "ctrl+shift+t" = "new_tab_with_cwd";
+      # Zoom the current split
+      "ctrl+shift+z" = "toggle_layout stack";
+      # Move between splits
+      "ctrl+alt+h" = "neighboring_window left";
+      "ctrl+alt+j" = "neighboring_window down";
+      "ctrl+alt+k" = "neighboring_window up";
+      "ctrl+alt+l" = "neighboring_window right";
     };
   };
 }

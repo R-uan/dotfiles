@@ -64,21 +64,37 @@
         {
           type = "uptime";
           key = "  UPT ";
-          keycolor = "32";
+          keyColor = "32";
         }
 
+        # 37, not 34: kitty's blue is #4a4a4a, near invisible on the background
         {
           type = "cpu";
           format = "{1}";
           key = "  CPU ";
-          keyColor = "34";
+          keyColor = "37";
         }
 
         {
           type = "gpu";
           format = "{1} {2}";
           key = "  GPU ";
-          keyColor = "34";
+          keyColor = "37";
+        }
+
+        {
+          type = "memory";
+          key = "  MEM ";
+          keyColor = "37";
+        }
+
+        # / is a tmpfs; these are the real disks
+        {
+          type = "disk";
+          folders = "/nix:/mnt/hdd";
+          format = "{size-used} / {size-total} ({size-percentage}) · {mountpoint}";
+          key = "  DSK ";
+          keyColor = "37";
         }
 
         {
@@ -88,7 +104,11 @@
         }
 
         "break"
-        "colors"
+        {
+          type = "colors";
+          symbol = "circle";
+          paddingLeft = 2;
+        }
       ];
     };
   };

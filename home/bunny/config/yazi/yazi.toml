@@ -1,109 +1,86 @@
 [mgr]
 ratio          = [2, 3, 3]   # Panel width ratios (parent:current:preview)
-linemode = "size"
-sort_by = "natural"
+linemode       = "size"
+sort_by        = "natural"
 sort_sensitive = false
 sort_reverse   = false
 sort_dir_first = true
 show_hidden    = true
 show_symlink   = true
+scrolloff      = 5
 
 [preview]
 tab_size      = 2
-max_width     = 600
-max_height    = 900
-cache_dir     = ""           # Defaults to system temp
-image_filter  = "triangle"
-image_quality = 75
-sixel_fraction = 15
-ueberzug_scale = 1
-ueberzug_offset = [0, 0, 0, 0]
+max_width     = 800
+max_height    = 1000
+image_filter  = "lanczos3"
+image_quality = 85
 
+# %s = selected paths, %s1 = the first one (yazi 26 replaced "$@" / "$1").
 [opener]
 extract = [
-  { run = 'unar "$1"', desc = "Extract (unar)" },
+  { run = 'unar %s1', desc = "Extract (unar)" },
 ]
 play = [
-  { run = 'vlc "$@"', desc = "Play with VLC" },
+  { run = 'vlc %s', orphan = true, desc = "Play with VLC" },
 ]
 edit = [
-  { run = 'code "$@"', desc = "Open in VSCode" },
-  { run = 'zeditor "$@"', desc = "Open in Zed" },
-  { run = 'nvim "$@"', desc = "Open in Neovim", block = true },
+  { run = 'nvim %s', block = true, desc = "Open in Neovim" },
+  { run = 'code %s', orphan = true, desc = "Open in VSCode" },
+  { run = 'zeditor %s', orphan = true, desc = "Open in Zed" },
 ]
 open = [
-  { run = 'xdg-open "$@"' },
+  { run = 'xdg-open %s1', orphan = true, desc = "Open" },
 ]
 open_browser = [
-  { run = 'xdg-open "$@"', desc = "Open in browser" },
+  { run = 'xdg-open %s1', orphan = true, desc = "Open in browser" },
 ]
 view_image = [
-  { run = 'krita "$@"', desc = "Open in Krita" },
-  { run = 'xdg-open "$@"', desc = "Open in default viewer/browser" },
+  { run = 'xdg-open %s1', orphan = true, desc = "Open in default viewer" },
+  { run = 'krita %s', orphan = true, desc = "Open in Krita" },
 ]
 run_exe = [
-  { run = 'wine "$1"', desc = "Run with Wine" },
-  { run = 'steam-run "$1"', desc = "Steamrun it" },
+  { run = 'wine %s1', orphan = true, desc = "Run with Wine" },
+  { run = 'steam-run %s1', orphan = true, desc = "Run with steam-run" },
+]
+run_sh = [
+  { run = 'bash %s1; printf "\n[exit %%s, press enter]" $?; read _', block = true, desc = "Run in terminal" },
+]
+reveal = [
+  { run = 'xdg-open %d1', orphan = true, desc = "Open containing folder" },
 ]
 
 [open]
 rules = [
   # HTML — edit or view in browser
   { mime = "text/html",                   use = ["edit", "open_browser"] },
-  { url = "*.html",                       use = ["edit", "open_browser"] },
-  { url = "*.htm",                        use = ["edit", "open_browser"] },
+  { url = "*.{html,htm}",                 use = ["edit", "open_browser"] },
 
-  # CSS, JS, and other web/text formats — editor only
-  { url = "*.css",                        use = "edit" },
-  { url = "*.scss",                       use = "edit" },
-  { url = "*.sass",                       use = "edit" },
-  { url = "*.less",                       use = "edit" },
-  { url = "*.js",                         use = "edit" },
-  { url = "*.ts",                         use = "edit" },
-  { url = "*.jsx",                        use = "edit" },
-  { url = "*.tsx",                        use = "edit" },
-  { url = "*.json",                       use = "edit" },
-  { url = "*.xml",                        use = "edit" },
-  { url = "*.yaml",                       use = "edit" },
-  { url = "*.yml",                        use = "edit" },
-  { url = "*.toml",                       use = "edit" },
-  { url = "*.md",                         use = "edit" },
+  # Scripts — edit or run (before text/*, which would catch them first)
+  { url = "*.sh",                         use = ["edit", "run_sh"] },
+
+  # Web/text formats — editor only
+  { url = "*.{css,scss,sass,less,js,ts,jsx,tsx,json,xml,yaml,yml,toml,md,nix,lua,qml}", use = "edit" },
   { url = "*.svg",                        use = ["edit", "view_image"] },
 
   # Generic text fallback
   { mime = "text/*",                      use = "edit" },
+  { mime = "inode/empty",                 use = "edit" },
 
   # Documents & archives
-  { mime = "application/pdf",              use = ["open_browser"] },
-  { mime = "application/zip",              use = "extract" },
-  { mime = "application/rar",              use = "extract" },
-  { mime = "application/gzip",             use = "extract" },
+  { mime = "application/pdf",             use = ["open_browser", "reveal"] },
+  { mime = "application/{zip,rar,vnd.rar,gzip,x-tar,x-xz,x-bzip2,x-7z-compressed,zstd,x-zstd}", use = "extract" },
 
-  # Images — Krita or browser/viewer
-  { mime = "image/*",                     use = "view_image" },
+  # Images — default viewer or Krita
+  { mime = "image/*",                     use = ["view_image", "reveal"] },
 
   # Media
-  { mime = "video/*",                     use = "play" },
-  { mime = "audio/*",                     use = "play" },
+  { mime = "{audio,video}/*",             use = ["play", "reveal"] },
 
   # Windows executables
-  { url = "*.exe", use = "run_exe" },
-  { url = "*.sh", use = "run_exe" },
-  { mime = "application/x-dosexec",               use = "run_exe" },
-  { mime = "application/x-ms-dos-executable",     use = "run_exe" },
+  { url = "*.exe",                        use = "run_exe" },
+  { mime = "application/{x-dosexec,x-ms-dos-executable,vnd.microsoft.portable-executable}", use = "run_exe" },
+
+  # Anything else
+  { url = "*",                            use = ["open", "reveal"] },
 ]
-
-[[manager.prepend_keymap]]
-on = ["o"]
-run = "open --interactive"
-desc = "Open with picker"
-
-[[manager.prepend_keymap]]
-on = ["Z"]
-run = '''shell 'read -p "Archive name: " name && zip -r "${name}.zip" -- "$@"' --confirm --interactive'''
-desc = "Zip selected to named archive"
-
-[[manager.prepend_keymap]]
-on = ["Z"]
-run = '''shell 'bash -c "read -p \"Archive name: \" name && zip -r \"${name}.zip\" -- \"$@\""' --confirm --interactive'''
-desc = "Zip selected to named archive"

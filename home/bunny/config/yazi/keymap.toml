@@ -1,0 +1,17 @@
+# Added on top of yazi's default keymap.
+[mgr]
+prepend_keymap = [
+  { on = "o", run = "open --interactive", desc = "Open with picker" },
+
+  # Zip the selection (or the hovered file) into <name>.zip in the current folder.
+  { on = "C", run = '''shell --block -- printf "Archive name: "; read name && [ -n "$name" ] && set -- && for f in %s; do set -- "$@" "${f##*/}"; done && zip -r "$name.zip" -- "$@"''', desc = "Zip selection" },
+
+  # Jumps into the quickshell base home (Config.defaultHomeDir) and dotfiles.
+  { on = ["g", "H"], run = "cd /mnt/hdd/home",           desc = "Go to base home" },
+  { on = ["g", "d"], run = "cd /mnt/hdd/home/downloads", desc = "Go to downloads" },
+  { on = ["g", "o"], run = "cd /mnt/hdd/home/documents", desc = "Go to documents" },
+  { on = ["g", "p"], run = "cd /mnt/hdd/home/code",      desc = "Go to code" },
+  { on = ["g", "i"], run = "cd /mnt/hdd/home/images",    desc = "Go to images" },
+  { on = ["g", "v"], run = "cd /mnt/hdd/home/videos",    desc = "Go to videos" },
+  { on = ["g", "."], run = "cd ~/dotfiles",              desc = "Go to dotfiles" },
+]

@@ -1,0 +1,100 @@
+# Monochrome, from palette.json (dark): background0 #151515, colour1-7,
+# foreground1 #e0e0e0. Anything not set here keeps yazi's default.
+
+[mgr]
+cwd              = { fg = "#a6a6a6", italic = true }
+find_keyword     = { fg = "#e0e0e0", bold = true, underline = true }
+find_position    = { fg = "#8a8a8a", italic = true }
+symlink_target   = { fg = "#6e6e6e", italic = true }
+marker_copied    = { fg = "#8e8e8e", bg = "#8e8e8e" }
+marker_cut       = { fg = "#e0e0e0", bg = "#e0e0e0" }
+marker_marked    = { fg = "#6e6e6e", bg = "#6e6e6e" }
+marker_selected  = { fg = "#a6a6a6", bg = "#a6a6a6" }
+count_copied     = { fg = "#151515", bg = "#8e8e8e" }
+count_cut        = { fg = "#151515", bg = "#e0e0e0" }
+count_selected   = { fg = "#151515", bg = "#a6a6a6" }
+border_symbol    = "│"
+border_style     = { fg = "#303030" }
+
+[indicator]
+parent  = { fg = "#c4c4c4", bg = "#252525" }
+current = { fg = "#e0e0e0", bg = "#303030", bold = true }
+preview = { fg = "#c4c4c4", bg = "#252525" }
+
+[tabs]
+active   = { fg = "#151515", bg = "#6e6e6e", bold = true }
+inactive = { fg = "#8a8a8a", bg = "#1c1c1c" }
+
+[mode]
+normal_main = { fg = "#151515", bg = "#6e6e6e", bold = true }
+normal_alt  = { fg = "#a6a6a6", bg = "#252525" }
+select_main = { fg = "#151515", bg = "#a6a6a6", bold = true }
+select_alt  = { fg = "#a6a6a6", bg = "#252525" }
+unset_main  = { fg = "#151515", bg = "#8a8a8a", bold = true }
+unset_alt   = { fg = "#8a8a8a", bg = "#252525" }
+
+[status]
+perm_type       = { fg = "#a6a6a6" }
+perm_read       = { fg = "#8e8e8e" }
+perm_write      = { fg = "#c4c4c4" }
+perm_exec       = { fg = "#e0e0e0" }
+perm_sep        = { fg = "#4a4a4a" }
+progress_label  = { fg = "#e0e0e0", bold = true }
+progress_normal = { fg = "#6e6e6e", bg = "#252525" }
+progress_error  = { fg = "#e0e0e0", bg = "#4a4a4a" }
+
+[which]
+mask            = { bg = "#1c1c1c" }
+cand            = { fg = "#e0e0e0" }
+rest            = { fg = "#4a4a4a" }
+desc            = { fg = "#8a8a8a" }
+separator_style = { fg = "#4a4a4a" }
+
+[confirm]
+border  = { fg = "#6e6e6e" }
+title   = { fg = "#e0e0e0" }
+btn_yes = { reversed = true }
+
+[spot]
+border = { fg = "#6e6e6e" }
+title  = { fg = "#e0e0e0" }
+
+[notify]
+title_info  = { fg = "#a6a6a6" }
+title_warn  = { fg = "#c4c4c4" }
+title_error = { fg = "#e0e0e0", bold = true }
+
+[pick]
+border = { fg = "#6e6e6e" }
+active = { fg = "#e0e0e0", bold = true }
+
+[input]
+border   = { fg = "#6e6e6e" }
+selected = { reversed = true }
+
+[cmp]
+border = { fg = "#6e6e6e" }
+active = { reversed = true }
+
+[tasks]
+border  = { fg = "#6e6e6e" }
+hovered = { fg = "#e0e0e0", underline = true }
+
+[help]
+border  = { fg = "#6e6e6e" }
+chord   = { fg = "#e0e0e0" }
+action  = { fg = "#a6a6a6" }
+hovered = { reversed = true, bold = true }
+
+# Brightness instead of hue: folders brightest, media dimmer, junk faint.
+[filetype]
+rules = [
+  { url = "*", is = "orphan", fg = "#4a4a4a", crossed = true },
+  { url = "*/", fg = "#e0e0e0", bold = true },
+  { url = "*", is = "exec", fg = "#e0e0e0", italic = true },
+  { mime = "image/*", fg = "#a6a6a6" },
+  { mime = "{audio,video}/*", fg = "#8e8e8e" },
+  { mime = "application/{zip,rar,vnd.rar,gzip,x-tar,x-xz,x-bzip2,x-7z-compressed,zstd,x-zstd}", fg = "#8a8a8a" },
+  { mime = "application/pdf", fg = "#a4a4a4" },
+  { url = "*", fg = "#c4c4c4" },
+]
