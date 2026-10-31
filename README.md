@@ -1,6 +1,22 @@
 # Dotfiles — NixOS + Home Manager (Flakes)
 
-Configuracao declarativa do meu sistema NixOS `bunny` (laptop NVIDIA Optimus).
+Configuracao declarativa do meu sistema NixOS `bunny` (desktop Ryzen 5 7600 + Radeon RX 7600).
+
+## Hardware
+
+| Componente     | Modelo                                          | Driver no NixOS                         |
+| -------------- | ----------------------------------------------- | --------------------------------------- |
+| Processador    | AMD Ryzen 5 7600 (6 nucleos, 3.8 GHz)           | `kvm-amd` + microcode AMD               |
+| Placa-mae      | MSI PRO B840M-P WIFI6E (Micro ATX, AM5)         | Kernel padrao                           |
+| ↳ Rede         | Realtek RTL8125D 2.5 GbE                        | `r8169` (kernel 6.13+)                  |
+| ↳ Wi-Fi / BT   | Wi-Fi 6E + Bluetooth 5.3                        | Kernel + `hardware.enableAllFirmware`   |
+| Memoria        | ADATA XPG Lancer Blade RGB 8 GB DDR5-5600 (1x8) | -                                       |
+| Placa de video | ASRock Radeon RX 7600 Challenger 8 GB           | `amdgpu` + Mesa (RADV)                  |
+| Fonte          | XPG Core Reactor II VE 750 W (80+ Gold)         | -                                       |
+| Gabinete       | Mancer CV100 (Micro ATX)                        | -                                       |
+| Monitor        | LG UltraGear 24" 1920x1080 144 Hz               | -                                       |
+
+Problemas conhecidos de hardware e solucoes: [KNOWN_ISSUES.md](KNOWN_ISSUES.md)
 
 ```
 dotfiles/
@@ -16,7 +32,7 @@ dotfiles/
 │   └── assets/
 ├── modules/
 │   ├── system/            # System-level modules
-│   └── services/          # SDDM theme, NBFC (fan control)
+│   └── services/          # SDDM theme, greetd
 ├── packages/              # Custom package definitions (SDDM theme)
 └── lib/                   # Helpers (rebuild script, palette loader)
 ```
@@ -60,10 +76,12 @@ rebuild
 
 **Importante:** O comando `rebuild` (definido em `lib/default.nix`) equivale a `nixos-rebuild switch --flake ~/dotfiles#bunny`. Rode com `sudo` se necessario.
 
-## GPU (NVIDIA Optimus)
+**Instalacao nova:** `hosts/bunny/hardware-configuration.nix` e um placeholder (labels `nixos` e `boot`). No primeiro uso, `sudo nix run ~/dotfiles#rebuild` copia o `/etc/nixos/hardware-configuration.nix` gerado pelo instalador para o repo (e faz `git add`), depois e so commitar.
 
-- Intel iGPU + NVIDIA dGPU em modo Prime Sync
-- Driver NVIDIA branch 580 (legacy)
+## GPU
+
+- Radeon RX 7600 com `amdgpu` + Mesa (RADV para Vulkan, VA-API para video)
+- A iGPU do Ryzen usa o mesmo driver, sem config extra. `amdgpu` carrega no initrd (`hardware.amdgpu.initrd.enable`)
 
 ## Estrutura de disco
 
