@@ -33,7 +33,7 @@
   fileSystems."/mnt/exssd" = {
     device = "/dev/disk/by-uuid/9ee1328e-249b-413e-922d-a30872f6d770";
     fsType = "ext4";
-    options = ["defaults"];
+    options = ["defaults" "nofail"];
   };
 
   #swapDevices = [{ 
