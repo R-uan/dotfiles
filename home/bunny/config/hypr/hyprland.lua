@@ -13,8 +13,6 @@ hl.on("hyprland.start", function()
   hl.exec_cmd "hyprsunset"
   hl.exec_cmd "otd-daemon"
   hl.exec_cmd "awww-daemon"
-  hl.exec_cmd "wl-paste --type text --watch cliphist store"
-  hl.exec_cmd "wl-paste --type image --watch cliphist store"
   hl.exec_cmd "quickshell -p ~/.config/quickshell"
   hl.exec_cmd "setxkbmap -layout br -variant nodeadkeys"
   hl.exec_cmd "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
