@@ -9,6 +9,8 @@ import "windows/networkmenu"
 import "windows/resourcesmenu"
 import "windows/bluetoothmenu"
 import "windows/audiomenu"
+import "windows/sunsetmenu"
+import "windows/calendarmenu"
 import "windows/launcher"
 import "windows/wallpapers"
 
@@ -21,7 +23,7 @@ ShellRoot {
   function hideOthers(except) {
     const panels = [
       startmenu, powermenu, notificationcenter, networkmenu,
-      resourcesmenu, bluetoothmenu, audiomenu, wallpapers, launcher
+      resourcesmenu, bluetoothmenu, audiomenu, sunsetmenu, calendarmenu, wallpapers, launcher
     ];
     for (let p of panels) {
       if (!p || p === except) continue;
@@ -69,6 +71,16 @@ ShellRoot {
   AudioMenu {
     id: audiomenu
     onVisibleChanged: if (visible) shellRoot.hideOthers(audiomenu)
+  }
+
+  SunsetMenu {
+    id: sunsetmenu
+    onVisibleChanged: if (visible) shellRoot.hideOthers(sunsetmenu)
+  }
+
+  CalendarMenu {
+    id: calendarmenu
+    onVisibleChanged: if (visible) shellRoot.hideOthers(calendarmenu)
   }
 
   Wallpapers {

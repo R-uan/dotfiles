@@ -9,6 +9,7 @@
     ./programs/kitty.nix
     ./programs/hyprlock.nix
     ./programs/hypridle.nix
+    ./programs/zen-browser.nix
   ];
 
   home.pointerCursor = {
@@ -76,7 +77,6 @@
     chromium
     obs-studio
     thunderbird
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     vlc     # Media Player
     dorion  # Tiny discord client alternative
@@ -92,7 +92,7 @@
     # Packages on unstable channel for separate updating
     inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.siyuan # Personal Notes (Obsidian Replacement)
   ];
-
+  services.hyprsunset.enable = true;
   home.sessionVariables = {
     HDD = "/mnt/hdd";
     CODE = "/mnt/hdd/home/code";
