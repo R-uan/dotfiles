@@ -16,19 +16,11 @@ Item {
   function openYazi(folder) {
     Quickshell.execDetached([
       Config.scriptsDir + "/openfilemanager.sh",
-      Config.homeShortcutDir + "/" + folder
+      folder.startsWith("/") ? folder : Config.homeShortcutDir + "/" + folder
     ]);
   }
 
-  readonly property var dirs: [
-    { label: "downloads", folder: "downloads" },
-    { label: "documents", folder: "documents" },
-    { label: "images",    folder: "images"    },
-    { label: "music",     folder: "music"     },
-    { label: "code",      folder: "code"      },
-    { label: "desktop",   folder: "desktop"   },
-    { label: "dotfiles",  folder: "/home/bunny/dotfiles/"  },
-  ]
+  readonly property var dirs: Config.startMenuFolders
 
   // Two fixed rows: first 4, then remaining 3
   ColumnLayout {

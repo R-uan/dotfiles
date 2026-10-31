@@ -7,30 +7,15 @@ import QtQuick
 import Quickshell
 import QtQuick.Layouts
 
-PanelWindow {
+DockedPanel {
+  edge: "bottom"
   id: sunsetMenu
   visible: false
-  implicitWidth: 300
+  cardWidth: 300
   color: "transparent"
   objectName: "Sunset Menu"
-  implicitHeight: mainLayout.implicitHeight + 28
+  cardHeight: mainLayout.implicitHeight + 28
   exclusionMode: ExclusionMode.Normal
-
-  anchors {
-    bottom: true
-    left: true
-    right: false
-    top: false
-  }
-
-  margins {
-    bottom: 6
-    left: 6
-  }
-
-  Background {
-    radius: 14
-  }
 
   property alias timer: timer
 

@@ -14,6 +14,7 @@ import "windows/calendarmenu"
 import "windows/launcher"
 import "windows/wallpapers"
 import "windows/osd"
+import "windows/clipboard"
 
 import QtQuick
 import Quickshell
@@ -24,7 +25,8 @@ ShellRoot {
   function hideOthers(except) {
     const panels = [
       startmenu, powermenu, notificationcenter, networkmenu,
-      resourcesmenu, bluetoothmenu, audiomenu, sunsetmenu, calendarmenu, wallpapers, launcher
+      resourcesmenu, bluetoothmenu, audiomenu, sunsetmenu, calendarmenu, wallpapers, launcher,
+      clipboard
     ];
     for (let p of panels) {
       if (!p || p === except) continue;
@@ -92,6 +94,11 @@ ShellRoot {
   Launcher {
     id: launcher
     onVisibleChanged: if (visible) shellRoot.hideOthers(launcher)
+  }
+
+  ClipboardMenu {
+    id: clipboard
+    onVisibleChanged: if (visible) shellRoot.hideOthers(clipboard)
   }
 
   // Not in hideOthers: it is a transient overlay, not a panel.

@@ -13,7 +13,7 @@ Item {
   visible: implicitHeight > 0
   clip: true
 
-  Behavior on implicitHeight { NumberAnimation { duration: 140; easing.type: Easing.OutCubic } }
+  Behavior on implicitHeight { Anim { duration: Motion.fastSpatialDuration } }
 
   Rectangle {
     anchors.centerIn: parent

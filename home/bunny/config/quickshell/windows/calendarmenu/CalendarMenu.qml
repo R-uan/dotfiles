@@ -8,29 +8,15 @@ import QtQuick.Layouts
 
 // Opens beside the clock: anchored only to the left edge, so the layer
 // shell centres it vertically, which is where the clock sits on the bar.
-PanelWindow {
+DockedPanel {
+  edge: "center"
   id: calendarMenu
   visible: false
-  implicitWidth: 320
-  implicitHeight: layout.implicitHeight + 28
+  cardWidth: 320
+  cardHeight: layout.implicitHeight + 28
   color: "transparent"
   objectName: "Calendar Menu"
   exclusionMode: ExclusionMode.Normal
-
-  anchors {
-    left: true
-    top: false
-    bottom: false
-    right: false
-  }
-
-  margins {
-    left: 6
-  }
-
-  Background {
-    radius: 14
-  }
 
   property alias timer: timer
 
@@ -57,10 +43,8 @@ PanelWindow {
     width: parent.width - 28
     spacing: 12
 
-    // Calendar content is ~210px (header + weekday row + 6-week grid).
     Calendar {
       Layout.fillWidth: true
-      Layout.preferredHeight: 216
     }
 
     Rectangle {

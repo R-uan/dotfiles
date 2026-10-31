@@ -74,6 +74,12 @@
     dxvk                # Not sure what this is
     libnotify           # Notifications Manager ?
     hyprshot            # Screenshots
+    cliphist            # Clipboard history (quickshell clipboard panel)
+    wl-clipboard        # wl-copy / wl-paste, feeds cliphist
+    wtype               # Types Ctrl+V when pasting from the clipboard panel
+    wf-recorder         # Screen recorder (quickshell recorder)
+    slurp               # Region picker for recordings
+    imagemagick         # Wallpaper picker thumbnails
     pavucontrol         # PulseAudio Control User Interface
     cloudflare-warp     # Cloudflare VPN (Not really a VPN, used to get better routes for FFXIV)
     (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {

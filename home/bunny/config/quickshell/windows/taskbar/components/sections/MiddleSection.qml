@@ -17,8 +17,6 @@ Item {
     width: parent.width
     spacing: Config.spacing
 
-    MediaChip {}
-
     YepClock {
       Layout.alignment: Qt.AlignHCenter
     }

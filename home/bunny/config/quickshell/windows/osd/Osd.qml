@@ -9,8 +9,8 @@ import Quickshell.Wayland
 import QtQuick.Layouts
 
 // On-screen display that slides out of the bar at mid height, e.g. on
-// volume changes. Content comes from OsdService; input passes straight
-// through (empty mask), so it never steals a click.
+// volume changes. Content comes from OsdService. Only the card takes input:
+// hovering keeps it open and scrolling adjusts what it shows.
 PanelWindow {
   id: osd
   color: "transparent"
@@ -19,7 +19,7 @@ PanelWindow {
   WlrLayershell.layer: WlrLayer.Overlay
   WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
   WlrLayershell.namespace: "quickshell:osd"
-  mask: Region {}
+  mask: Region { item: assembly }
 
   // Set by shell.qml: don't pop up over a menu that already shows the value.
   property bool suppress: false
@@ -53,7 +53,10 @@ PanelWindow {
   Timer {
     id: hideTimer
     interval: 1600
-    onTriggered: osd._shown = false
+    onTriggered: {
+      if (cardHover.hovered) restart();
+      else osd._shown = false;
+    }
   }
 
   // ── Card ───────────────────────────────────────────────────────
@@ -68,8 +71,31 @@ PanelWindow {
     clip: true
     opacity: osd._shown ? 1 : 0
 
-    Behavior on width   { NumberAnimation { duration: 220; easing.type: Easing.OutCubic } }
-    Behavior on opacity { NumberAnimation { duration: 160 } }
+    // Springs out, accelerates back in (no overshoot past zero width).
+    Behavior on width {
+      Anim {
+        curve: osd._shown ? Motion.spatial : Motion.accel
+        duration: osd._shown ? Motion.spatialDuration : Motion.exitDuration
+      }
+    }
+    Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration } }
+
+    HoverHandler { id: cardHover }
+
+    // Scroll on the card to keep adjusting whatever it is showing.
+    WheelHandler {
+      onWheel: (event) => {
+        const up = event.angleDelta.y > 0;
+        if (OsdService.label === "Volume") AudioService.stepVolume(up ? 5 : -5);
+        else if (OsdService.label === "Microphone") {
+          // Mic volume isn't watched by OsdService (apps auto-adjust gain), so refresh by hand.
+          AudioService.setMicVolume(AudioService.micVolume + (up ? 5 : -5));
+          Qt.callLater(OsdService._showMic);
+        }
+        else return;
+        hideTimer.restart();
+      }
+    }
 
     Rectangle {
       x: -osd._cornerRadius
@@ -140,7 +166,7 @@ PanelWindow {
             width: Math.max(parent.height, parent.width * OsdService.value)
             radius: parent.radius
             color: OsdService.dimmed ? osd._muted : osd._fg
-            Behavior on width { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+            Behavior on width { Anim { duration: Motion.fastSpatialDuration } }
             Behavior on color { ColorAnimation { duration: 140 } }
           }
         }

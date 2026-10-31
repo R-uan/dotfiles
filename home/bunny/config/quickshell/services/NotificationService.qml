@@ -16,11 +16,82 @@ Singleton {
   // mako's do-not-disturb mode (defined in config/mako/config).
   property bool dnd: false
 
+  // ── Arrival times ─────────────────────────────────────────────
+  // mako keeps no timestamps, so record when each notification first shows
+  // up. mako's on-notify pings us over IPC (below), so that is effectively
+  // the arrival time. Saved to the cache so reloads keep them.
+  property var times: ({})          // key -> epoch ms
+  property real now: Date.now()     // ticks so relative labels stay fresh
+  property bool _timesLoaded: false
+
+  // mako reuses ids after a restart; the summary keeps old stamps from
+  // sticking to new notifications.
+  function _key(n) {
+    return n.id + "|" + (n.app_name || "") + "|" + String(n.summary || "").slice(0, 40);
+  }
+
+  function timeOf(n) { return n ? (root.times[root._key(n)] || 0) : 0; }
+
+  function _stamp(lists) {
+    const t = {};
+    const stamp = Date.now();
+    let changed = false;
+    for (const list of lists) {
+      for (const n of list) {
+        const k = root._key(n);
+        if (root.times[k]) t[k] = root.times[k];
+        else { t[k] = stamp; changed = true; }
+      }
+    }
+    // Entries mako no longer has are dropped, which also counts as a change.
+    if (!changed && Object.keys(t).length === Object.keys(root.times).length) return;
+    root.times = t;
+    timesFile.setText(JSON.stringify(t));
+  }
+
+  FileView {
+    id: timesFile
+    path: Quickshell.cachePath("notification-times.json")
+    printErrors: false
+    onLoaded: {
+      try { root.times = JSON.parse(text()) || {}; } catch (e) { root.times = {}; }
+      root._timesLoaded = true;
+      root.refresh();
+    }
+    // First run: nothing saved yet.
+    onLoadFailed: {
+      root._timesLoaded = true;
+      root.refresh();
+    }
+  }
+
+  Timer {
+    interval: 30000
+    running: true
+    repeat: true
+    onTriggered: root.now = Date.now()
+  }
+
+  // Called by mako's on-notify (config/mako/config) so new notifications
+  // are stamped and shown right away instead of on the next poll.
+  IpcHandler {
+    target: "notifications"
+    function arrived(): void { root.refresh(); }
+  }
+
   function _safeParse(txt) {
     try { return JSON.parse(txt); } catch (e) { return []; }
   }
 
-  function refresh() { notifProc.running = true; }
+  function refresh() {
+    if (root._timesLoaded) notifProc.running = true;
+  }
+
+  // Runs the notification's default action, then mako drops it.
+  function invoke(id) {
+    dismissProc.command = ["makoctl", "invoke", "-n", String(id)];
+    dismissProc.running = true;
+  }
 
   function dismiss(id) {
     dismissProc.command = ["makoctl", "dismiss", "-n", String(id)];
@@ -43,7 +114,7 @@ Singleton {
 
   Process {
     id: notifProc
-    running: true
+    running: false   // started once the saved times are loaded
     command: [Config.scriptsDir + "/getnotifications.sh"]
     stdout: StdioCollector {
       onStreamFinished: {
@@ -57,6 +128,7 @@ Singleton {
         const historyChunk = text.slice(marker).replace(/^HISTORY\s*/, "").trim();
         root.active = root._safeParse(activeChunk);
         root.history = root._safeParse(historyChunk);
+        root._stamp([root.active, root.history]);
       }
     }
   }
@@ -95,7 +167,7 @@ Singleton {
     running: true
     repeat: true
     onTriggered: {
-      notifProc.running = true;
+      root.refresh();
       modeProc.running = true;
     }
   }

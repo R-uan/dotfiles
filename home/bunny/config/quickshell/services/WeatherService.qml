@@ -20,8 +20,6 @@ Singleton {
   property string icon: ""
   property var forecast: []       // list of { day, icon, max, min }
 
-  readonly property var _dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-
   // WWO weather codes, as used by wttr.in, to nerd-font weather glyphs.
   function iconFor(code, night) {
     const c = parseInt(code);
@@ -69,7 +67,7 @@ Singleton {
           const midday = d.hourly && d.hourly[4] ? d.hourly[4].weatherCode : 113;
           const date = new Date(d.date + "T12:00:00");
           days.push({
-            day:  days.length === 0 ? "Today" : root._dayNames[date.getDay()],
+            day:  days.length === 0 ? "Today" : Qt.locale(Config.timeLocale).dayName(date.getDay(), Locale.ShortFormat).replace(".", ""),
             icon: root.iconFor(midday, false),
             max:  parseInt(d.maxtempC) || 0,
             min:  parseInt(d.mintempC) || 0

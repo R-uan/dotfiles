@@ -6,3 +6,4 @@ Card 1.0 Card.qml
 Storage 1.0 Storage.qml
 AppLauncher 1.0 AppLauncher.qml
 QuickToggles 1.0 QuickToggles.qml
+CaptureRow 1.0 CaptureRow.qml

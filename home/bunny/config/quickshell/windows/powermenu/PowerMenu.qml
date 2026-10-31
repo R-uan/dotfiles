@@ -6,30 +6,15 @@ import QtQuick
 import Quickshell
 import QtQuick.Layouts
 
-PanelWindow {
+DockedPanel {
+  edge: "bottom"
   id: powerMenu
   visible: false
-  implicitWidth: 260
+  cardWidth: 260
   color: "transparent"
   objectName: "Power Menu"
-  implicitHeight: mainLayout.implicitHeight + 28
+  cardHeight: mainLayout.implicitHeight + 28
   exclusionMode: ExclusionMode.Normal
-
-  anchors {
-    bottom: true
-    left: true
-    right: false
-    top: false
-  }
-
-  margins {
-    bottom: 6
-    left: 6
-  }
-
-  Background {
-    radius: 14
-  }
 
   property alias timer: timer
   // Which action is armed for confirmation ("", "poweroff", "reboot", "lock")

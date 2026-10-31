@@ -14,6 +14,10 @@ max-history=100
 # Stack repeats from the same app instead of flooding the corner.
 group-by=app-name,category
 
+# Tell quickshell straight away so its notification center can timestamp
+# the notification (mako's JSON has no time) and refresh without polling.
+on-notify=exec qs -p ~/.config/quickshell ipc call notifications arrived
+
 ### Layout
 
 font=Iosevka 12

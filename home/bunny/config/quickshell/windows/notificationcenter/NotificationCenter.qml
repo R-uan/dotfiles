@@ -7,33 +7,18 @@ import Quickshell
 import QtQuick.Controls
 import QtQuick.Layouts
 
-PanelWindow {
+DockedPanel {
+  edge: "bottom"
   id: notifCenter
   visible: false
-  implicitWidth: 340
+  cardWidth: 340
   color: "transparent"
   objectName: "Notification Center"
-  implicitHeight: mainLayout.implicitHeight + 28
+  cardHeight: mainLayout.implicitHeight + 28
   exclusionMode: ExclusionMode.Normal
 
   // Never grow past ~60% of the screen; the list scrolls beyond that
   readonly property int maxListHeight: Math.max(200, Math.round((screen ? screen.height : 1000) * 0.6))
-
-  anchors {
-    bottom: true
-    left: true
-    right: false
-    top: false
-  }
-
-  margins {
-    bottom: 6
-    left: 6
-  }
-
-  Background {
-    radius: 14
-  }
 
   property alias timer: timer
 
@@ -91,6 +76,18 @@ PanelWindow {
         text: NotificationService.activeCount + " active · " + NotificationService.historyCount + " past"
         font.pixelSize: Config.fontSize - 3
         color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+      }
+      StyledText {
+        Layout.leftMargin: 4
+        text: "󰂛"
+        font.pixelSize: Config.fontSize - 1
+        color: NotificationService.dnd
+          ? (Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0)
+          : (Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3)
+      }
+      Toggle {
+        checked: NotificationService.dnd
+        onToggled: NotificationService.toggleDnd()
       }
     }
 

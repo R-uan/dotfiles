@@ -6,34 +6,25 @@ import QtQuick
 import Quickshell
 import QtQuick.Layouts
 
-PanelWindow {
+DockedPanel {
   id: btMenu
+  edge: "bottom"
   visible: false
-  implicitWidth: 340
+  cardWidth: 340
   color: "transparent"
   objectName: "Bluetooth Menu"
-  implicitHeight: mainLayout.implicitHeight + 28
-  exclusionMode: ExclusionMode.Normal
-
-  anchors {
-    bottom: true
-    left: true
-    right: false
-    top: false
-  }
-
-  margins {
-    bottom: 6
-    left: 6
-  }
-
-  Background {
-    radius: 14
-  }
+  cardHeight: mainLayout.implicitHeight + 28
 
   property alias timer: timer
 
+  readonly property color _fg:   Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
+  readonly property color _acc:  Config.darkMode ? ThemeDark.primary1    : ThemeLight.primary1
+  readonly property color _dim:  Config.darkMode ? ThemeDark.primary3    : ThemeLight.primary3
+  readonly property color _mute: Config.darkMode ? ThemeDark.muted       : ThemeLight.muted
+  readonly property color _line: Config.darkMode ? Qt.rgba(1,1,1,0.07)   : Qt.rgba(0,0,0,0.07)
+
   onVisibleChanged: {
+    BluetoothService.watching = visible;
     if (visible) BluetoothService.refresh();
   }
 
@@ -51,14 +42,38 @@ PanelWindow {
     }
   }
 
+  component SectionLabel: StyledText {
+    Layout.fillWidth: true
+    Layout.topMargin: 4
+    font.pixelSize: Config.fontSize - 5
+    font.letterSpacing: 1.6
+    color: btMenu._dim
+  }
+
+  component DeviceList: ColumnLayout {
+    property var devices: []
+    Layout.fillWidth: true
+    spacing: 2
+    Repeater {
+      model: parent.devices
+      delegate: BtRow {
+        required property var modelData
+        Layout.fillWidth: true
+        device: modelData
+        onActivated: BluetoothService.activate(modelData)
+        onForgetRequested: BluetoothService.forget(modelData.mac)
+      }
+    }
+  }
+
   ColumnLayout {
     id: mainLayout
-    spacing: 10
+    spacing: 8
     width: parent.width - 28
     x: 14
     y: 14
 
-    // Header
+    // ── Header ────────────────────────────────────────────
     RowLayout {
       Layout.fillWidth: true
       spacing: 8
@@ -68,144 +83,130 @@ PanelWindow {
           ? (BluetoothService.connectedCount > 0 ? "󰂱" : "󰂯")
           : "󰂲"
         font.pixelSize: Config.fontSize + 4
-        color: BluetoothService.powered
-          ? (Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1)
-          : (Config.darkMode ? ThemeDark.muted : ThemeLight.muted)
+        color: BluetoothService.powered ? btMenu._acc : btMenu._mute
       }
-      StyledText {
-        text: "Bluetooth"
-        font.pixelSize: Config.fontSize - 1
-        font.letterSpacing: 1.4
-        color: Config.darkMode ? ThemeDark.primary1 : ThemeLight.primary1
-      }
-      Item { Layout.fillWidth: true }
-      StyledText {
-        text: !BluetoothService.powered ? "off"
-            : BluetoothService.connectedCount > 0 ? "connected"
-            : "on"
-        font.pixelSize: Config.fontSize - 4
-        font.letterSpacing: 1.4
-        color: !BluetoothService.powered
-          ? (Config.darkMode ? ThemeDark.muted : ThemeLight.muted)
-          : (BluetoothService.connectedCount > 0
-              ? (Config.darkMode ? ThemeDark.success : ThemeLight.success)
-              : (Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3))
-      }
-    }
-
-    // Divider
-    Rectangle {
-      Layout.fillWidth: true
-      height: 1
-      color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
-    }
-
-    // Controls
-    RowLayout {
-      Layout.fillWidth: true
-      spacing: 6
-
-      BtPill {
-        icon: "󰂯"
-        label: BluetoothService.powered ? "on" : "off"
-        active: BluetoothService.powered
-        onClicked: BluetoothService.togglePower()
-      }
-      BtPill {
-        visible: BluetoothService.powered
-        icon: "󰐷"
-        label: BluetoothService.scanning ? "scanning" : "scan"
-        active: BluetoothService.scanning
-        onClicked: BluetoothService.toggleScan()
+      ColumnLayout {
+        spacing: 0
+        StyledText {
+          text: "Bluetooth"
+          font.pixelSize: Config.fontSize - 1
+          font.letterSpacing: 1.4
+          color: btMenu._fg
+        }
+        StyledText {
+          text: !BluetoothService.powered ? "off"
+              : BluetoothService.connectedCount > 0
+                ? BluetoothService.connectedCount + " connected"
+                : "on · no devices connected"
+          font.pixelSize: Config.fontSize - 5
+          color: btMenu._dim
+        }
       }
       Item { Layout.fillWidth: true }
+      Toggle {
+        checked: BluetoothService.powered
+        onToggled: BluetoothService.togglePower()
+      }
     }
 
-    // Divider
-    Rectangle {
+    // Divider; becomes a sweeping bar while scanning.
+    Item {
       Layout.fillWidth: true
-      height: 1
-      color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
+      implicitHeight: 2
+
+      Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width
+        height: 1
+        color: btMenu._line
+      }
+      Rectangle {
+        id: sweep
+        visible: BluetoothService.scanning
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width * 0.3
+        height: 2
+        radius: 1
+        color: btMenu._fg
+        opacity: 0.6
+        SequentialAnimation on x {
+          running: sweep.visible
+          loops: Animation.Infinite
+          NumberAnimation { from: -sweep.width; to: sweep.parent.width; duration: 1200; easing.type: Easing.InOutQuad }
+        }
+      }
+    }
+
+    // ── Devices ───────────────────────────────────────────
+    Flickable {
+      Layout.fillWidth: true
+      Layout.preferredHeight: Math.min(320, devCol.implicitHeight)
       visible: BluetoothService.powered
-    }
-
-    // Section label
-    RowLayout {
-      Layout.fillWidth: true
-      visible: BluetoothService.powered
-
-      StyledText {
-        text: "DEVICES"
-        font.pixelSize: Config.fontSize - 4
-        font.letterSpacing: 1.6
-        color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
-      }
-      Item { Layout.fillWidth: true }
-      StyledText {
-        text: BluetoothService.devices.length + " known"
-        font.pixelSize: Config.fontSize - 4
-        color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
-      }
-    }
-
-    // Device list (scrollable, capped)
-    Rectangle {
-      Layout.fillWidth: true
-      Layout.preferredHeight: Math.min(6 * 36, devCol.implicitHeight)
-      visible: BluetoothService.powered && BluetoothService.devices.length > 0
-      radius: 8
-      color: "transparent"
+      contentHeight: devCol.implicitHeight
+      boundsBehavior: Flickable.StopAtBounds
       clip: true
 
-      Flickable {
-        anchors.fill: parent
-        contentHeight: devCol.implicitHeight
-        clip: true
+      ColumnLayout {
+        id: devCol
+        width: parent.width
+        spacing: 4
 
-        ColumnLayout {
-          id: devCol
-          width: parent.width
-          spacing: 2
+        SectionLabel {
+          visible: BluetoothService.connectedDevices.length > 0
+          text: "CONNECTED"
+        }
+        DeviceList { devices: BluetoothService.connectedDevices }
 
-          Repeater {
-            model: BluetoothService.devices
-            delegate: BtRow {
-              Layout.fillWidth: true
-              device: modelData
-              onActivated: {
-                if (!modelData) return;
-                if (modelData.connected) BluetoothService.disconnect(modelData.mac);
-                else if (modelData.paired) BluetoothService.connect(modelData.mac);
-                else {
-                  BluetoothService.pair(modelData.mac);
-                  BluetoothService.trust(modelData.mac);
-                  BluetoothService.connect(modelData.mac);
-                }
-              }
-              onForgetRequested: BluetoothService.forget(modelData.mac)
-            }
+        SectionLabel {
+          visible: BluetoothService.pairedDevices.length > 0
+          text: "PAIRED"
+        }
+        DeviceList { devices: BluetoothService.pairedDevices }
+
+        RowLayout {
+          Layout.fillWidth: true
+          Layout.topMargin: 4
+          SectionLabel {
+            Layout.topMargin: 0
+            text: "AVAILABLE"
           }
+          BtPill {
+            icon: "󰐷"
+            label: BluetoothService.scanning ? "scanning" : "scan"
+            active: BluetoothService.scanning
+            onClicked: BluetoothService.toggleScan()
+          }
+        }
+        DeviceList { devices: BluetoothService.availableDevices }
+
+        StyledText {
+          visible: BluetoothService.availableDevices.length === 0
+          Layout.fillWidth: true
+          text: BluetoothService.scanning ? "Looking for devices…" : "Scan to find new devices"
+          font.pixelSize: Config.fontSize - 4
+          color: btMenu._mute
         }
       }
     }
 
     StyledText {
-      visible: BluetoothService.powered && BluetoothService.devices.length === 0
+      visible: BluetoothService.lastError.length > 0
       Layout.fillWidth: true
-      horizontalAlignment: Text.AlignHCenter
-      text: BluetoothService.scanning ? "Scanning…" : "No devices. Press scan."
-      font.pixelSize: Config.fontSize - 2
-      color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+      text: BluetoothService.lastError
+      elide: Text.ElideRight
+      font.pixelSize: Config.fontSize - 4
+      color: Config.darkMode ? ThemeDark.error : ThemeLight.error
     }
 
     StyledText {
       visible: !BluetoothService.powered
       Layout.fillWidth: true
       Layout.topMargin: 4
+      Layout.bottomMargin: 4
       horizontalAlignment: Text.AlignHCenter
       text: "Bluetooth is off"
       font.pixelSize: Config.fontSize - 2
-      color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+      color: btMenu._dim
     }
   }
 }

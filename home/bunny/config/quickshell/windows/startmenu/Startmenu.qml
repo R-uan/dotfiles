@@ -8,30 +8,15 @@ import QtQuick.Effects
 import QtQuick.Window
 import QtQuick.Layouts
 
-PanelWindow {
+DockedPanel {
+  edge: "top"
   id: quickMenu
   visible: false
-  implicitWidth: 480
+  cardWidth: 480
   color: "transparent"
   objectName: "Start Menu"
-  implicitHeight: mainLayout.implicitHeight
+  cardHeight: mainLayout.implicitHeight
   exclusionMode: ExclusionMode.Normal
-
-  anchors {
-    top: true
-    left: true
-    right: false
-  }
-
-  margins {
-    top: 6
-    left: 6
-    bottom: 6
-  }
-
-  Background {
-    radius: 14
-  }
 
   property alias timer: timer
 
@@ -51,18 +36,60 @@ PanelWindow {
       // Button overflows 32px below the card — account for that in height
       implicitHeight: cardClip.implicitHeight + 10
 
-      // Clipping wrapper — only the image gets clipped
       Item {
         id: cardClip
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        implicitHeight: Math.min(cardInner.implicitHeight, 155)
-        clip: true
+        implicitHeight: 155
 
         Card {
           id: cardInner
-          width: parent.width
+          anchors.fill: parent
+        }
+
+        // Greeting over the wallpaper (caelestia's user/date card).
+        Rectangle {
+          anchors.fill: parent
+          radius: cardInner.radius
+          gradient: Gradient {
+            orientation: Gradient.Horizontal
+            GradientStop { position: 0.0; color: Qt.rgba(0, 0, 0, 0.55) }
+            GradientStop { position: 0.6; color: Qt.rgba(0, 0, 0, 0.0) }
+          }
+        }
+
+        SystemClock {
+          id: heroClock
+          precision: SystemClock.Minutes
+        }
+
+        ColumnLayout {
+          anchors.left: parent.left
+          anchors.bottom: parent.bottom
+          anchors.leftMargin: 14
+          anchors.bottomMargin: 12
+          spacing: 0
+
+          StyledText {
+            text: Qt.formatTime(heroClock.date, "HH:mm")
+            font.pixelSize: Config.fontSize + 22
+            font.weight: Font.Medium
+            color: Qt.rgba(1, 1, 1, 0.95)
+          }
+          StyledText {
+            readonly property int _h: heroClock.date.getHours()
+            text: (_h < 5 ? "Good night" : _h < 12 ? "Good morning" : _h < 18 ? "Good afternoon" : "Good evening")
+                  + ", " + (Quickshell.env("USER") || "you")
+            font.pixelSize: Config.fontSize - 1
+            color: Qt.rgba(1, 1, 1, 0.85)
+          }
+          StyledText {
+            text: "up " + UptimeService.uptimeShort
+            font.pixelSize: Config.fontSize - 4
+            font.letterSpacing: 1.2
+            color: Qt.rgba(1, 1, 1, 0.55)
+          }
         }
       }
 
@@ -110,6 +137,14 @@ PanelWindow {
     // ── Quick toggles ────────────────────────────────────────────────────
     QuickToggles {
       Layout.topMargin: 4
+      Layout.leftMargin: 14
+      Layout.rightMargin: 14
+      Layout.fillWidth: true
+    }
+
+    // ── Capture: screenshots, recording, clipboard ───────────────────────
+    CaptureRow {
+      Layout.topMargin: 6
       Layout.leftMargin: 14
       Layout.rightMargin: 14
       Layout.fillWidth: true

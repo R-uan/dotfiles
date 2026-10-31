@@ -3,7 +3,7 @@
 #   POWERED=yes|no
 #   SCANNING=yes|no
 #   ---DEVICES---
-#   MAC|NAME|ICON|PAIRED|CONNECTED|TRUSTED
+#   MAC|NAME|ICON|PAIRED|CONNECTED|TRUSTED|BATTERY  (battery: 0-100, or empty)
 
 powered=no
 scanning=no
@@ -23,7 +23,7 @@ echo "---DEVICES---"
 if [ "$powered" = "yes" ]; then
   bluetoothctl devices 2>/dev/null | while read -r _dev mac _rest; do
     [ -z "$mac" ] && continue
-    name=""; icon=""; paired=no; connected=no; trusted=no
+    name=""; icon=""; paired=no; connected=no; trusted=no; battery=""
     while IFS= read -r line; do
       case "$line" in
         *"Name: "*)      name=${line#*Name: } ;;
@@ -31,8 +31,10 @@ if [ "$powered" = "yes" ]; then
         *"Paired: "*)    paired=${line#*Paired: } ;;
         *"Connected: "*) connected=${line#*Connected: } ;;
         *"Trusted: "*)   trusted=${line#*Trusted: } ;;
+        # "Battery Percentage: 0x55 (85)"
+        *"Battery Percentage: "*) battery=${line##*\(}; battery=${battery%\)} ;;
       esac
     done < <(bluetoothctl info "$mac" 2>/dev/null)
-    echo "$mac|$name|$icon|$paired|$connected|$trusted"
+    echo "$mac|$name|$icon|$paired|$connected|$trusted|$battery"
   done
 fi

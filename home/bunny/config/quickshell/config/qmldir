@@ -3,3 +3,4 @@ module qs.config
 singleton Config 1.0 Config.qml
 singleton ThemeDark 1.0 Theme.dark.qml
 singleton ThemeLight 1.0 Theme.light.qml
+singleton Motion 1.0 Motion.qml

@@ -2,65 +2,43 @@ import qs.shared
 import qs.config
 import qs.services
 import QtQuick
-import Quickshell
 import QtQuick.Effects
-import QtQuick.Window
-import QtQuick.Layouts
 
-// Card
+// Current wallpaper, cropped to fill this item and rounded at its own
+// corners. (It used to round the full-height image and get clipped
+// afterwards, which cut the bottom corners square.)
 Item {
   id: root
-  implicitHeight: col.implicitHeight
-  implicitWidth: col.implicitWidth
+  property real radius: 10
 
-  ColumnLayout {
-    id: col
-    spacing: 25
-    anchors.centerIn: parent
+  Image {
+    id: img
+    anchors.fill: parent
+    visible: false
+    smooth: true
+    mipmap: true
+    asynchronous: true
+    fillMode: Image.PreserveAspectCrop
+    sourceSize.width: 960
+    source: WallpaperService.wallpaperPath
+  }
 
-    Item {
-      Layout.preferredWidth: root.width
-      // Height follows the image's natural aspect ratio
-      Layout.preferredHeight: img.sourceSize.height > 0
-        ? img.sourceSize.height * (root.width / img.sourceSize.width)
-        : root.width
-      Layout.alignment: Qt.AlignHCenter
-      clip: true
+  MultiEffect {
+    anchors.fill: parent
+    source: img
+    maskEnabled: true
+    maskSource: mask
+  }
 
-      Image {
-        id: img
-        smooth: true
-        mipmap: true
-        visible: false
-        width: parent.width
-        height: parent.height
-        fillMode: Image.PreserveAspectCrop
-        source: WallpaperService.wallpaperPath
-        anchors.centerIn: parent
-      }
-
-      MultiEffect {
-        source: img
-        anchors.fill: img
-        maskEnabled: true
-        maskSource: mask
-      }
-
-      Item {
-        id: mask
-        width: img.width
-        height: img.height
-        layer.enabled: true
-        visible: false
-        Rectangle {
-          radius: 8
-          color: "black"
-          width: img.width
-          height: img.height
-          border.width: 2
-          border.color: Config.darkMode ? ThemeDark.border : ThemeLight.border
-        }
-      }
+  Item {
+    id: mask
+    anchors.fill: parent
+    layer.enabled: true
+    visible: false
+    Rectangle {
+      anchors.fill: parent
+      radius: root.radius
+      color: "black"
     }
   }
 }

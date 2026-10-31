@@ -86,11 +86,12 @@ PanelWindow {
 
     opacity: resMenu._presented ? 1 : 0
     Behavior on width {
-      NumberAnimation { duration: 240; easing.type: Easing.OutCubic }
+      Anim {
+        curve: resMenu._presented ? Motion.spatial : Motion.accel
+        duration: resMenu._presented ? Motion.spatialDuration : Motion.exitDuration
+      }
     }
-    Behavior on opacity {
-      NumberAnimation { duration: 180 }
-    }
+    Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration } }
 
     Rectangle {
       x: -resMenu._cornerRadius

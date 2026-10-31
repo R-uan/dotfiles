@@ -1,0 +1,3 @@
+module qs.clipboard
+
+ClipboardMenu 1.0 ClipboardMenu.qml

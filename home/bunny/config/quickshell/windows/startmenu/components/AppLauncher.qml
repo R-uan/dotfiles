@@ -9,16 +9,7 @@ Item {
   id: root
   implicitHeight: 48
 
-  readonly property var apps: [
-    { name: "Zen",         icon: "󰈹", command: ["zen"] },
-    { name: "VSCode",      icon: "󰨞", command: ["code"] },
-    { name: "XIVLauncher", icon: "󰊴", command: ["XIVLauncher.Core"] },
-    { name: "Steam",       icon: "󰓓", command: ["steam"] },
-    { name: "Vesktop",     icon: "󰙯", command: ["vesktop"] },
-    { name: "Terminal",    icon: "", command: ["kitty"] },
-    { name: "Siyuan",      icon: "", command: ["siyuan"] },
-    { name: "All apps",    icon: "", launcher: true }
-  ]
+  readonly property var apps: Config.startMenuApps
 
   // Must be detached. A Quickshell Process is a child of quickshell and gets
   // killed when quickshell exits or reloads its config. Apps that fork and

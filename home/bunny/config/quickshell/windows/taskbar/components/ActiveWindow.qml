@@ -1,5 +1,6 @@
 import qs.shared
 import qs.config
+import qs.services
 
 import QtQuick
 import Quickshell
@@ -13,16 +14,27 @@ import QtQuick.Effects
 Item {
   id: root
 
-  readonly property var toplevel: ToplevelManager.activeToplevel
+  // What's displayed lags the real focus by a fade-out, so switching
+  // windows cross-fades instead of the icon and title snapping (caelestia).
+  // Title changes within the same window still update live.
+  readonly property var _focused: ToplevelManager.activeToplevel
+  property var toplevel: null
   readonly property string title: toplevel?.title ?? ""
   readonly property string appId: toplevel?.appId ?? ""
-  readonly property var entry: appId.length > 0 ? DesktopEntries.heuristicLookup(appId) : null
-  readonly property string iconSource: entry?.icon ? Quickshell.iconPath(entry.icon, true) : ""
+  readonly property string iconSource: AppIcons.source(appId)
+
+  on_FocusedChanged: swap.restart()
+  Component.onCompleted: toplevel = _focused
+
+  SequentialAnimation {
+    id: swap
+    Anim { target: root; property: "opacity"; to: 0; curve: Motion.accel; duration: 120 }
+    ScriptAction { script: root.toplevel = root._focused }
+    Anim { target: root; property: "opacity"; to: 1; curve: Motion.effects; duration: Motion.effectsDuration }
+  }
 
   // The bar is too narrow for anything useful once it shrinks below this.
   visible: toplevel !== null && height > 70
-  opacity: visible ? 1 : 0
-  Behavior on opacity { NumberAnimation { duration: 160 } }
 
   Item {
     id: iconBox
