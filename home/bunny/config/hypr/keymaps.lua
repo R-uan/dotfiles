@@ -12,6 +12,16 @@ hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(globals.terminal))
 -- hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("qs -p ~/.config/quickshell ipc call launcher toggle"))
 hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(globals.appLauncher))
 
+-- Media keys, routed through quickshell so its OSD shows the change
+local qsIpc = "qs -p ~/.config/quickshell ipc call "
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(qsIpc .. "audio up"), { locked = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(qsIpc .. "audio down"), { locked = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd(qsIpc .. "audio mute"), { locked = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(qsIpc .. "audio micMute"), { locked = true })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(qsIpc .. "media playPause"), { locked = true })
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd(qsIpc .. "media next"), { locked = true })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(qsIpc .. "media previous"), { locked = true })
+
 -- Window management
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
