@@ -4,8 +4,24 @@ Configuracao declarativa das minhas maquinas NixOS:
 
 | Host     | Maquina                                         | Papel                      |
 | -------- | ----------------------------------------------- | -------------------------- |
-| `bunny`  | Desktop Ryzen 5 7600 (iGPU, Radeon no futuro)   | Dev web + jogos (Hyprland) |
+| `bunny`  | Desktop Ryzen 5 7600 + Radeon RX 7600           | Dev web + jogos (Hyprland) |
 | `server` | Notebook Acer Nitro AN515-51                    | Home-server headless (SSH) |
+
+## Hardware do desktop (`bunny`)
+
+| Componente    | Modelo                                         | Driver no NixOS                         |
+| ------------- | ---------------------------------------------- | --------------------------------------- |
+| Processador   | AMD Ryzen 5 7600 (6 nucleos, 3.8 GHz)          | `kvm-amd` + microcode AMD               |
+| Placa-mae     | MSI PRO B840M-P WIFI6E (Micro ATX, AM5)        | Kernel padrao                           |
+| ↳ Rede        | Realtek RTL8125D 2.5 GbE                       | `r8169` (kernel 6.13+)                  |
+| ↳ Wi-Fi / BT  | Wi-Fi 6E + Bluetooth 5.3                       | Kernel + `hardware.enableAllFirmware`   |
+| Memoria       | ADATA XPG Lancer Blade RGB 8 GB DDR5-5600 (1x8) | -                                      |
+| Placa de video | ASRock Radeon RX 7600 Challenger 8 GB         | `amdgpu` + Mesa (RADV)                  |
+| Fonte         | XPG Core Reactor II VE 750 W (80+ Gold)        | -                                       |
+| Gabinete      | Mancer CV100 (Micro ATX)                       | -                                       |
+| Monitor       | LG UltraGear 24" 1920x1080 144 Hz              | -                                       |
+
+Problemas conhecidos de hardware e solucoes: [KNOWN_ISSUES.md](KNOWN_ISSUES.md)
 
 ```
 dotfiles/
@@ -80,7 +96,7 @@ nixos-rebuild switch --flake ~/dotfiles#server --target-host server --sudo --ask
 
 ## GPU
 
-- **Desktop:** AMD (amdgpu + Mesa/RADV). iGPU agora; uma Radeon dedicada funciona sem mudar a config.
+- **Desktop:** Radeon RX 7600 (amdgpu + Mesa/RADV). A iGPU do Ryzen usa o mesmo driver, sem config extra.
 - **Server:** GTX 1050 removida do barramento PCI (sem uso, economiza energia).
 
 ## Estrutura de disco

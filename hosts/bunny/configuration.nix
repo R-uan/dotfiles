@@ -1,5 +1,5 @@
-# Desktop: Ryzen 5 7600 (iGPU) + MSI PRO B840M-P WiFi6E
-# Ao instalar uma Radeon dedicada nada muda aqui: o amdgpu cobre iGPU e dGPU.
+# Desktop: Ryzen 5 7600 + Radeon RX 7600 + MSI PRO B840M-P WiFi6E
+# O amdgpu cobre a iGPU e a RX 7600, sem config extra.
 {...}: {
   imports = [
     ./hardware-configuration.nix
