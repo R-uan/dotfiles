@@ -1,18 +1,8 @@
 {...}: {
   hardware = {
-    nvidia = {
-      open = false;
-      branch = "legacy_580";
-      nvidiaSettings = true;
-      modesetting.enable = true;
-      powerManagement.enable = false;
-
-      prime = {
-        sync.enable = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
-    };
+    # amdgpu cobre a iGPU do Ryzen e a RX 7600 — Mesa já fornece RADV (Vulkan) e VA-API.
+    # Carrega no initrd (KMS cedo, Plymouth na resolução certa)
+    amdgpu.initrd.enable = true;
 
     graphics = {
       enable = true;

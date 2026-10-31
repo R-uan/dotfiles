@@ -76,5 +76,8 @@
         ];
       };
     };
+
+    # First rebuild on a fresh install: sudo nix run ~/dotfiles#rebuild
+    packages.${system}.rebuild = helpers.mkRebuildScript;
   };
 }
