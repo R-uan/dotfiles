@@ -93,7 +93,6 @@
     chromium
     obs-studio
     thunderbird
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     vlc     # Media Player
     dorion  # Tiny discord client alternative
