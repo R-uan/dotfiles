@@ -80,5 +80,11 @@
       bunny = mkHost "bunny" ./home/bunny/desktop.nix;   # Desktop Ryzen 5 7600 + Radeon
       server = mkHost "server" ./home/bunny/server.nix;  # Notebook Acer Nitro (home-server)
     };
+
+    # First rebuild on a fresh install: sudo nix run ~/dotfiles#rebuild-<host>
+    packages.${system} = {
+      rebuild-bunny = helpers.mkRebuildScript "bunny";
+      rebuild-server = helpers.mkRebuildScript "server";
+    };
   };
 }
