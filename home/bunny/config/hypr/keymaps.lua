@@ -26,6 +26,7 @@ hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(qsIpc .. "media previous"), { locked = 
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(qsIpc .. "clipboard toggle"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(qsIpc .. "recorder region"))
 hl.bind(mainMod .. " + ALT + R", hl.dsp.exec_cmd(qsIpc .. "recorder screen"))
+hl.bind(mainMod .. " + Tab", hl.dsp.exec_cmd(qsIpc .. "overview toggle"))
 
 -- Window management
 hl.bind(mainMod .. " + C", hl.dsp.window.close())

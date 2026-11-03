@@ -30,15 +30,18 @@
     (lua52Packages.lua.withPackages ( ps: with ps; [luafilesystem] ))                  
 
     ## AI agents
-    opencode
-    claude-code
+    opencode    # Open Source AI Agent (Deepseek)
+    claude-code # Claude
 
     ## Development Tools
+
     php
     bruno       # API Client
     nodejs
+    chromium    # For testing web apps
     phpactor    # PHP Language Server
     dbeaver-bin # Database Manager
+
     ## Code Editors
     zed-editor
     vscode-fhs
@@ -68,26 +71,22 @@
     # System Utilities
     awww                # Wallpaper Daemon for Wayland
     mako                # Notification
-    vicinae             # App Launcher
     rofi                # App Launcher
-    papirus-icon-theme  # Icon theme (rofi/GTK app icons)
     dxvk                # Not sure what this is
-    libnotify           # Notifications Manager ?
-    hyprshot            # Screenshots
-    cliphist            # Clipboard history (quickshell clipboard panel)
-    wl-clipboard        # wl-copy / wl-paste, feeds cliphist
     wtype               # Types Ctrl+V when pasting from the clipboard panel
-    wf-recorder         # Screen recorder (quickshell recorder)
     slurp               # Region picker for recordings
+    vicinae             # App Launcher
+    cliphist            # Clipboard history (quickshell clipboard panel)
+    hyprshot            # Screenshots
+    libnotify           # Notifications Manager ?
+    quickshell          # Desktop Widgets
+    wf-recorder         # Screen recorder (quickshell recorder)
     imagemagick         # Wallpaper picker thumbnails
     pavucontrol         # PulseAudio Control User Interface
+    wl-clipboard        # wl-copy / wl-paste, feeds cliphist
     cloudflare-warp     # Cloudflare VPN (Not really a VPN, used to get better routes for FFXIV)
-    (inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-      withX11 = false;
-      withWayland = true;
-      withPipewire = true;
-      withHyprland = true;
-    })                  # Desktop Widgets
+    papirus-icon-theme  # Icon theme (rofi/GTK app icons)
+
     # Gaming Related Packages
     mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU
     winetricks  # Essential Extension for Wine
@@ -96,16 +95,13 @@
       vulkanSupport = true;
     })          # Windows Compatibility Layer
 
-    chromium
-    obs-studio
-    thunderbird
-
-    vlc     # Media Player
-    dorion  # Tiny discord client alternative
-    spotify # It's spotify
-    vesktop # Alternative Discord Client
+    vlc         # Media Player
+    spotify     # It's spotify
+    vesktop     # Alternative Discord Client
+    obs-studio  # Screen Recording
+    thunderbird # Email Client
     telegram-desktop
-    proton-vpn
+
     # Fonts
     iosevka
     noto-fonts-cjk-serif # I think this is for chinese characters
