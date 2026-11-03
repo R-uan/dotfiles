@@ -11,7 +11,10 @@ Singleton {
   id: root
 
   readonly property var players: Mpris.players.values || []
-  readonly property MprisPlayer player: players.find(p => p.isPlaying) ?? players[0] ?? null
+  // Set by the start menu's player switcher; wins while that player exists.
+  property MprisPlayer pinned: null
+  readonly property MprisPlayer player: (pinned && players.includes(pinned) ? pinned : null)
+    ?? players.find(p => p.isPlaying) ?? players[0] ?? null
 
   readonly property bool hasPlayer: player !== null
   readonly property real position: player?.position ?? 0
@@ -32,4 +35,10 @@ Singleton {
   function togglePlaying() { if (root.player?.canTogglePlaying) root.player.togglePlaying(); }
   function next()          { if (root.player?.canGoNext) root.player.next(); }
   function previous()      { if (root.player?.canGoPrevious) root.player.previous(); }
+
+  // Step to the next player in the list and stick with it.
+  function cycle() {
+    if (players.length < 2) return;
+    pinned = players[(players.indexOf(player) + 1) % players.length];
+  }
 }

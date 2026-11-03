@@ -4,314 +4,397 @@ import qs.services
 import QtQuick
 import Quickshell
 import QtQuick.Effects
-import QtQuick.Window
 import QtQuick.Layouts
 import Quickshell.Services.Mpris
 
+// Now playing, after caelestia's media card: blurred art behind a rounded
+// card, art + track info, a draggable seek bar and a full control row.
+// The chip at the top names the player; with several around, clicking it
+// switches between them. Collapses to one line when nothing is playing.
 Item {
   id: root
-  property MprisPlayer player: MediaService.player
+  readonly property MprisPlayer player: MediaService.player
+  readonly property bool _has: player !== null
 
-  readonly property bool _hasPlayer: player !== null
-  readonly property real _pos: player?.position ?? 0
-  readonly property real _rawLen: player?.length ?? 0
-  // Some MPRIS players report absurd length values when metadata is missing.
-  readonly property bool _lenValid: _rawLen > 0 && _rawLen < 86400
-  readonly property real _len: _lenValid ? _rawLen : 0
-  readonly property real _pct: _lenValid ? Math.min(1, _pos / _len) : 0
+  implicitHeight: _has ? 168 : 44
+  Behavior on implicitHeight { Anim { duration: Motion.fastSpatialDuration } }
 
-  function _fmtTime(sec) {
+  readonly property string _placeholder: Quickshell.shellPath("assets/img/media-placeholder.jpg")
+  readonly property string _artSrc: player?.trackArtUrl || _placeholder
+
+  // While dragging the seek bar, show where it will land instead of the
+  // player's position.
+  property real _dragPct: -1
+  readonly property real _pct: _dragPct >= 0 ? _dragPct : MediaService.progress
+
+  function _fmt(sec) {
     if (!sec || sec <= 0) return "0:00";
-    const s = Math.floor(sec) % 60;
-    const m = Math.floor(sec / 60) % 60;
-    const h = Math.floor(sec / 3600);
-    const pad = (n) => (n < 10 ? "0" + n : String(n));
+    const s = Math.floor(sec) % 60, m = Math.floor(sec / 60) % 60, h = Math.floor(sec / 3600);
+    const pad = n => (n < 10 ? "0" + n : String(n));
     return (h > 0 ? h + ":" + pad(m) : m) + ":" + pad(s);
   }
 
-  Timer {
-    interval: 500
-    running: root.player?.isPlaying ?? false
-    repeat: true
-    onTriggered: if (root.player) root.player.positionChanged()
-  }
+  readonly property color _fg:  Qt.rgba(1, 1, 1, 0.95)
+  readonly property color _sub: Qt.rgba(1, 1, 1, 0.60)
+  readonly property color _dim: Qt.rgba(1, 1, 1, 0.38)
 
-  // Blurred art backdrop
-  Image {
-    id: bgBlur
-    anchors.centerIn: parent
-    width: parent.width * 1.15
-    height: parent.height * 1.15
-    fillMode: Image.PreserveAspectCrop
-    source: art.source
+  // ── Rounded backdrop: tile colour + blurred art ─────────────────────
+  Item {
+    id: backdrop
+    anchors.fill: parent
     visible: false
-    cache: true
+    layer.enabled: true
+
+    Rectangle {
+      anchors.fill: parent
+      color: Config.darkMode ? Qt.rgba(1, 1, 1, 0.04) : Qt.rgba(0, 0, 0, 0.04)
+    }
+    Image {
+      id: bgArt
+      anchors.centerIn: parent
+      width: parent.width * 1.2
+      height: parent.height * 1.6
+      fillMode: Image.PreserveAspectCrop
+      source: root._has ? root._artSrc : ""
+      sourceSize.width: 256
+      asynchronous: true
+      visible: false
+    }
+    MultiEffect {
+      anchors.fill: bgArt
+      source: bgArt
+      blurEnabled: true
+      blur: 1.0
+      blurMax: 64
+      saturation: -0.6
+      opacity: bgArt.status === Image.Ready ? 0.35 : 0
+      Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration * 2 } }
+    }
+    // Keeps text readable over bright art.
+    Rectangle {
+      anchors.fill: parent
+      gradient: Gradient {
+        orientation: Gradient.Horizontal
+        GradientStop { position: 0.0; color: Qt.rgba(0, 0, 0, 0.35) }
+        GradientStop { position: 1.0; color: Qt.rgba(0, 0, 0, 0.10) }
+      }
+    }
   }
   MultiEffect {
-    source: bgBlur
-    anchors.fill: bgBlur
-    blurEnabled: true
-    blur: 1.0
-    blurMax: 64
-    blurMultiplier: 2.0
-    opacity: 0.18
-    saturation: 0.4
+    anchors.fill: backdrop
+    source: backdrop
+    maskEnabled: true
+    maskSource: cardMask
+  }
+  Item {
+    id: cardMask
+    anchors.fill: parent
+    layer.enabled: true
+    visible: false
+    Rectangle { anchors.fill: parent; radius: 12; color: "black" }
+  }
+  Rectangle {
+    anchors.fill: parent
+    radius: 12
+    color: "transparent"
+    border.width: 1
+    border.color: Config.darkMode ? Qt.rgba(1, 1, 1, 0.06) : Qt.rgba(0, 0, 0, 0.06)
   }
 
+  // ── Nothing playing ─────────────────────────────────────────────────
+  RowLayout {
+    anchors.fill: parent
+    anchors.leftMargin: 14
+    anchors.rightMargin: 14
+    spacing: 10
+    visible: !root._has
+    opacity: root._has ? 0 : 1
+    Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration } }
+
+    StyledText {
+      text: "󰝚"
+      font.pixelSize: Config.fontSize + 2
+      color: root._dim
+    }
+    StyledText {
+      Layout.fillWidth: true
+      text: "Nothing playing"
+      font.pixelSize: Config.fontSize - 2
+      color: root._sub
+    }
+  }
+
+  // ── Player ──────────────────────────────────────────────────────────
   ColumnLayout {
     anchors.fill: parent
     anchors.margins: 12
     spacing: 8
+    visible: root._has
+    opacity: root._has ? 1 : 0
+    Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration } }
 
-    // ── Top row: art + title/artist/controls ────────────────
     RowLayout {
       Layout.fillWidth: true
       spacing: 12
 
       // Album art
       Item {
-        Layout.preferredWidth: 64
-        Layout.preferredHeight: 64
-        Layout.alignment: Qt.AlignVCenter
+        Layout.preferredWidth: 84
+        Layout.preferredHeight: 84
 
         Image {
           id: art
-          visible: false
           anchors.fill: parent
           fillMode: Image.PreserveAspectCrop
-          source: Quickshell.shellPath("assets/img/media-placeholder.jpg")
-          Connections {
-            target: root.player
-            function onTrackArtUrlChanged() {
-              if (root.player.trackArtUrl && root.player.trackArtUrl !== "")
-                art.source = root.player.trackArtUrl;
-            }
-            function onTrackTitleChanged() {
-              art.source = Quickshell.shellPath("assets/img/media-placeholder.jpg");
-            }
-          }
+          source: root._artSrc
+          sourceSize.width: 168
+          asynchronous: true
+          visible: false
         }
-
         MultiEffect {
-          source: art
           anchors.fill: art
+          source: art
           maskEnabled: true
           maskSource: artMask
-          visible: art.status === Image.Ready
+          opacity: art.status === Image.Ready ? 1 : 0
+          Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration } }
         }
-
         Item {
           id: artMask
-          width: art.width
-          height: art.height
+          anchors.fill: parent
           layer.enabled: true
           visible: false
-          Rectangle {
-            anchors.fill: parent
-            radius: 10
-            color: "black"
-          }
+          Rectangle { anchors.fill: parent; radius: 10; color: "black" }
         }
-
         Rectangle {
           anchors.fill: parent
           radius: 10
           color: "transparent"
-          border.color: Qt.rgba(1, 1, 1, 0.08)
           border.width: 1
+          border.color: Qt.rgba(1, 1, 1, 0.10)
         }
       }
 
-      // Title / artist
       ColumnLayout {
         Layout.fillWidth: true
-        Layout.alignment: Qt.AlignVCenter
+        Layout.alignment: Qt.AlignTop
         spacing: 2
 
+        // Player chip; click to switch when there's more than one.
+        Rectangle {
+          readonly property bool _multi: MediaService.players.length > 1
+          Layout.bottomMargin: 4
+          implicitWidth: chipRow.implicitWidth + 14
+          implicitHeight: 18
+          radius: 9
+          color: chipMouse.containsMouse && _multi ? Qt.rgba(1, 1, 1, 0.16) : Qt.rgba(1, 1, 1, 0.08)
+          Behavior on color { CAnim {} }
+
+          Row {
+            id: chipRow
+            anchors.centerIn: parent
+            spacing: 5
+            StyledText {
+              text: (root.player?.identity || "player").toLowerCase()
+              font.pixelSize: Config.fontSize - 5
+              font.letterSpacing: 1.2
+              color: root._sub
+            }
+            StyledText {
+              visible: parent.parent._multi
+              text: "󰓡 " + (MediaService.players.indexOf(root.player) + 1) + "/" + MediaService.players.length
+              font.pixelSize: Config.fontSize - 5
+              color: root._dim
+            }
+          }
+          MouseArea {
+            id: chipMouse
+            anchors.fill: parent
+            hoverEnabled: true
+            enabled: parent._multi
+            cursorShape: Qt.PointingHandCursor
+            onClicked: MediaService.cycle()
+          }
+        }
+
         StyledText {
           Layout.fillWidth: true
+          text: root.player?.trackTitle || "Unknown track"
           font.pixelSize: Config.fontSize + 1
           font.weight: Font.Medium
-          color: Qt.rgba(1, 1, 1, 0.95)
+          color: root._fg
           elide: Text.ElideRight
-          maximumLineCount: 1
-          text: root.player?.trackTitle && root.player.trackTitle.length > 0
-                  ? root.player.trackTitle
-                  : "Nothing playing"
         }
-
         StyledText {
           Layout.fillWidth: true
-          font.pixelSize: Config.fontSize - 3
-          font.letterSpacing: 1.4
-          color: Qt.rgba(1, 1, 1, 0.55)
+          visible: text.length > 0
+          text: root.player?.trackArtist ?? ""
+          font.pixelSize: Config.fontSize - 2
+          color: root._sub
           elide: Text.ElideRight
-          maximumLineCount: 1
-          text: root.player?.trackArtist && root.player.trackArtist.length > 0
-                  ? root.player.trackArtist.toUpperCase()
-                  : "—"
-        }
-      }
-
-      // Play / Pause (main)
-      Item {
-        Layout.preferredWidth: 40
-        Layout.preferredHeight: 40
-        Layout.alignment: Qt.AlignVCenter
-        visible: root.player?.canPlay ?? false
-
-        Rectangle {
-          anchors.fill: parent
-          radius: width / 2
-          color: playArea.containsMouse ? Qt.rgba(1,1,1,0.22) : Qt.rgba(1,1,1,0.14)
-          border.color: Qt.rgba(1,1,1,0.14)
-          border.width: 1
-          Behavior on color { ColorAnimation { duration: 120 } }
         }
         StyledText {
-          anchors.centerIn: parent
-          text: root.player?.isPlaying ? "" : ""
-          font.pixelSize: 16
-          color: Qt.rgba(1, 1, 1, 0.95)
-        }
-        MouseArea {
-          id: playArea
-          anchors.fill: parent
-          hoverEnabled: true
-          onClicked: root.player?.togglePlaying()
-          cursorShape: Qt.PointingHandCursor
+          Layout.fillWidth: true
+          visible: text.length > 0
+          text: root.player?.trackAlbum ?? ""
+          font.pixelSize: Config.fontSize - 4
+          color: root._dim
+          elide: Text.ElideRight
         }
       }
     }
 
-    // ── Seek bar + times ─────────────────────────────────────
+    // ── Seek bar ────────────────────────────────────────────────────
     Item {
+      id: seek
       Layout.fillWidth: true
-      Layout.topMargin: 4
-      Layout.preferredHeight: seekTrack.height + timeRow.implicitHeight + 4
-      visible: root._hasPlayer
+      Layout.preferredHeight: 14
+      readonly property bool _can: MediaService.lengthValid && (root.player?.canSeek ?? false)
+      readonly property bool _hot: seekMouse.containsMouse || seekMouse.pressed
 
       Rectangle {
-        id: seekTrack
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        height: 3
-        radius: 2
-        color: Qt.rgba(1, 1, 1, 0.10)
+        id: track
+        anchors.verticalCenter: parent.verticalCenter
+        width: parent.width
+        height: seek._hot && seek._can ? 6 : 4
+        radius: height / 2
+        color: Qt.rgba(1, 1, 1, 0.12)
+        Behavior on height { Anim { duration: Motion.fastSpatialDuration } }
 
         Rectangle {
-          anchors.left: parent.left
-          anchors.top: parent.top
-          anchors.bottom: parent.bottom
-          width: Math.max(2, parent.width * root._pct)
-          radius: 2
+          height: parent.height
+          radius: parent.radius
+          width: Math.max(parent.height, parent.width * root._pct)
           color: Qt.rgba(1, 1, 1, 0.80)
-          Behavior on width { NumberAnimation { duration: 200 } }
-        }
-
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          enabled: root._lenValid && (root.player?.canSeek ?? false)
-          cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-          onClicked: (mouse) => {
-            const p = mouse.x / width;
-            if (root.player) root.player.position = p * root._len;
+          Behavior on width {
+            enabled: root._dragPct < 0
+            Anim { curve: Motion.effects; duration: Motion.effectsDuration }
           }
         }
       }
-
-      RowLayout {
-        id: timeRow
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: seekTrack.bottom
-        anchors.topMargin: 4
-        spacing: 4
-
-        StyledText {
-          text: root._fmtTime(root._pos)
-          font.pixelSize: Config.fontSize - 4
-          color: Qt.rgba(1, 1, 1, 0.55)
+      Rectangle {
+        anchors.verticalCenter: parent.verticalCenter
+        x: Math.max(0, Math.min(parent.width - width, parent.width * root._pct - width / 2))
+        width: 12
+        height: 12
+        radius: 6
+        color: root._fg
+        scale: seek._hot && seek._can ? 1 : 0
+        Behavior on scale { Anim { duration: Motion.fastSpatialDuration } }
+      }
+      MouseArea {
+        id: seekMouse
+        anchors.fill: parent
+        hoverEnabled: true
+        enabled: seek._can
+        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+        function _at(x) { return Math.max(0, Math.min(1, x / width)); }
+        onPressed: (mouse) => root._dragPct = _at(mouse.x)
+        onPositionChanged: (mouse) => { if (pressed) root._dragPct = _at(mouse.x); }
+        onReleased: {
+          if (root.player) root.player.position = root._dragPct * MediaService.length;
+          root._dragPct = -1;
         }
-        Item { Layout.fillWidth: true }
-        StyledText {
-          text: root._lenValid ? root._fmtTime(root._len) : "--:--"
-          font.pixelSize: Config.fontSize - 4
-          color: Qt.rgba(1, 1, 1, 0.55)
-        }
+        onCanceled: root._dragPct = -1
       }
     }
 
-    // ── Prev / Next row ──────────────────────────────────────
-    RowLayout {
+    // ── Times + controls ────────────────────────────────────────────
+    Item {
       Layout.fillWidth: true
-      Layout.topMargin: 2
-      spacing: 6
-      visible: root.player?.canControl ?? false
+      Layout.preferredHeight: 36
 
-      Item { Layout.fillWidth: true }
-
-      // Prev
-      Item {
-        Layout.preferredWidth: 30
-        Layout.preferredHeight: 30
-        visible: root.player?.canGoPrevious ?? false
-
-        Rectangle {
-          anchors.fill: parent
-          radius: width / 2
-          color: prevArea.containsMouse ? Qt.rgba(1,1,1,0.10) : Qt.rgba(1,1,1,0.04)
-          border.color: Qt.rgba(1,1,1,0.08)
-          border.width: 1
-          Behavior on color { ColorAnimation { duration: 120 } }
-        }
-        StyledText {
-          anchors.centerIn: parent
-          text: ""
-          font.pixelSize: 12
-          color: Qt.rgba(1, 1, 1, 0.70)
-        }
-        MouseArea {
-          id: prevArea
-          anchors.fill: parent
-          hoverEnabled: true
-          onClicked: root.player?.previous()
-          cursorShape: Qt.PointingHandCursor
-        }
+      StyledText {
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        text: root._fmt(root._pct * MediaService.length)
+        font.pixelSize: Config.fontSize - 4
+        color: root._sub
+      }
+      StyledText {
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+        text: MediaService.lengthValid ? root._fmt(MediaService.length) : "--:--"
+        font.pixelSize: Config.fontSize - 4
+        color: root._sub
       }
 
-      // Next
-      Item {
-        Layout.preferredWidth: 30
-        Layout.preferredHeight: 30
-        visible: root.player?.canGoNext ?? false
+      Row {
+        anchors.centerIn: parent
+        spacing: 6
 
-        Rectangle {
-          anchors.fill: parent
-          radius: width / 2
-          color: nextArea.containsMouse ? Qt.rgba(1,1,1,0.10) : Qt.rgba(1,1,1,0.04)
-          border.color: Qt.rgba(1,1,1,0.08)
-          border.width: 1
-          Behavior on color { ColorAnimation { duration: 120 } }
+        MediaButton {
+          icon: root.player?.shuffle ? "󰒝" : "󰒞"
+          active: root.player?.shuffle ?? false
+          enabled: root.player?.shuffleSupported ?? false
+          onClicked: root.player.shuffle = !root.player.shuffle
         }
-        StyledText {
-          anchors.centerIn: parent
-          text: ""
-          font.pixelSize: 12
-          color: Qt.rgba(1, 1, 1, 0.70)
+        MediaButton {
+          icon: "󰒮"
+          enabled: root.player?.canGoPrevious ?? false
+          onClicked: MediaService.previous()
         }
-        MouseArea {
-          id: nextArea
-          anchors.fill: parent
-          hoverEnabled: true
-          onClicked: root.player?.next()
-          cursorShape: Qt.PointingHandCursor
+        MediaButton {
+          size: 36
+          primary: true
+          icon: root.player?.isPlaying ? "󰏤" : "󰐊"
+          enabled: root.player?.canTogglePlaying ?? false
+          onClicked: MediaService.togglePlaying()
+        }
+        MediaButton {
+          icon: "󰒭"
+          enabled: root.player?.canGoNext ?? false
+          onClicked: MediaService.next()
+        }
+        MediaButton {
+          readonly property int _loop: root.player?.loopState ?? MprisLoopState.None
+          icon: _loop === MprisLoopState.Track ? "󰑘" : _loop === MprisLoopState.Playlist ? "󰑖" : "󰑗"
+          active: _loop !== MprisLoopState.None
+          enabled: root.player?.loopSupported ?? false
+          // none -> playlist -> track -> none
+          onClicked: root.player.loopState = _loop === MprisLoopState.None ? MprisLoopState.Playlist
+                                           : _loop === MprisLoopState.Playlist ? MprisLoopState.Track
+                                           : MprisLoopState.None
         }
       }
+    }
+  }
 
-      Item { Layout.fillWidth: true }
+  component MediaButton: Item {
+    id: btn
+    property string icon
+    property int size: 28
+    property bool primary: false
+    property bool active: false
+    signal clicked()
+
+    width: size
+    height: size
+    opacity: enabled ? 1 : 0.3
+
+    Rectangle {
+      anchors.fill: parent
+      radius: width / 2
+      color: btn.primary ? (btnMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.95) : Qt.rgba(1, 1, 1, 0.85))
+           : btnMouse.containsMouse ? Qt.rgba(1, 1, 1, 0.12) : "transparent"
+      Behavior on color { CAnim {} }
+    }
+    StyledText {
+      anchors.centerIn: parent
+      text: btn.icon
+      font.pixelSize: btn.primary ? 18 : 15
+      color: btn.primary ? "#151515" : btn.active ? root._fg : root._sub
+      Behavior on color { CAnim {} }
+    }
+    scale: btnMouse.pressed ? 0.88 : 1
+    Behavior on scale { Anim { duration: Motion.fastSpatialDuration } }
+
+    MouseArea {
+      id: btnMouse
+      anchors.fill: parent
+      hoverEnabled: true
+      cursorShape: Qt.PointingHandCursor
+      onClicked: btn.clicked()
     }
   }
 }

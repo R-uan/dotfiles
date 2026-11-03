@@ -4,6 +4,7 @@ import qs.services
 
 import QtQuick
 import Quickshell
+import Quickshell.Wayland
 import QtQuick.Layouts
 
 DockedPanel {
@@ -19,10 +20,16 @@ DockedPanel {
   property alias timer: timer
   property string expandedSsid: ""
 
+  // Layer-shell windows get no keys by default; take them while a password
+  // field is open so it can be typed into.
+  WlrLayershell.keyboardFocus: visible && expandedSsid !== "" ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+
   onVisibleChanged: {
     if (visible) {
       NetworkService.refresh();
       if (NetworkService.wifiEnabled) NetworkService.rescan();
+    } else {
+      expandedSsid = "";
     }
   }
 
@@ -37,7 +44,7 @@ DockedPanel {
     id: hoverHandler
     onHoveredChanged: {
       if (hovered) timer.stop();
-      else         timer.restart();
+      else if (netMenu.expandedSsid === "") timer.restart();
     }
   }
 

@@ -224,7 +224,6 @@ DockedPanel {
       Layout.leftMargin: 12
       Layout.rightMargin: 12
       Layout.fillWidth: true
-      Layout.preferredHeight: 170
     }
 
     // ── Divider ──────────────────────────────────────────────────────────

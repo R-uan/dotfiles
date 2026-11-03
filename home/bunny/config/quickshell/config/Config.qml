@@ -75,16 +75,18 @@ Singleton {
   // Prefix used to run desktop entries that declare Terminal=true.
   property var terminalCommand: ["kitty", "-e"]
 
-  // Start menu. App icons are nerd-font glyphs; `launcher: true` opens the
-  // app launcher.
+  // Start menu shortcuts. `entry` is the desktop entry (for the icon) and
+  // `appId` the window app id prefix, so a click focuses an open window
+  // instead of launching another; `icon` is the glyph used when no icon
+  // matches. `launcher: true` opens the app launcher.
   property var startMenuApps: [
-    { name: "Zen",         icon: "󰈹", command: ["zen"] },
-    { name: "VSCode",      icon: "󰨞", command: ["code"] },
-    { name: "XIVLauncher", icon: "󰊴", command: ["XIVLauncher.Core"] },
-    { name: "Steam",       icon: "󰓓", command: ["steam"] },
-    { name: "Vesktop",     icon: "󰙯", command: ["vesktop"] },
-    { name: "Terminal",    icon: "", command: ["kitty"] },
-    { name: "Siyuan",      icon: "", command: ["siyuan"] },
+    { name: "Zen",         icon: "󰈹", entry: "zen-beta", appId: "zen", command: ["zen"] },
+    { name: "VSCode",      icon: "󰨞", entry: "code", appId: "code", command: ["code"] },
+    { name: "XIVLauncher", icon: "󰊴", entry: "xivlauncher", appId: "xivlauncher", command: ["XIVLauncher.Core"] },
+    { name: "Steam",       icon: "󰓓", entry: "steam", appId: "steam", command: ["steam"] },
+    { name: "Vesktop",     icon: "󰙯", entry: "vesktop", appId: "vesktop", command: ["vesktop"] },
+    { name: "Terminal",    icon: "", entry: "kitty", appId: "kitty", command: ["kitty"] },
+    { name: "Siyuan",      icon: "", entry: "siyuan", appId: "siyuan", command: ["siyuan"] },
     { name: "All apps",    icon: "", launcher: true }
   ]
 

@@ -3,7 +3,8 @@
     enable = true;
     settings = {
       general = {
-        lock_cmd = "pidof hyprlock || hyprlock";
+        # Quickshell's lock screen; hyprlock if quickshell isn't running
+        lock_cmd = "qs -p ~/.config/quickshell ipc call lock lock || pidof hyprlock || hyprlock";
         before_sleep_cmd = "loginctl lock-session";
         after_sleep_cmd = "hyprctl dispatch dpms on";
         ignore_dbus_inhibit = false;

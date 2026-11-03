@@ -3,7 +3,8 @@
 
 import "windows/taskbar"
 import "windows/startmenu"
-import "windows/powermenu"
+import "windows/session"
+import "windows/lock"
 import "windows/notificationcenter"
 import "windows/networkmenu"
 import "windows/resourcesmenu"
@@ -16,6 +17,7 @@ import "windows/wallpapers"
 import "windows/osd"
 import "windows/clipboard"
 import "windows/settings"
+import "windows/overview"
 
 import QtQuick
 import Quickshell
@@ -25,9 +27,9 @@ ShellRoot {
 
   function hideOthers(except) {
     const panels = [
-      startmenu, powermenu, notificationcenter, networkmenu,
+      startmenu, session, notificationcenter, networkmenu,
       resourcesmenu, bluetoothmenu, audiomenu, sunsetmenu, calendarmenu, wallpapers, launcher,
-      clipboard, settingsmenu
+      clipboard, settingsmenu, overview
     ];
     for (let p of panels) {
       if (!p || p === except) continue;
@@ -47,9 +49,15 @@ ShellRoot {
     onVisibleChanged: if (visible) shellRoot.hideOthers(startmenu)
   }
 
-  PowerMenu {
-    id: powermenu
-    onVisibleChanged: if (visible) shellRoot.hideOthers(powermenu)
+  Session {
+    id: session
+    lockScreen: lock
+    onVisibleChanged: if (visible) shellRoot.hideOthers(session)
+  }
+
+  // Not in hideOthers: it sits above everything and hides nothing.
+  Lock {
+    id: lock
   }
 
   NotificationCenter {
@@ -105,6 +113,11 @@ ShellRoot {
   SettingsMenu {
     id: settingsmenu
     onVisibleChanged: if (visible) shellRoot.hideOthers(settingsmenu)
+  }
+
+  Overview {
+    id: overview
+    onVisibleChanged: if (visible) shellRoot.hideOthers(overview)
   }
 
   // Not in hideOthers: it is a transient overlay, not a panel.
