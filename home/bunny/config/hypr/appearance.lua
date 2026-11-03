@@ -53,6 +53,8 @@ hl.config {
     vrr                     = 0,
     force_default_wallpaper = -1,
     disable_hyprland_logo   = false,
+    -- Lets a new lock client take over if the lock screen crashes
+    allow_session_lock_restore = true,
   },
 
   animations = {
