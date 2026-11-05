@@ -102,6 +102,12 @@ ShellRoot {
 
   Launcher {
     id: launcher
+    session: session
+    lockScreen: lock
+    overview: overview
+    wallpapers: wallpapers
+    clipboardMenu: clipboard
+    settingsMenu: settingsmenu
     onVisibleChanged: if (visible) shellRoot.hideOthers(launcher)
   }
 

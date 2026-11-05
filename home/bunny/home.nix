@@ -71,7 +71,8 @@
     # System Utilities
     awww                # Wallpaper Daemon for Wayland
     mako                # Notification
-    rofi                # App Launcher
+    # rofi comes from programs/rofi.nix (wrapped with its plugins)
+    libqalculate        # qalc: the launcher's calculator ("=" or just type maths)
     dxvk                # Not sure what this is
     wtype               # Types Ctrl+V when pasting from the clipboard panel
     slurp               # Region picker for recordings
@@ -133,6 +134,8 @@
   home.file.".config/mako".source = ./config/mako;
   home.file.".config/yazi".source = ./config/yazi;
   home.file.".config/quickshell".source = ./config/quickshell;
+  # Emoji table for the launcher's ":" mode (emoji, group, subgroup, name, keywords)
+  xdg.dataFile."quickshell/emojis.txt".source = "${pkgs.rofi-emoji}/share/rofi-emoji/all_emojis.txt";
 
   # Don't change this unless you're rebuilding the system cleanly
   home.stateVersion = "25.05";

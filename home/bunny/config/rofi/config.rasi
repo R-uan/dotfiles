@@ -34,6 +34,8 @@ configuration {
 
     /* Matching */
     matching:               "fuzzy";
+    /* Accent-insensitive: "configuracoes" finds "Configurações" */
+    normalize-match:        true;
     show-match:             true;
     sort:                   true;
     sorting-method:         "fzf";

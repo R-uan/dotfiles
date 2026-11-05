@@ -75,6 +75,11 @@ Singleton {
   // Prefix used to run desktop entries that declare Terminal=true.
   property var terminalCommand: ["kitty", "-e"]
 
+  // Launcher: "?query" (and the no-match fallback) opens this + the query.
+  property string webSearchUrl: "https://duckduckgo.com/?q="
+  // Emoji table for ":" (linked from rofi-emoji by home.nix).
+  readonly property string emojiFile: (Quickshell.env("XDG_DATA_HOME") || Quickshell.env("HOME") + "/.local/share") + "/quickshell/emojis.txt"
+
   // Start menu shortcuts. `entry` is the desktop entry (for the icon) and
   // `appId` the window app id prefix, so a click focuses an open window
   // instead of launching another; `icon` is the glyph used when no icon

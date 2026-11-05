@@ -8,9 +8,13 @@ hl.bind("Print", hl.dsp.exec_cmd "hyprshot -m window --clipboard-only", { locked
 -- Apps
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(globals.fileManager))
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(globals.terminal))
--- hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(globals.appLauncher))
--- hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd("qs -p ~/.config/quickshell ipc call launcher toggle"))
-hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(globals.appLauncher))
+-- Launcher: quickshell's (prefix modes: / actions · = maths · : emoji ·
+-- ; clipboard · $ shell · ? web), rofi when quickshell isn't running.
+-- Super+= and Super+. open it straight into maths and emoji.
+local qsLauncher = "qs -p ~/.config/quickshell ipc call launcher "
+hl.bind(mainMod .. " + Space", hl.dsp.exec_cmd(qsLauncher .. "toggle || " .. globals.appLauncher))
+hl.bind(mainMod .. " + equal", hl.dsp.exec_cmd(qsLauncher .. [[openWith "=" || rofi -show calc -modes calc -display-calc "]] .. "\u{F00EC}" .. [[ " -no-show-match -no-sort -eh 1 -calc-command "printf '%s' '{result}' | wl-copy"]]))
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd(qsLauncher .. [[openWith ":" || rofi -show emoji -modes emoji -eh 1]]))
 
 -- Media keys, routed through quickshell so its OSD shows the change
 local qsIpc = "qs -p ~/.config/quickshell ipc call "

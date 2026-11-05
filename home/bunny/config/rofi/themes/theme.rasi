@@ -35,10 +35,28 @@ mainbox {
 inputbar {
     padding:          18px 20px;
     spacing:          12px;
-    children:         [ prompt, entry ];
+    children:         [ prompt, entry, num-filtered-rows, textbox-num-sep, num-rows ];
     background-color: @background1-alpha;
     border:           0px 0px 1px 0px;
     border-color:     @shade1;
+}
+
+/* "12/240" match counter at the right of the search bar */
+num-filtered-rows, num-rows {
+    font:             "Iosevka 11";
+    text-color:       @muted;
+    background-color: transparent;
+    vertical-align:   0.5;
+    expand:           false;
+}
+
+textbox-num-sep {
+    font:             "Iosevka 11";
+    str:              "/";
+    text-color:       @shade2;
+    background-color: transparent;
+    vertical-align:   0.5;
+    expand:           false;
 }
 
 prompt {
@@ -51,7 +69,7 @@ prompt {
 entry {
     text-color:        @foreground1;
     padding:           0px;
-    placeholder:       "Search apps…";
+    placeholder:       "Search…";
     placeholder-color: @muted;
     background-color:  transparent;
     vertical-align:    0.5;
