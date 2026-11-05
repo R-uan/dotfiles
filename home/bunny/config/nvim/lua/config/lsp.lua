@@ -259,5 +259,4 @@ vim.lsp.enable "nil_ls"
 vim.lsp.enable "omnisharp"
 vim.lsp.enable "clangd"
 vim.lsp.enable "lua_ls"
--- vim.lsp.enable "phpantom_lsp"
-vim.lsp.enable 'phpactor'
+vim.lsp.enable "phpantom_lsp"

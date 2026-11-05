@@ -14,7 +14,6 @@ hl.on("hyprland.start", function()
   hl.exec_cmd "otd-daemon"
   hl.exec_cmd "awww-daemon"
   hl.exec_cmd "quickshell -p ~/.config/quickshell"
-  hl.exec_cmd "setxkbmap -layout br -variant nodeadkeys"
   hl.exec_cmd "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
   hl.exec_cmd "sh -c 'eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh); dbus-update-activation-environment --systemd GNOME_KEYRING_CONTROL SSH_AUTH_SOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP'"
 end)

@@ -26,7 +26,6 @@
 
     ## PHP
     php
-    phpactor # Language Server
 
     ## JavaScript
     nodejs

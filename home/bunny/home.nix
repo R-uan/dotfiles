@@ -18,7 +18,6 @@
     name = "Bibata-Modern-Classic";
   };
 
-  services.hyprsunset.enable = true;
   home.sessionVariables = {
     EDITOR = "nvim";
     HDD = "/mnt/hdd";

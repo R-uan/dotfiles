@@ -12,7 +12,6 @@
     telegram-desktop
 
     # Gaming
-    dxvk        # DirectX -> Vulkan translation for Wine
     mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU
     winetricks  # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)

@@ -7,9 +7,9 @@
     libqalculate        # qalc: the launcher's calculator ("=" or just type maths)
     wtype               # Types Ctrl+V when pasting from the clipboard panel
     slurp               # Region picker for recordings
-    vicinae             # App Launcher
     cliphist            # Clipboard history (quickshell clipboard panel)
     hyprshot            # Screenshots
+    hyprsunset          # Night light (started by hyprland.lua, driven by quickshell)
     libnotify           # Notifications Manager ?
     quickshell          # Desktop Widgets
     wf-recorder         # Screen recorder (quickshell recorder)
@@ -24,14 +24,9 @@
     mtr       # Internet Test
     fzf       # Fuzzy Finder
     zoxide    # Smarter CD
-    eza       # Smarter LS
     zip       # Zipper
     unar      # Unziper
-    gawk      # Text Processing Language
     btop      # Task Manager
-    procps    # For Top
-    gnused    # Text Surgery
-    gnugrep   # GREP
     ripgrep   # Text Search Tool
     inetutils # Net Utils
 
