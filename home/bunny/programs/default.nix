@@ -13,5 +13,6 @@
     ./hypridle.nix
     ./fastfetch.nix
     ./zen-browser.nix
+    ./zed
   ];
 }

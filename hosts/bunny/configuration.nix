@@ -41,9 +41,5 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-    allowUnfreePredicate = pkg:
-      builtins.elem (pkgs.lib.getName pkg) [
-        "cloudflare-warp"
-      ];
   };
 }
