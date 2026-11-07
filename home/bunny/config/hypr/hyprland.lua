@@ -4,7 +4,7 @@ require "keymaps"
 
 -- eDP-1 (laptop screen) disabled, using external monitor only
 hl.monitor { output = "eDP-1", disabled = true }
-hl.monitor { output = "HDMI-A-1", mode = "1920x1080@60.00Hz", position = "0x0", scale = 1 }
+hl.monitor { output = "HDMI-A-1", mode = "1920x1080@120Hz", position = "0x0", scale = 1 }
 
 -- Startup
 hl.on("hyprland.start", function()

@@ -22,6 +22,7 @@ hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(qsIpc .. "audio up"), { locked =
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(qsIpc .. "audio down"), { locked = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd(qsIpc .. "audio mute"), { locked = true })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd(qsIpc .. "audio micMute"), { locked = true })
+hl.bind("KP_Insert", hl.dsp.exec_cmd(qsIpc .. "audio micMute"), { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(qsIpc .. "media playPause"), { locked = true })
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd(qsIpc .. "media next"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(qsIpc .. "media previous"), { locked = true })
