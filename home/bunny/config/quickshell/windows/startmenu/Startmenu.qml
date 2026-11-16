@@ -234,9 +234,17 @@ DockedPanel {
       color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
     }
 
+    // ── Cloudflare WARP toggle ───────────────────────────────────────────
+    WarpCard {
+      Layout.topMargin: 2
+      Layout.leftMargin: 14
+      Layout.rightMargin: 14
+      Layout.fillWidth: true
+    }
+
     // ── App shortcuts ────────────────────────────────────────────────────
     AppLauncher {
-      Layout.topMargin: 6
+      Layout.topMargin: 8
       Layout.bottomMargin: 12
       Layout.leftMargin: 12
       Layout.rightMargin: 12

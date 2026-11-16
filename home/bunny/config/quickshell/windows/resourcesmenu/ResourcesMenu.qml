@@ -12,7 +12,16 @@ PanelWindow {
   // Public open/close API (mirrors DockedPanel). Keep the window alive
   // while the card furls away, then unmount it.
   property bool shown: false
-  visible: shown || assembly.width > 0.5
+  property real _reveal: 0
+  visible: shown || _reveal > 0.001
+
+  Behavior on _reveal {
+    NumberAnimation {
+      duration: resMenu.shown ? Motion.spatialDuration : Motion.exitDuration
+      easing.type: Easing.BezierSpline
+      easing.bezierCurve: resMenu.shown ? Motion.spatial : Motion.accel
+    }
+  }
   color: "transparent"
   objectName: "Resources Menu"
   exclusionMode: ExclusionMode.Ignore
@@ -32,7 +41,7 @@ PanelWindow {
   // Screen-space vertical centre the card lines up with. The Resources
   // button in the bar sets this to its own centre before showing us.
   property real anchorCenterY: 140
-  readonly property bool _presented: shown
+  readonly property real _presented: _reveal
 
   // Keep the whole card (plus its corner fillets) inside the free area
   // between the top and bottom bars.
@@ -42,6 +51,7 @@ PanelWindow {
              height - _edgeBar - _cornerRadius - _cardHeight))
 
   onShownChanged: {
+    _reveal = shown ? 1 : 0;
     ResourcesService.watchProcs = shown;
     // On open, give a generous grace window to let the pointer reach the
     // card; it stops the timer the moment it's hovered. On close, cancel.
@@ -91,18 +101,10 @@ PanelWindow {
     id: assembly
     x: resMenu._barWidth
     y: resMenu._cardY
-    width: resMenu._presented ? resMenu._cardWidth : 0
+    width: resMenu._cardWidth * resMenu._reveal
     height: resMenu._cardHeight
     clip: true
-
-    opacity: resMenu._presented ? 1 : 0
-    Behavior on width {
-      Anim {
-        curve: resMenu._presented ? Motion.spatial : Motion.accel
-        duration: resMenu._presented ? Motion.spatialDuration : Motion.exitDuration
-      }
-    }
-    Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration } }
+    opacity: Math.min(1, resMenu._reveal * 2)
 
     Rectangle {
       x: -resMenu._cornerRadius

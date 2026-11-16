@@ -151,13 +151,6 @@ DockedPanel {
         label: NetworkService.scanning ? "scanning" : "rescan"
         onClicked: NetworkService.rescan()
       }
-      NetPill {
-        icon: WarpService.icon
-        label: WarpService.shortLabel
-        active: WarpService.connected
-        opacity: WarpService.transitioning || WarpService.busy ? 0.6 : 1
-        onClicked: WarpService.toggle()
-      }
       Item { Layout.fillWidth: true }
       NetPill {
         visible: NetworkService.netState === "connected"
