@@ -11,7 +11,6 @@ import QtQuick.Layouts
 DockedPanel {
   edge: "top"
   id: quickMenu
-  visible: false
   cardWidth: 480
   color: "transparent"
   objectName: "Start Menu"
@@ -122,7 +121,7 @@ DockedPanel {
           anchors.fill: parent
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
-          onClicked: settingsmenu.visible = true
+          onClicked: settingsmenu.shown = true
         }
       }
 
@@ -156,11 +155,11 @@ DockedPanel {
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
           onClicked: {
-            if (wallpapers.visible) {
-              wallpapers.visible = false
+            if (wallpapers.shown) {
+              wallpapers.shown = false
               wallpapers.timer.running = false
             } else {
-              wallpapers.visible = true
+              wallpapers.shown = true
             }
           }
         }
@@ -249,7 +248,7 @@ DockedPanel {
     id: timer
     interval: 1000
     running: false
-    onTriggered: quickMenu.visible = false
+    onTriggered: quickMenu.shown = false
   }
 
   MouseArea {

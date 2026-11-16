@@ -14,13 +14,13 @@ Item {
 
   // Give the start menu time to close so it isn't in the shot.
   function shoot(mode) {
-    startmenu.visible = false;
+    startmenu.shown = false;
     Quickshell.execDetached(["sh", "-c",
       "sleep 0.35; hyprshot " + (mode === "region" ? "--freeze -m region" : "-m window") + " --clipboard-only"]);
   }
 
   function record(mode) {
-    startmenu.visible = false;
+    startmenu.shown = false;
     RecorderService.toggle(mode);
   }
 
@@ -36,7 +36,7 @@ Item {
       icon: RecorderService.withAudio ? "󰕾" : "󰖁",
       active: RecorderService.withAudio,
       run: () => RecorderService.withAudio = !RecorderService.withAudio },
-    { label: "Clipboard", icon: "󰅌", run: () => { clipboard.visible = true; } }
+    { label: "Clipboard", icon: "󰅌", run: () => { clipboard.shown = true; } }
   ]
 
   RowLayout {

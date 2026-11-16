@@ -47,4 +47,10 @@
   services.udev.extraRules = ''
     KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
   '';
+
+  # OpenRGB — RGB em RAM XPG, placa-mãe e periféricos via SMBus/USB
+  services.hardware.openrgb = {
+    enable = true;
+    motherboard = "amd";
+  };
 }

@@ -29,6 +29,10 @@ PanelWindow {
   // keyboard, where the hover-out timer never starts.
   property bool modal: false
 
+  // Public open/close API. Callers set `shown = true/false`; the window
+  // stays visible while the close animation plays, then unmounts itself.
+  property bool shown: false
+
   WlrLayershell.layer: modal ? WlrLayer.Overlay : WlrLayer.Top
 
   // Full-screen, invisible click catcher one layer below the card.
@@ -44,7 +48,7 @@ PanelWindow {
     MouseArea {
       anchors.fill: parent
       acceptedButtons: Qt.AllButtons
-      onPressed: panel.visible = false
+      onPressed: panel.shown = false
     }
   }
 
@@ -68,19 +72,22 @@ PanelWindow {
   // Only the card takes input; the fillets and padding are see-through.
   mask: Region { item: card }
 
-  // 0 -> 1 on open; drives the unfurl. Closing is instant, as before.
-  property real _reveal: 0
-  onVisibleChanged: if (visible) revealAnim.restart()
+  // Keep the window alive while the close animation plays; unmount once
+  // the card has fully furled.
+  visible: shown || _reveal > 0.001
 
-  NumberAnimation {
-    id: revealAnim
-    target: panel
-    property: "_reveal"
-    from: 0
-    to: 1
-    duration: Motion.spatialDuration
-    easing.type: Easing.BezierSpline
-    easing.bezierCurve: Motion.spatial
+  // 0 -> 1 on open, 1 -> 0 on close. Opening uses a spatial spring (same
+  // feel as before); closing is faster with an accelerating curve so
+  // dismissal doesn't feel laggy.
+  property real _reveal: 0
+  onShownChanged: _reveal = shown ? 1 : 0
+
+  Behavior on _reveal {
+    NumberAnimation {
+      duration: panel.shown ? Motion.spatialDuration : Motion.exitDuration
+      easing.type: Easing.BezierSpline
+      easing.bezierCurve: panel.shown ? Motion.spatial : Motion.accel
+    }
   }
 
   Item {

@@ -45,11 +45,11 @@ Item {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
     onClicked: {
-      if (networkmenu.visible) {
-        networkmenu.visible = false;
+      if (networkmenu.shown) {
+        networkmenu.shown = false;
         networkmenu.timer.running = false;
       } else {
-        networkmenu.visible = true;
+        networkmenu.shown = true;
       }
     }
   }

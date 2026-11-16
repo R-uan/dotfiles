@@ -215,4 +215,22 @@ PanelWindow {
     function next(): void      { MediaService.next(); }
     function previous(): void  { MediaService.previous(); }
   }
+
+  IpcHandler {
+    target: "warp"
+    function toggle(): void { WarpService.toggle(); }
+  }
+
+  // Flash the OSD when WARP settles on a final state (not while it's
+  // Connecting/Disconnecting). Picks up toggles via keybind, the net
+  // menu, or an external client.
+  Connections {
+    target: WarpService
+    function onStatusTextChanged() {
+      if (WarpService.transitioning) return;
+      OsdService.show(WarpService.icon, "WARP", WarpService.connected ? 1 : 0,
+                      WarpService.statusText.toLowerCase(),
+                      !WarpService.connected, false);
+    }
+  }
 }

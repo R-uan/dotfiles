@@ -45,11 +45,11 @@ Item {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
     onClicked: {
-      if (bluetoothmenu.visible) {
-        bluetoothmenu.visible = false;
+      if (bluetoothmenu.shown) {
+        bluetoothmenu.shown = false;
         bluetoothmenu.timer.running = false;
       } else {
-        bluetoothmenu.visible = true;
+        bluetoothmenu.shown = true;
       }
     }
   }

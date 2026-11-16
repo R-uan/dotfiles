@@ -14,7 +14,6 @@ import QtQuick.Layouts
 DockedPanel {
   id: settingsMenu
   edge: "center"
-  visible: false
   objectName: "Settings"
   cardWidth: 460
   cardHeight: layout.implicitHeight + 28
@@ -33,7 +32,7 @@ DockedPanel {
 
   IpcHandler {
     target: "settings"
-    function toggle(): void { settingsMenu.visible = !settingsMenu.visible; }
+    function toggle(): void { settingsMenu.shown = !settingsMenu.shown; }
   }
 
   readonly property var _allPaths: [Config.homeDir, Config.recordingsDir, Config.wallpaperDir]
@@ -134,7 +133,7 @@ DockedPanel {
           clip: true
           text: row.value
           onEditingFinished: if (text.trim() !== row.value) row.commit(text.trim())
-          Keys.onEscapePressed: { text = row.value; settingsMenu.visible = false; }
+          Keys.onEscapePressed: { text = row.value; settingsMenu.shown = false; }
 
           StyledText {
             visible: input.text.length === 0
@@ -219,7 +218,7 @@ DockedPanel {
           anchors.margins: -4
           hoverEnabled: true
           cursorShape: Qt.PointingHandCursor
-          onClicked: settingsMenu.visible = false
+          onClicked: settingsMenu.shown = false
         }
       }
     }

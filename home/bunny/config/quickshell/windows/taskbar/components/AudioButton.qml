@@ -48,11 +48,11 @@ Item {
         AudioService.toggleMute();
         return;
       }
-      if (audiomenu.visible) {
-        audiomenu.visible = false;
+      if (audiomenu.shown) {
+        audiomenu.shown = false;
         audiomenu.timer.running = false;
       } else {
-        audiomenu.visible = true;
+        audiomenu.shown = true;
       }
     }
 

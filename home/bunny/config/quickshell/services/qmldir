@@ -17,3 +17,4 @@ singleton WeatherService 1.0 WeatherService.qml
 singleton AppIcons 1.0 AppIcons.qml
 singleton ClipboardService 1.0 ClipboardService.qml
 singleton RecorderService 1.0 RecorderService.qml
+singleton WarpService 1.0 WarpService.qml

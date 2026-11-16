@@ -11,7 +11,6 @@ import QtQuick.Layouts
 DockedPanel {
   edge: "center"
   id: calendarMenu
-  visible: false
   cardWidth: 320
   cardHeight: layout.implicitHeight + 28
   color: "transparent"
@@ -26,7 +25,7 @@ DockedPanel {
     id: timer
     interval: 1000
     running: false
-    onTriggered: calendarMenu.visible = false
+    onTriggered: calendarMenu.shown = false
   }
 
   HoverHandler {

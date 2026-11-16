@@ -15,6 +15,7 @@
     mangohud    # Overlay to monitor FPS, temperatures, CPU/GPU
     winetricks  # Essential Extension for Wine
     xivlauncher # XIV Dalamund (Can't play without this)
+    deadlock-mod-manager
     (wineWow64Packages.staging.override {
       vulkanSupport = true;
     })          # Windows Compatibility Layer

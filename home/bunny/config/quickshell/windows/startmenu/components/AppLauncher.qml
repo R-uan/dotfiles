@@ -46,7 +46,7 @@ Item {
       Hyprland.dispatch(`hl.dsp.focus({ window = "address:0x${wins[0].address}" })`);
     else
       launch(app.command);
-    startmenu.visible = false;
+    startmenu.shown = false;
   }
 
   readonly property color _fg:  Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0

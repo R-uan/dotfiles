@@ -55,11 +55,11 @@ Item {
         root._flashOsd();
         return;
       }
-      if (sunsetmenu.visible) {
-        sunsetmenu.visible = false;
+      if (sunsetmenu.shown) {
+        sunsetmenu.shown = false;
         sunsetmenu.timer.running = false;
       } else {
-        sunsetmenu.visible = true;
+        sunsetmenu.shown = true;
       }
     }
 

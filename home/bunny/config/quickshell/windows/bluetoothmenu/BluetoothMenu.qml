@@ -9,7 +9,6 @@ import QtQuick.Layouts
 DockedPanel {
   id: btMenu
   edge: "bottom"
-  visible: false
   cardWidth: 340
   color: "transparent"
   objectName: "Bluetooth Menu"
@@ -32,7 +31,7 @@ DockedPanel {
     id: timer
     interval: 1000
     running: false
-    onTriggered: btMenu.visible = false
+    onTriggered: btMenu.shown = false
   }
 
   HoverHandler {

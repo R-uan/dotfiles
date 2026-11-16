@@ -25,6 +25,9 @@ hl.bind("XF86AudioPlay", hl.dsp.exec_cmd(qsIpc .. "media playPause"), { locked =
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd(qsIpc .. "media next"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd(qsIpc .. "media previous"), { locked = true })
 
+-- Toggle Cloudflare WARP (OSD shows the resulting state)
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(qsIpc .. "warp toggle"))
+
 -- Clipboard history and screen recording (quickshell panels)
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(qsIpc .. "clipboard toggle"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd(qsIpc .. "recorder region"))

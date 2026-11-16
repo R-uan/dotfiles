@@ -28,11 +28,11 @@ Item {
     anchors.fill: parent
 
     onClicked: {
-      if (startmenu.visible) {
-        startmenu.visible = false;
+      if (startmenu.shown) {
+        startmenu.shown = false;
         startmenu.timer.running = false;
       } else {
-        startmenu.visible = true;
+        startmenu.shown = true;
       }
     }
   }

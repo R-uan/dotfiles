@@ -10,7 +10,6 @@ import QtQuick.Layouts
 DockedPanel {
   edge: "bottom"
   id: sunsetMenu
-  visible: false
   cardWidth: 300
   color: "transparent"
   objectName: "Sunset Menu"
@@ -23,7 +22,7 @@ DockedPanel {
     id: timer
     interval: 1000
     running: false
-    onTriggered: sunsetMenu.visible = false
+    onTriggered: sunsetMenu.shown = false
   }
 
   HoverHandler {

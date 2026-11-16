@@ -15,7 +15,6 @@ import QtQuick.Controls
 DockedPanel {
   id: clipMenu
   edge: "center"
-  visible: false
   objectName: "Clipboard"
   cardWidth: 400
   cardHeight: 470
@@ -52,14 +51,14 @@ DockedPanel {
   function choose(paste) {
     const e = results[selectedIndex];
     if (!e) return;
-    clipMenu.visible = false;
+    clipMenu.shown = false;
     ClipboardService.copy(e, paste);
   }
 
   Timer {
     id: closeTimer
     interval: 1000
-    onTriggered: clipMenu.visible = false
+    onTriggered: clipMenu.shown = false
   }
 
   ColumnLayout {
@@ -151,7 +150,7 @@ DockedPanel {
           Keys.onPressed: (event) => {
             const n = clipMenu.results.length;
             if (event.key === Qt.Key_Escape) {
-              clipMenu.visible = false;
+              clipMenu.shown = false;
             } else if (event.key === Qt.Key_Down || (event.key === Qt.Key_N && event.modifiers & Qt.ControlModifier)) {
               clipMenu.selectedIndex = Math.min(n - 1, clipMenu.selectedIndex + 1);
             } else if (event.key === Qt.Key_Up || (event.key === Qt.Key_P && event.modifiers & Qt.ControlModifier)) {
@@ -311,7 +310,7 @@ DockedPanel {
 
   IpcHandler {
     target: "clipboard"
-    function toggle(): void { clipMenu.visible = !clipMenu.visible; }
-    function open(): void   { clipMenu.visible = true; }
+    function toggle(): void { clipMenu.shown = !clipMenu.shown; }
+    function open(): void   { clipMenu.shown = true; }
   }
 }

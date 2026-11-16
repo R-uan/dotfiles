@@ -76,11 +76,11 @@ Item {
                         0, "", NotificationService.dnd, false);
         return;
       }
-      if (notificationcenter.visible) {
-        notificationcenter.visible = false;
+      if (notificationcenter.shown) {
+        notificationcenter.shown = false;
         notificationcenter.timer.running = false;
       } else {
-        notificationcenter.visible = true;
+        notificationcenter.shown = true;
       }
     }
   }

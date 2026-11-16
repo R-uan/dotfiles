@@ -9,7 +9,10 @@ import QtQuick.Layouts
 
 PanelWindow {
   id: resMenu
-  visible: false
+  // Public open/close API (mirrors DockedPanel). Keep the window alive
+  // while the card furls away, then unmount it.
+  property bool shown: false
+  visible: shown || assembly.width > 0.5
   color: "transparent"
   objectName: "Resources Menu"
   exclusionMode: ExclusionMode.Ignore
@@ -29,7 +32,7 @@ PanelWindow {
   // Screen-space vertical centre the card lines up with. The Resources
   // button in the bar sets this to its own centre before showing us.
   property real anchorCenterY: 140
-  property bool _presented: false
+  readonly property bool _presented: shown
 
   // Keep the whole card (plus its corner fillets) inside the free area
   // between the top and bottom bars.
@@ -38,23 +41,31 @@ PanelWindow {
     Math.min(anchorCenterY - _cardHeight / 2,
              height - _edgeBar - _cornerRadius - _cardHeight))
 
-  onVisibleChanged: {
-    _presented = visible;
-    ResourcesService.watchProcs = visible;
+  onShownChanged: {
+    ResourcesService.watchProcs = shown;
+    // On open, give a generous grace window to let the pointer reach the
+    // card; it stops the timer the moment it's hovered. On close, cancel.
+    if (shown) {
+      hoverCloseTimer.interval = 1500;
+      hoverCloseTimer.restart();
+    } else {
+      hoverCloseTimer.stop();
+    }
   }
 
-  property alias timer: closeTimer
+  property alias timer: hoverCloseTimer
 
+  // Auto-close a short beat after the pointer leaves the card.
   Timer {
-    id: closeTimer
-    interval: 1
-    onTriggered: resMenu.visible = false
+    id: hoverCloseTimer
+    interval: 1500
+    onTriggered: resMenu.shown = false
   }
 
   // Click-outside catcher
   MouseArea {
     anchors.fill: parent
-    onClicked: resMenu.visible = false
+    onClicked: resMenu.shown = false
   }
 
   function _pctColor(pct) {
@@ -102,8 +113,16 @@ PanelWindow {
       color: resMenu._cardColor
     }
 
-    // Eat clicks on the card so the outside catcher doesn't dismiss us.
-    MouseArea { anchors.fill: parent; onClicked: {} }
+    // Eat clicks on the card so the outside catcher doesn't dismiss us,
+    // and track hover: pause the auto-close while the pointer is inside,
+    // then switch to the shorter exit grace once it leaves.
+    MouseArea {
+      anchors.fill: parent
+      hoverEnabled: true
+      onClicked: {}
+      onEntered: hoverCloseTimer.stop()
+      onExited:  { hoverCloseTimer.interval = 600; hoverCloseTimer.restart(); }
+    }
 
     ColumnLayout {
       id: mainLayout
@@ -142,60 +161,89 @@ PanelWindow {
         color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
       }
 
-      // ── CPU ───────────────────────────────────────────
-      ResBar {
-        label: "CPU"
-        percent: ResourcesService.cpu
-        rightText:ResourcesService.cpu + "%"
-        history: ResourcesService.cpuHistory
-        hint: ResourcesService.cpuTemp > 0 ? (ResourcesService.cpuTemp + "°C") : ""
-        hintColor: resMenu._tempColor(ResourcesService.cpuTemp)
-        fillColor: resMenu._pctColor(ResourcesService.cpu)
+      // ── System section ────────────────────────────────
+      StyledText {
+        text: "SYSTEM"
+        font.pixelSize: Config.fontSize - 5
+        font.letterSpacing: 1.4
+        color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
       }
 
-      // ── RAM ───────────────────────────────────────────
-      ResBar {
-        label: "RAM"
-        percent: ResourcesService.ramPct
-        rightText:ResourcesService.ramPct + "%"
-        history: ResourcesService.ramHistory
-        hint: resMenu._fmtGiB(ResourcesService.ramUsedBytes) + " / "
-              + resMenu._fmtGiB(ResourcesService.ramTotalBytes) + " GiB"
-        fillColor: resMenu._pctColor(ResourcesService.ramPct)
+      ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 14
+
+        ResBar {
+          label: "CPU"
+          percent: ResourcesService.cpu
+          rightText:ResourcesService.cpu + "%"
+          history: ResourcesService.cpuHistory
+          hint: ResourcesService.cpuTemp > 0 ? (ResourcesService.cpuTemp + "°C") : ""
+          hintColor: resMenu._tempColor(ResourcesService.cpuTemp)
+          fillColor: resMenu._pctColor(ResourcesService.cpu)
+        }
+
+        ResBar {
+          label: "RAM"
+          percent: ResourcesService.ramPct
+          rightText:ResourcesService.ramPct + "%"
+          history: ResourcesService.ramHistory
+          hint: resMenu._fmtGiB(ResourcesService.ramUsedBytes) + " / "
+                + resMenu._fmtGiB(ResourcesService.ramTotalBytes) + " GiB"
+          fillColor: resMenu._pctColor(ResourcesService.ramPct)
+        }
+
+        ResBar {
+          visible: ResourcesService.swapTotalBytes > 1
+          label: "SWAP"
+          percent: ResourcesService.swapPct
+          rightText:ResourcesService.swapPct + "%"
+          hint: resMenu._fmtGiB(ResourcesService.swapUsedBytes) + " / "
+                + resMenu._fmtGiB(ResourcesService.swapTotalBytes) + " GiB"
+          fillColor: resMenu._pctColor(ResourcesService.swapPct)
+        }
       }
 
-      // ── Swap ──────────────────────────────────────────
-      ResBar {
-        visible: ResourcesService.swapTotalBytes > 1
-        label: "SWAP"
-        percent: ResourcesService.swapPct
-        rightText:ResourcesService.swapPct + "%"
-        hint: resMenu._fmtGiB(ResourcesService.swapUsedBytes) + " / "
-              + resMenu._fmtGiB(ResourcesService.swapTotalBytes) + " GiB"
-        fillColor: resMenu._pctColor(ResourcesService.swapPct)
-      }
-
-      // ── GPU ───────────────────────────────────────────
-      ResBar {
+      // ── Graphics section ──────────────────────────────
+      Rectangle {
         visible: ResourcesService.hasGpu
-        label: "GPU"
-        percent: ResourcesService.gpu
-        rightText:ResourcesService.gpu + "%"
-        history: ResourcesService.gpuHistory
-        hint: ResourcesService.gpuTemp > 0 ? (ResourcesService.gpuTemp + "°C") : ""
-        hintColor: resMenu._tempColor(ResourcesService.gpuTemp)
-        fillColor: resMenu._pctColor(ResourcesService.gpu)
+        Layout.fillWidth: true
+        Layout.topMargin: 2
+        height: 1
+        color: Config.darkMode ? Qt.rgba(1,1,1,0.07) : Qt.rgba(0,0,0,0.07)
       }
 
-      // ── VRAM ──────────────────────────────────────────
-      ResBar {
+      StyledText {
         visible: ResourcesService.hasGpu
-        label: "VRAM"
-        percent: ResourcesService.gpuMemPct
-        rightText:ResourcesService.gpuMemPct + "%"
-        hint: ResourcesService.gpuMemUsedMiB + " / "
-              + ResourcesService.gpuMemTotalMiB + " MiB"
-        fillColor: resMenu._pctColor(ResourcesService.gpuMemPct)
+        text: "GRAPHICS"
+        font.pixelSize: Config.fontSize - 5
+        font.letterSpacing: 1.4
+        color: Config.darkMode ? ThemeDark.primary3 : ThemeLight.primary3
+      }
+
+      ColumnLayout {
+        visible: ResourcesService.hasGpu
+        Layout.fillWidth: true
+        spacing: 14
+
+        ResBar {
+          label: "GPU"
+          percent: ResourcesService.gpu
+          rightText:ResourcesService.gpu + "%"
+          history: ResourcesService.gpuHistory
+          hint: ResourcesService.gpuTemp > 0 ? (ResourcesService.gpuTemp + "°C") : ""
+          hintColor: resMenu._tempColor(ResourcesService.gpuTemp)
+          fillColor: resMenu._pctColor(ResourcesService.gpu)
+        }
+
+        ResBar {
+          label: "VRAM"
+          percent: ResourcesService.gpuMemPct
+          rightText:ResourcesService.gpuMemPct + "%"
+          hint: ResourcesService.gpuMemUsedMiB + " / "
+                + ResourcesService.gpuMemTotalMiB + " MiB"
+          fillColor: resMenu._pctColor(ResourcesService.gpuMemPct)
+        }
       }
 
       // ── Top processes ─────────────────────────────────

@@ -17,7 +17,6 @@ import QtQuick.Controls
 DockedPanel {
   id: wallpapers
   edge: "full"
-  visible: false
   cardWidth: 480
   objectName: "Wallpapers"
   WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
@@ -152,7 +151,7 @@ DockedPanel {
     id: hideTimer
     interval: 1000
     running: false
-    onTriggered: wallpapers.visible = false
+    onTriggered: wallpapers.shown = false
   }
 
   HoverHandler {
@@ -347,7 +346,7 @@ DockedPanel {
             const cols = wallpapers.columns;
             if (event.key === Qt.Key_Escape) {
               if (text.length > 0) text = "";
-              else wallpapers.visible = false;
+              else wallpapers.shown = false;
             } else if (event.key === Qt.Key_Down) {
               wallpapers.moveSelection(cols);
             } else if (event.key === Qt.Key_Up) {

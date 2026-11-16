@@ -10,7 +10,6 @@ import QtQuick.Layouts
 DockedPanel {
   edge: "bottom"
   id: notifCenter
-  visible: false
   cardWidth: 340
   color: "transparent"
   objectName: "Notification Center"
@@ -33,7 +32,7 @@ DockedPanel {
     id: timer
     interval: 1000
     running: false
-    onTriggered: notifCenter.visible = false
+    onTriggered: notifCenter.shown = false
   }
 
   MouseArea {

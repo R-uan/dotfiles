@@ -120,7 +120,7 @@ Item {
           acceptedButtons: Qt.LeftButton | Qt.RightButton
           onClicked: function (mouse) {
             if (mouse.button === Qt.RightButton) {
-              if (tile.modelData.menu) tile.modelData.menu.visible = true;
+              if (tile.modelData.menu) tile.modelData.menu.shown = true;
               return;
             }
             tile.modelData.toggle();

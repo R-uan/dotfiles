@@ -9,7 +9,6 @@ import QtQuick.Layouts
 DockedPanel {
   edge: "bottom"
   id: audioMenu
-  visible: false
   cardWidth: 340
   color: "transparent"
   objectName: "Audio Menu"
@@ -22,7 +21,7 @@ DockedPanel {
     id: timer
     interval: 1000
     running: false
-    onTriggered: audioMenu.visible = false
+    onTriggered: audioMenu.shown = false
   }
 
   HoverHandler {

@@ -10,7 +10,6 @@ import QtQuick.Layouts
 DockedPanel {
   edge: "bottom"
   id: netMenu
-  visible: false
   cardWidth: 340
   color: "transparent"
   objectName: "Network Menu"
@@ -37,7 +36,7 @@ DockedPanel {
     id: timer
     interval: 1000
     running: false
-    onTriggered: netMenu.visible = false
+    onTriggered: netMenu.shown = false
   }
 
   HoverHandler {
@@ -151,6 +150,13 @@ DockedPanel {
         icon: "󰑐"
         label: NetworkService.scanning ? "scanning" : "rescan"
         onClicked: NetworkService.rescan()
+      }
+      NetPill {
+        icon: WarpService.icon
+        label: WarpService.shortLabel
+        active: WarpService.connected
+        opacity: WarpService.transitioning || WarpService.busy ? 0.6 : 1
+        onClicked: WarpService.toggle()
       }
       Item { Layout.fillWidth: true }
       NetPill {

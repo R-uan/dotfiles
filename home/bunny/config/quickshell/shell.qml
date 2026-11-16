@@ -33,8 +33,13 @@ ShellRoot {
     ];
     for (let p of panels) {
       if (!p || p === except) continue;
-      if (p.visible) {
-        p.visible = false;
+      // Prefer the animated `shown` API (DockedPanel-based menus); fall
+      // back to raw `visible` for panels that don't expose it (launcher,
+      // session, overview).
+      const hasShown = typeof p.shown === "boolean";
+      if (hasShown ? p.shown : p.visible) {
+        if (hasShown) p.shown = false;
+        else p.visible = false;
         if (p.timer) p.timer.running = false;
       }
     }
@@ -128,6 +133,6 @@ ShellRoot {
 
   // Not in hideOthers: it is a transient overlay, not a panel.
   Osd {
-    suppress: audiomenu.visible || sunsetmenu.visible
+    suppress: audiomenu.shown || sunsetmenu.shown
   }
 }

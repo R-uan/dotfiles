@@ -36,13 +36,13 @@ Item {
       hoverEnabled: true
       cursorShape: Qt.PointingHandCursor
       onClicked: {
-        if (resourcesmenu.visible) {
-          resourcesmenu.visible = false;
+        if (resourcesmenu.shown) {
+          resourcesmenu.shown = false;
           resourcesmenu.timer.running = false;
         } else {
           // Line the card up with this button, in screen coordinates.
           resourcesmenu.anchorCenterY = root.mapToItem(null, 0, root.height / 2).y;
-          resourcesmenu.visible = true;
+          resourcesmenu.shown = true;
         }
       }
 

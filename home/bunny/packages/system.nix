@@ -18,7 +18,6 @@
     wl-clipboard        # wl-copy / wl-paste, feeds cliphist
     cloudflare-warp     # Cloudflare VPN (Not really a VPN, used to get better routes for FFXIV)
     papirus-icon-theme  # Icon theme (rofi/GTK app icons)
-
     # Command Line Interface Tools
     fd        # Find replacement
     mtr       # Internet Test
