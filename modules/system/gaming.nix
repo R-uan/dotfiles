@@ -16,6 +16,21 @@
   # Precisa do ppfeaturemask em kernelParams p/ destravar edição de tensão/clock.
   programs.corectrl.enable = true;
 
+  # A policy do GameMode veio com allow_active=no, então o pkexec recusa os
+  # helpers (governor, procsys, cpucorectl, gpuclockctl). Libera p/ sessão local
+  # ativa — é desktop single-user.
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if ((action.id == "com.feralinteractive.GameMode.governor-helper" ||
+           action.id == "com.feralinteractive.GameMode.cpu-helper" ||
+           action.id == "com.feralinteractive.GameMode.gpu-helper" ||
+           action.id == "com.feralinteractive.GameMode.procsys-helper") &&
+          subject.local && subject.active) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
   programs.gamemode = {
     enable = true;
     enableRenice = true;
