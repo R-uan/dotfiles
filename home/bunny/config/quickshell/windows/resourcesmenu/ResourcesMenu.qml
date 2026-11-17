@@ -53,22 +53,17 @@ PanelWindow {
   onShownChanged: {
     _reveal = shown ? 1 : 0;
     ResourcesService.watchProcs = shown;
-    // On open, give a generous grace window to let the pointer reach the
-    // card; it stops the timer the moment it's hovered. On close, cancel.
-    if (shown) {
-      hoverCloseTimer.interval = 1500;
-      hoverCloseTimer.restart();
-    } else {
-      hoverCloseTimer.stop();
-    }
+    if (!shown) hoverCloseTimer.stop();
   }
 
   property alias timer: hoverCloseTimer
 
-  // Auto-close a short beat after the pointer leaves the card.
+  // Auto-close a short beat after the pointer leaves the card. Doesn't
+  // start on open — the other menus (network, bluetooth, …) wait for the
+  // first hover-exit before counting down, which feels much calmer.
   Timer {
     id: hoverCloseTimer
-    interval: 1500
+    interval: 1000
     onTriggered: resMenu.shown = false
   }
 
@@ -117,13 +112,13 @@ PanelWindow {
 
     // Eat clicks on the card so the outside catcher doesn't dismiss us,
     // and track hover: pause the auto-close while the pointer is inside,
-    // then switch to the shorter exit grace once it leaves.
+    // then start it once the pointer leaves.
     MouseArea {
       anchors.fill: parent
       hoverEnabled: true
       onClicked: {}
       onEntered: hoverCloseTimer.stop()
-      onExited:  { hoverCloseTimer.interval = 600; hoverCloseTimer.restart(); }
+      onExited:  hoverCloseTimer.restart()
     }
 
     ColumnLayout {
