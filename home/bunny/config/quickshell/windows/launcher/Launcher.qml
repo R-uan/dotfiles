@@ -20,13 +20,27 @@ import Quickshell.Wayland
 // Usage (count + last time) is remembered across restarts and ranks results.
 PanelWindow {
   id: launcher
-  visible: false
   color: "transparent"
   objectName: "App Launcher"
   exclusionMode: ExclusionMode.Ignore
   WlrLayershell.layer: WlrLayer.Overlay
   WlrLayershell.namespace: "quickshell:launcher"
-  WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+  // Focus follows the public open state so the close animation can play
+  // after keyboard focus has already moved on to the launched window.
+  WlrLayershell.keyboardFocus: shown ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+
+  // Public open/close: callers set `shown`; the window stays mounted while
+  // the close animation drains the reveal fraction to zero.
+  property bool shown: false
+  property real _reveal: 0
+  Behavior on _reveal {
+    NumberAnimation {
+      duration: launcher.shown ? Motion.fastSpatialDuration : Motion.exitDuration
+      easing.type: Easing.BezierSpline
+      easing.bezierCurve: launcher.shown ? Motion.decel : Motion.accel
+    }
+  }
+  visible: shown || _reveal > 0.001
 
   anchors { top: true; left: true; right: true; bottom: true }
 
@@ -51,7 +65,6 @@ PanelWindow {
   // -1: the item itself; otherwise which of the selected app's actions.
   property int actionIndex: -1
   property string query: ""
-  property bool _presented: false
   readonly property color _cardColor: Config.darkMode ? ThemeDark.background0 : ThemeLight.background0
   readonly property color _fg:  Config.darkMode ? ThemeDark.foreground0 : ThemeLight.foreground0
   readonly property color _hi:  Config.darkMode ? ThemeDark.foreground1 : ThemeLight.foreground1
@@ -84,7 +97,7 @@ PanelWindow {
   }
 
   function openWith(text) {
-    if (!visible) visible = true;
+    if (!shown) shown = true;
     setQuery(text);
   }
 
@@ -439,14 +452,13 @@ PanelWindow {
   readonly property var current: results[Math.max(0, Math.min(selectedIndex, results.length - 1))] ?? null
 
   // ── Behaviour ───────────────────────────────────────────────────────
-  onVisibleChanged: {
-    if (visible) {
+  onShownChanged: {
+    _reveal = shown ? 1 : 0;
+    if (shown) {
       selectedIndex = 0;
       actionIndex = -1;
-      _presented = true;
       searchField.forceActiveFocus();
     } else {
-      _presented = false;
       mode = "";
       searchField.text = "";
     }
@@ -479,20 +491,20 @@ PanelWindow {
     _bump(it.key);
     // Drop our exclusive keyboard focus first so the new window (or the
     // wtype paste) lands in the right place.
-    launcher.visible = false;
+    launcher.shown = false;
     it.run(alt, ai);
   }
 
   Timer {
     id: closeTimer
     interval: 1
-    onTriggered: launcher.visible = false
+    onTriggered: launcher.shown = false
   }
 
   // Click-outside catcher
   MouseArea {
     anchors.fill: parent
-    onClicked: launcher.visible = false
+    onClicked: launcher.shown = false
   }
 
   // ── Card: flat against the top bar, unfurls downward ────────────────
@@ -503,21 +515,14 @@ PanelWindow {
     x: (launcher.width - width) / 2
     y: launcher._topBarHeight
 
-    opacity: launcher._presented ? 1 : 0
-    Behavior on opacity { Anim { curve: Motion.effects; duration: Motion.effectsDuration } }
+    opacity: Math.min(1, launcher._reveal * 2)
 
     Item {
       id: card
       x: launcher._transitionSize
       width: launcher._cardWidth
-      height: launcher._presented ? launcher._cardHeight : 0
+      height: Math.max(0, launcher._cardHeight * launcher._reveal)
       clip: true
-      Behavior on height {
-        Anim {
-          curve: launcher._presented ? Motion.decel : Motion.accel
-          duration: launcher._presented ? Motion.fastSpatialDuration : Motion.exitDuration
-        }
-      }
 
       Rectangle {
         anchors { left: parent.left; right: parent.right; top: parent.top; topMargin: -launcher._cornerRadius }
@@ -588,7 +593,7 @@ PanelWindow {
               selectionColor: Qt.rgba(1, 1, 1, 0.25)
               selectByMouse: true
               clip: true
-              focus: launcher.visible
+              focus: launcher.shown
               onTextChanged: {
                 if (launcher.mode === "" && text.length > 0 && launcher.modes[text.charAt(0)]) {
                   launcher.mode = text.charAt(0);
@@ -614,7 +619,7 @@ PanelWindow {
                   // Esc clears the text, then the mode, then closes.
                   if (searchField.text.length > 0) searchField.text = "";
                   else if (launcher.mode) launcher.mode = "";
-                  else launcher.visible = false;
+                  else launcher.shown = false;
                   break;
                 case Qt.Key_J: if (ctrl) { launcher.moveSelection(1); break; } return;
                 case Qt.Key_K: if (ctrl) { launcher.moveSelection(-1); break; } return;
@@ -781,9 +786,9 @@ PanelWindow {
 
   IpcHandler {
     target: "launcher"
-    function toggle(): void { launcher.visible = !launcher.visible; }
-    function open(): void   { launcher.visible = true; }
-    function close(): void  { launcher.visible = false; }
+    function toggle(): void { launcher.shown = !launcher.shown; }
+    function open(): void   { launcher.shown = true; }
+    function close(): void  { launcher.shown = false; }
     // Open straight into a mode, e.g. `launcher openWith "="`.
     function openWith(prefix: string): void { launcher.openWith(prefix); }
   }

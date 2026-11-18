@@ -38,7 +38,7 @@ Item {
 
   function open(app, forceNew) {
     if (app.launcher) {
-      launcher.visible = true;
+      launcher.shown = true;
       return;
     }
     const wins = forceNew ? [] : windowsOf(app);
